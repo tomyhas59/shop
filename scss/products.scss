@@ -6,14 +6,14 @@ body {
 .products-title {
   line-height: 100px;
   text-align: center;
-  font-size: 2rem;
-  background-color: darkgrey;
+  font-size: 5rem;
+  margin-top: 200px;
 }
 
 .productList {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(3, 33%);
+  gap: 50px;
   text-align: center;
   margin-top: -200px;
   padding: 300px;
@@ -21,7 +21,7 @@ body {
 
 .product-item {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 50%);
   place-items: center;
   border: 1px solid gray;
   border-radius: 20px;
@@ -44,7 +44,6 @@ body {
   }
   > .title {
     font-size: 1.5rem;
-    width: 10rem;
     background-color: #f2f2f2;
     padding: 10px;
     border-radius: 10px;
@@ -75,23 +74,15 @@ body {
 }
 
 .product-detail {
-  height: 90vh;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 30%);
+  justify-content: center;
   place-items: center;
-  text-decoration: none;
-  position: relative;
-  grid-template-areas:
-    "a b"
-    "c d"
-    "c f"
-    "e q";
+  margin-top: 100px;
   > .category {
     font-size: 2rem;
     color: #000;
     text-shadow: 1px 1px white;
-    grid-area: a;
-
     &:hover {
       color: #fff;
       text-shadow: 1px 1px black;
@@ -100,10 +91,8 @@ body {
   > .image {
     width: 25rem;
     height: auto;
-    grid-area: c;
   }
   > .title {
-    grid-area: b;
     font-size: 1.5rem;
     background-color: #f2f2f2;
     padding: 10px;
@@ -111,7 +100,6 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   > .price {
-    grid-area: e;
     font-size: 1.5rem;
     padding: 5px;
     height: 50px;
@@ -121,25 +109,12 @@ body {
     border: 2px solid #060606;
     line-height: 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    grid-area: f;
   }
   > .description {
-    grid-area: d;
     font-size: 1.5rem;
     width: 400px;
   }
   > .rating {
-    grid-area: f;
-  }
-  > a {
-    position: absolute;
-    bottom: -50px;
-    left: 47%;
-    text-decoration: none;
-    background-color: #ffcc00;
-    border-radius: 10px;
-    font-size: 2.5rem;
-    border: 1px solid;
-    padding: 5px;
+    border: 1px;
   }
 }

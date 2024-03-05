@@ -1,1 +1,43 @@
 @import "products";
+
+a {
+  text-decoration: none;
+}
+
+.layoutWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.contentWrapper {
+  width: 100%;
+  flex: 1;
+}
+.header {
+  z-index: 999;
+  position: fixed;
+  background-color: rgb(137, 103, 103);
+  width: 100%;
+  font-size: 2rem;
+  height: 6rem;
+  line-height: 3rem;
+}
+
+.headerList {
+  display: flex;
+  justify-content: space-around;
+
+  li {
+    list-style: none;
+    > a {
+      color: #fff;
+    }
+  }
+}
+
+.footer {
+  background-color: rgb(137, 103, 103);
+  width: 100%;
+  font-size: 2rem;
+  text-align: center;
+}

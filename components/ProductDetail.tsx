@@ -1,5 +1,5 @@
 import { Product } from "@/types";
-import Link from "next/link";
+
 import React from "react";
 
 const ProductDetail = ({
@@ -8,7 +8,7 @@ const ProductDetail = ({
   data: Product;
 }) => {
   return (
-    <li className="product-detail">
+    <div className="product-detail">
       <p className="category">{category}</p>
       <p className="title">{title}</p>
       <img className="image" src={image} alt={title} />
@@ -17,8 +17,7 @@ const ProductDetail = ({
         {rating.count}/{rating.rate}
       </span>
       <span className="price">{price}달러</span>
-      <Link href="/products">뒤로</Link>
-    </li>
+    </div>
   );
 };
 
