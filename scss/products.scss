@@ -1,25 +1,22 @@
-$product-item-padding: 50px;
-$product-item-gap: 20px;
 body {
   margin: 0;
   padding: 0;
 }
+
 .products-title {
-  width: 100%;
-  height: 100px;
   line-height: 100px;
   text-align: center;
   font-size: 2rem;
   background-color: darkgrey;
 }
+
 .productList {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  padding: $product-item-padding;
-  gap: $product-item-gap;
+  gap: 20px;
   text-align: center;
-  padding: 300px;
   margin-top: -200px;
+  padding: 300px;
 }
 
 .product-item {
@@ -35,10 +32,9 @@ body {
     "b c"
     "d e"
     "f f";
-  padding: 20px;
-  > img {
-    width: 200px;
-    height: auto;
+
+  > .image {
+    width: 10rem;
     transform: scale(0.7);
     transition: transform 0.3s ease;
 
@@ -48,7 +44,7 @@ body {
   }
   > .title {
     font-size: 1.5rem;
-    width: 200px;
+    width: 10rem;
     background-color: #f2f2f2;
     padding: 10px;
     border-radius: 10px;
@@ -56,11 +52,11 @@ body {
   }
   > .price {
     font-size: 20px;
-    width: 100px;
+    width: 10rem;
     height: 50px;
     background-color: #ffcc00;
     border-radius: 20px;
-    border: 2px solid #ffcc00;
+    border: 2px solid;
     line-height: 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     grid-area: f;
@@ -79,8 +75,6 @@ body {
 }
 
 .product-detail {
-  padding-left: 500px;
-  padding-right: 500px;
   height: 90vh;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -90,8 +84,8 @@ body {
   grid-template-areas:
     "a b"
     "c d"
-    "c d"
-    "e f";
+    "c f"
+    "e q";
   > .category {
     font-size: 2rem;
     color: #000;
@@ -103,8 +97,8 @@ body {
       text-shadow: 1px 1px black;
     }
   }
-  > img {
-    width: 400px;
+  > .image {
+    width: 25rem;
     height: auto;
     grid-area: c;
   }
@@ -118,8 +112,8 @@ body {
   }
   > .price {
     grid-area: e;
-    font-size: 20px;
-    width: 100px;
+    font-size: 1.5rem;
+    padding: 5px;
     height: 50px;
     text-align: center;
     background-color: #278b6d;
@@ -139,12 +133,13 @@ body {
   }
   > a {
     position: absolute;
-    bottom: 0;
+    bottom: -50px;
     left: 47%;
     text-decoration: none;
     background-color: #ffcc00;
     border-radius: 10px;
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     border: 1px solid;
+    padding: 5px;
   }
 }

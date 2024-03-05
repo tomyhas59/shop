@@ -14,8 +14,8 @@ const ProductItem = ({
   return (
     <Link className="product-item" href={`/products/${id}`}>
       <p className="category">{category}</p>
-      <p className="title">{title}</p>
       <img className="image" src={image} alt={title} />
+      <p className="title">{title}</p>
       <span className="price">{price}달러</span>
     </Link>
   );
