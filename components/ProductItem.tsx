@@ -1,21 +1,21 @@
-import { Product } from "@/types";
+import { Product } from "@/graphql/products";
+
 import Link from "next/link";
 import React from "react";
 
 const ProductItem = ({
-  category,
+  createAt,
   description,
-  image,
+  imageUrl,
   price,
-  rating,
   title,
   id,
 }: Product) => {
   return (
     <Link className="product-item" href={`/products/${id}`}>
-      <p className="category">{category}</p>
+      <p className="category">{createAt}</p>
       <p className="title">{title}</p>
-      <img className="image" src={image} alt={title} />
+      <img className="image" src={imageUrl} alt={title} />
       <span className="price">{price}달러</span>
     </Link>
   );

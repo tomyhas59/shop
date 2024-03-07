@@ -1,6 +1,6 @@
 import { getClient } from "@/queryClient";
 import Head from "next/head";
-import React, { useEffect } from "react";
+import React from "react";
 import { QueryClientProvider } from "react-query";
 import "../scss/index.scss";
 import Header from "@/components/Header";
@@ -8,6 +8,13 @@ import Footer from "@/components/Footer";
 
 interface PropTypes {
   Component: React.FC;
+}
+
+if (process.env.NODE_ENV === "development") {
+  (async () => {
+    const { worker } = await import("../mocks/browser");
+    worker.start();
+  })();
 }
 
 const Shop: React.FC<PropTypes> = ({ Component }) => {
