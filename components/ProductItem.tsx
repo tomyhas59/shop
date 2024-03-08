@@ -1,7 +1,5 @@
 import { Product } from "@/graphql/products";
-
 import Link from "next/link";
-import React from "react";
 
 const ProductItem = ({
   createAt,

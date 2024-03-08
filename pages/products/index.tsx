@@ -1,16 +1,15 @@
+import { useQuery } from "react-query";
 import ProductItem from "@/components/ProductItem";
 import GET_PRODUCTS, { Products } from "@/graphql/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
-
 import React from "react";
-import { useQuery } from "react-query";
 
 const ProductList = () => {
   const { data } = useQuery<Products>(QueryKeys.PRODUCTS, () =>
     graphqlFetcher<Products>(GET_PRODUCTS)
   );
 
-  console.log(data);
+  console.log("list", data);
   return (
     <div>
       <div className="products-title">상품 목록</div>

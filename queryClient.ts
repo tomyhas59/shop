@@ -23,7 +23,7 @@ export const getClient = (() => {
   };
 })();
 
-const BASE_URL = "/";
+const BASE_URL = "http://localhost:3000/graphql";
 
 export const restFetcher = async ({
   method,
@@ -62,7 +62,8 @@ export const restFetcher = async ({
 
 export const graphqlFetcher = <T>(query: RequestDocument, variables = {}) =>
   request<T>(BASE_URL, query, variables);
-  
+
 export const QueryKeys = {
   PRODUCTS: "PRODUCTS",
+  PRODUCT: "PRODUCT",
 };
