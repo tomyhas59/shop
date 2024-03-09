@@ -16,7 +16,7 @@ const ProductItem = ({
     graphqlFetcher(ADD_CART, { id })
   );
   return (
-    <li className="product-item">
+    <li className="productItem">
       <p className="createAt">{createAt}</p>
       <p className="title">{title}</p>
       <Link className="link" href={`/products/${id}`}>

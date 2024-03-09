@@ -3,7 +3,7 @@ body {
   padding: 0;
 }
 
-.products-title {
+.productsTitle {
   line-height: 100px;
   text-align: center;
   font-size: 5rem;
@@ -18,7 +18,7 @@ body {
   padding: 300px;
 }
 
-.product-item {
+.productItem {
   display: grid;
   grid-template-columns: repeat(2, 50%);
   place-items: center;
@@ -83,10 +83,11 @@ body {
   > .link {
     grid-area: d;
     color: #875959;
+    text-decoration: none;
   }
 }
 @media screen and (max-width: 1024px) {
-  .product-item {
+  .productItem {
     > .createAt {
       font-size: 1rem;
     }
@@ -101,7 +102,7 @@ body {
   }
 }
 
-.product-detail {
+.productDetail {
   display: grid;
   grid-template-columns: repeat(2, 30%);
   justify-content: center;

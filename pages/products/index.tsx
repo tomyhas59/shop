@@ -13,7 +13,7 @@ const ProductList = () => {
   console.log("list", data);
   return (
     <div>
-      <div className="products-title">상품 목록</div>
+      <div className="productsTitle">상품 목록</div>
       <ul className="productList">
         {data?.products?.map((product) => (
           <ProductItem {...product} key={product.id} />

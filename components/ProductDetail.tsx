@@ -9,7 +9,7 @@ const ProductDetail = ({
   id,
 }: Product) => {
   return (
-    <div className="product-detail">
+    <div className="productDetail">
       <p className="createAt">{createAt}</p>
       <p className="title">{title}</p>
       <img className="image" src={imageUrl} alt={title} />
