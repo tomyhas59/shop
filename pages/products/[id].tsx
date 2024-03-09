@@ -1,5 +1,5 @@
 import ProductDetail from "@/components/ProductDetail";
-import GET_PRODUCT, { Product } from "@/graphql/products";
+import { GET_PRODUCT, Product } from "@/graphql/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
 import { useRouter } from "next/dist/client/router";
 
@@ -17,7 +17,7 @@ const ProductDetailPage = () => {
 
   return (
     <div>
-      <ProductDetail data={data} />
+      <ProductDetail {...data} />
     </div>
   );
 };

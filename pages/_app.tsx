@@ -5,6 +5,7 @@ import { QueryClientProvider } from "react-query";
 import "../scss/index.scss";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { RecoilRoot } from "recoil";
 
 interface PropTypes {
   Component: React.FC;
@@ -24,6 +25,7 @@ const Shop: React.FC<PropTypes> = ({ Component }) => {
       })();
     }
   }
+
   const queryClient = getClient();
 
   return (
@@ -32,15 +34,17 @@ const Shop: React.FC<PropTypes> = ({ Component }) => {
         <meta charSet="utf-8" />
         <title>shop</title>
       </Head>
-      <div className="layoutWrapper">
-        <Header />
-        <QueryClientProvider client={queryClient}>
-          <div className="contentWrapper">
-            <Component />
-          </div>
-        </QueryClientProvider>
-        <Footer />
-      </div>
+      <RecoilRoot>
+        <div className="layoutWrapper">
+          <Header />
+          <QueryClientProvider client={queryClient}>
+            <div className="contentWrapper">
+              <Component />
+            </div>
+          </QueryClientProvider>
+          <Footer />
+        </div>
+      </RecoilRoot>
     </>
   );
 };

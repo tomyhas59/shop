@@ -9,10 +9,13 @@ a {
   flex-direction: column;
   min-height: 100vh;
 }
+
 .contentWrapper {
+  margin-top: 200px;
   width: 100%;
   flex: 1;
 }
+
 .header {
   z-index: 999;
   position: fixed;
@@ -40,4 +43,17 @@ a {
   width: 100%;
   font-size: 2rem;
   text-align: center;
+}
+
+/* 미디어 쿼리를 사용하여 반응형 스타일 적용 */
+@media screen and (max-width: 1024px) {
+  .header {
+    font-size: 1.5rem;
+    height: 4rem;
+    line-height: 2rem;
+  }
+
+  .footer {
+    font-size: 1.5rem;
+  }
 }

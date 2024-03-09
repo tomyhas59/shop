@@ -1,14 +1,16 @@
 import { Product } from "@/graphql/products";
-import React from "react";
 
 const ProductDetail = ({
-  data: { createAt, description, imageUrl, price, title, id },
-}: {
-  data: Product;
-}) => {
+  createAt,
+  description,
+  imageUrl,
+  price,
+  title,
+  id,
+}: Product) => {
   return (
     <div className="product-detail">
-      <p className="category">{createAt}</p>
+      <p className="createAt">{createAt}</p>
       <p className="title">{title}</p>
       <img className="image" src={imageUrl} alt={title} />
       <p className="description">{description}</p>

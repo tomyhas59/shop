@@ -7,7 +7,6 @@ body {
   line-height: 100px;
   text-align: center;
   font-size: 5rem;
-  margin-top: 200px;
 }
 
 .productList {
@@ -30,37 +29,9 @@ body {
   grid-template-areas:
     "a a"
     "b c"
-    "d e"
-    "f f";
-
-  > .image {
-    width: 10rem;
-    transform: scale(0.7);
-    transition: transform 0.3s ease;
-
-    &:hover {
-      transform: scale(1);
-    }
-  }
-  > .title {
-    font-size: 1.5rem;
-    background-color: #f2f2f2;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  > .price {
-    font-size: 20px;
-    width: 10rem;
-    height: 50px;
-    background-color: #ffcc00;
-    border-radius: 20px;
-    border: 2px solid;
-    line-height: 50px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    grid-area: f;
-  }
-  > .category {
+    "d c"
+    "f g";
+  > .createAt {
     font-size: 2rem;
     color: #000;
     text-shadow: 1px 1px white;
@@ -70,6 +41,63 @@ body {
       color: #fff;
       text-shadow: 1px 1px black;
     }
+  }
+  > .title {
+    grid-area: b;
+    font-size: 1.5rem;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  > .image {
+    width: 10rem;
+    transform: scale(0.7);
+    transition: transform 0.3s ease;
+    grid-area: c;
+    &:hover {
+      transform: scale(1);
+    }
+  }
+  > .price,
+  .addCart {
+    font-size: 20px;
+    width: 10rem;
+    height: 50px;
+    background-color: #ffcc00;
+    color: rgb(16, 15, 15);
+    border-radius: 20px;
+    border: 2px solid black;
+    line-height: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    grid-area: f;
+  }
+
+  > .addCart {
+    grid-area: g;
+    background-color: #4dd5ac;
+    &:hover {
+      background-color: #278b6d;
+    }
+  }
+  > .link {
+    grid-area: d;
+    color: #875959;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .product-item {
+    > .createAt {
+      font-size: 1rem;
+    }
+  }
+  .productList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    text-align: center;
+    margin-top: -100px;
+    padding: 200px;
   }
 }
 
