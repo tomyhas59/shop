@@ -48,6 +48,7 @@ const CartItem = ({ id, imageUrl, price, title, amount }: Cart) => {
 
   const handleUpdateAmount = (e: SyntheticEvent) => {
     const amount = Number((e.target as HTMLInputElement).value);
+    if (amount < 1) return;
     updateCart({ id, amount });
   };
 
@@ -63,7 +64,12 @@ const CartItem = ({ id, imageUrl, price, title, amount }: Cart) => {
       <p className="cartItemPrice">{price}</p>
       <div className="cartItemAmount">
         수량
-        <input type="number" value={amount} onChange={handleUpdateAmount} />
+        <input
+          type="number"
+          value={amount}
+          onChange={handleUpdateAmount}
+          min={1}
+        />
       </div>
       <button className="cartItemDelete" onClick={handledeleteAmount}>
         삭제
