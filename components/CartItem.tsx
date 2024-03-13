@@ -1,4 +1,5 @@
 import { Cart, DELETE_CART, UPDATE_CART } from "@/graphql/cart";
+import ItemData from "@/pages/cart/ItemData";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 import { LegacyRef, SyntheticEvent, forwardRef } from "react";
 import { useMutation } from "react-query";
@@ -55,7 +56,7 @@ const CartItem = (
     updateCart({ id, amount });
   };
 
-  const handledeleteCart = () => {
+  const handledeleteItem = () => {
     deleteCart(id);
   };
 
@@ -67,9 +68,7 @@ const CartItem = (
         name="selectItem"
         ref={ref}
       />
-      <p className="cartItemTitle">{title}</p>
-      <img className="cartImage" src={imageUrl} alt={title} />
-      <p className="cartItemPrice">{price}</p>
+      <ItemData imageUrl={imageUrl} price={price} title={title} />
       <div className="cartItemAmount">
         수량
         <input
@@ -79,7 +78,11 @@ const CartItem = (
           min={1}
         />
       </div>
-      <button className="cartItemDelete" onClick={handledeleteCart}>
+      <button
+        type="button"
+        className="cartItemDelete"
+        onClick={handledeleteItem}
+      >
         삭제
       </button>
     </li>

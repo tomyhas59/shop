@@ -12,7 +12,7 @@ const ProductList = () => {
 
   console.log("list", data);
   return (
-    <div>
+    <div className="productWrapper">
       <div className="productsTitle">상품 목록</div>
       <ul className="productList">
         {data?.products?.map((product) => (

@@ -1,10 +1,14 @@
 @import "products";
 @import "cart";
 
+.mainPage,
+.emptyCart {
+  padding: 200px;
+}
+
 li {
   list-style: none;
 }
-
 .layoutWrapper {
   display: flex;
   flex-direction: column;
@@ -12,7 +16,6 @@ li {
 }
 
 .contentWrapper {
-  margin-top: 200px;
   width: 100%;
   flex: 1;
 }
@@ -32,9 +35,9 @@ li {
   justify-content: space-around;
 
   li {
-    list-style: none;
     > a {
       color: #fff;
+      text-decoration: none;
     }
   }
 }
@@ -44,9 +47,9 @@ li {
   width: 100%;
   font-size: 2rem;
   text-align: center;
+  color: #fff;
 }
 
-/* 미디어 쿼리를 사용하여 반응형 스타일 적용 */
 @media screen and (max-width: 1024px) {
   .header {
     font-size: 1.5rem;

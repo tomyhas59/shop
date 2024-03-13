@@ -16,7 +16,8 @@ const CartPage = () => {
   const cartItems = Object.values(data || {});
   console.log(data);
 
-  if (!cartItems.length) return <div>장바구니가 비었습니다</div>;
+  if (!cartItems.length)
+    return <div className="emptyCart">장바구니가 비었습니다</div>;
 
   return (
     <div>
