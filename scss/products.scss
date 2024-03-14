@@ -42,6 +42,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   > .image {
+    margin-top: 20px;
     width: 200px;
     border-radius: 20px;
     transition: transform 0.3s ease;
@@ -50,7 +51,7 @@ body {
   > .price,
   .addCart {
     font-size: 20px;
-    width: 10rem;
+    width: 7rem;
     height: 50px;
     background-color: #ffcc00;
     color: rgb(16, 15, 15);
@@ -59,10 +60,10 @@ body {
     line-height: 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     grid-area: f;
-    cursor: pointer;
   }
 
   > .addCart {
+    cursor: pointer;
     grid-area: g;
     background-color: #4dd5ac;
     &:hover {

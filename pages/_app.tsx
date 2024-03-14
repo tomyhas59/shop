@@ -35,6 +35,7 @@ const Shop: React.FC<PropTypes> = ({ Component }) => {
         <title>shop</title>
       </Head>
       <RecoilRoot>
+        <div id="modal"></div>
         <div className="layoutWrapper">
           <Header />
           <QueryClientProvider client={queryClient}>

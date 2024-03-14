@@ -1,8 +1,10 @@
 @import "products";
 @import "cart";
+@import "payment";
 
 .mainPage,
-.emptyCart {
+.emptyCart,
+.paymentWrapper {
   padding: 200px;
 }
 

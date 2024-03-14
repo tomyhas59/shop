@@ -1,59 +1,21 @@
 import { Cart } from "@/graphql/cart";
 import CartItem from "./CartItem";
 import { createRef, useRef, SyntheticEvent, useEffect, useState } from "react";
-import { useSetRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { checkedCartState } from "@/recolis/cart";
 import Estimate from "@/pages/cart/Estimate";
 import { useRouter } from "next/router";
+import { formatPrice } from "@/pages/products";
 
 const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
   const router = useRouter();
 
-  const setCheckedCartData = useSetRecoilState(checkedCartState);
+  const [checkedCartData, setCheckedCartData] =
+    useRecoilState(checkedCartState);
   const formRef = useRef<HTMLFormElement>(null);
   const checkboxRefs = cartItems.map(() => createRef<HTMLInputElement>());
   const [formData, setFormData] = useState<FormData>();
   const checkedItems = useRecoilValue(checkedCartState);
-
-  const formatPrice = (price: number) => {
-    return price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
-  const totalPrice = checkedItems.reduce((res, { price, amount }) => {
-    res += price * amount;
-
-    return res;
-  }, 0);
-
-  const formattedTotalPrice = formatPrice(totalPrice);
-
-  const handleCheckboxChanged = (e: SyntheticEvent) => {
-    if (!formRef.current) return;
-    // const checkboxes =
-    //   formRef.current.querySelectorAll<HTMLInputElement>(".cartItemCheckbox");
-    const targetInput = e.target as HTMLInputElement;
-    const data = new FormData(formRef.current);
-    const selectedCount = data.getAll("selectItem").length; //name="selectItem"
-
-    if (targetInput.classList.contains("selectAll")) {
-      const allChecked = targetInput.checked;
-      checkboxRefs.forEach((inputElem) => {
-        inputElem.current!.checked = allChecked;
-      });
-    } else {
-      const allChecked = selectedCount === cartItems.length;
-      formRef.current.querySelector<HTMLInputElement>(".selectAll")!.checked =
-        allChecked;
-    }
-    setFormData(data);
-  };
-
-  useEffect(() => {
-    const checkedItems = checkboxRefs.reduce<Cart[]>((res, ref, i) => {
-      if (ref.current!.checked) res.push(cartItems[i]);
-      return res;
-    }, []);
-    setCheckedCartData(checkedItems);
-  }, [cartItems, formData]);
 
   const handleSubmit = () => {
     if (checkedItems.length) {
@@ -65,6 +27,65 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
       // router.back();
     }
   };
+
+  //천 단위 쉼표-------------------------------
+  const totalPrice = checkedItems.reduce((res, { price, amount }) => {
+    res += price * amount;
+    return res;
+  }, 0);
+
+  const formattedTotalPrice = formatPrice(totalPrice);
+
+  //개별 체크 올 체크 시------------------------------------------------
+  const setAllCheckedFromItems = () => {
+    if (!formRef.current) return;
+    const data = new FormData(formRef.current);
+    const selectedCount = data.getAll("selectItem").length; //name="selectItem"
+    const allChecked = selectedCount === cartItems.length;
+    formRef.current.querySelector<HTMLInputElement>(".selectAll")!.checked =
+      allChecked;
+  };
+
+  //올 체크 시-----------------------------------------------
+  const setItemsCheckedFromAll = (targetInput: HTMLInputElement) => {
+    const allChecked = targetInput.checked;
+    checkboxRefs.forEach((inputElem) => {
+      inputElem.current!.checked = allChecked;
+    });
+  };
+
+  const handleCheckboxChanged = (e: SyntheticEvent) => {
+    if (!formRef.current) return;
+    const targetInput = e.target as HTMLInputElement;
+
+    if (targetInput && targetInput.classList.contains("selectAll")) {
+      setItemsCheckedFromAll(targetInput);
+    } else {
+      setAllCheckedFromItems();
+    }
+    const data = new FormData(formRef.current);
+    setFormData(data);
+  };
+
+  //recoil checked 업데이트
+  useEffect(() => {
+    checkedCartData.forEach((item) => {
+      const itemRef = checkboxRefs.find(
+        (ref) => ref.current!.dataset.id === item.id
+      );
+      if (itemRef) itemRef.current!.checked = true;
+    });
+    setAllCheckedFromItems();
+  }, []);
+
+  //recoil data 추가
+  useEffect(() => {
+    const checkedItems = checkboxRefs.reduce<Cart[]>((res, ref, i) => {
+      if (ref.current!.checked) res.push(cartItems[i]);
+      return res;
+    }, []);
+    setCheckedCartData(checkedItems);
+  }, [cartItems, formData]);
 
   return (
     <div className="CartListWrapper">
@@ -80,12 +101,12 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
         </div>
       </form>
       <Estimate />
-      <div className="paymentWrapper">
+      <div className="buyWrapper">
         <p>총예상결제액</p>
         <p className="totalEstimate">{formattedTotalPrice}원</p>
 
-        <button className="payment" onClick={handleSubmit}>
-          결제하기
+        <button className="buy" onClick={handleSubmit}>
+          구매하기
         </button>
       </div>
     </div>

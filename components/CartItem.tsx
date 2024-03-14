@@ -1,20 +1,22 @@
 import { Cart, DELETE_CART, UPDATE_CART } from "@/graphql/cart";
 import ItemData from "@/pages/cart/ItemData";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
-import { LegacyRef, SyntheticEvent, forwardRef } from "react";
+import { ForwardedRef, SyntheticEvent, forwardRef } from "react";
 import { useMutation } from "react-query";
 
 const CartItem = (
   { id, imageUrl, price, title, amount }: Cart,
-  ref: LegacyRef<HTMLInputElement>
+  ref: ForwardedRef<HTMLInputElement>
 ) => {
   const queryClient = getClient();
-  const { mutate: updateCart } = useMutation(
+
+  const { mutate: updateCartAmount } = useMutation(
     ({ id, amount }: { id: string; amount: number }) =>
       graphqlFetcher(UPDATE_CART, { id, amount }),
     {
+      //서버 요청 전 실행으로 로컬 상태 변경
       onMutate: async ({ id, amount }) => {
-        await queryClient.cancelQueries(QueryKeys.CART);
+        await queryClient.cancelQueries(QueryKeys.CART); //모든 이전 요청을 취소
 
         const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>(
           QueryKeys.CART
@@ -28,6 +30,7 @@ const CartItem = (
         queryClient.setQueryData(QueryKeys.CART, newCart);
         return prevCart;
       },
+      //서버 응답 후 실행
       onSuccess: (newValue) => {
         const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>(
           QueryKeys.CART
@@ -53,7 +56,7 @@ const CartItem = (
   const handleUpdateAmount = (e: SyntheticEvent) => {
     const amount = Number((e.target as HTMLInputElement).value);
     if (amount < 1) return;
-    updateCart({ id, amount });
+    updateCartAmount({ id, amount });
   };
 
   const handledeleteItem = () => {
@@ -67,6 +70,7 @@ const CartItem = (
         className="cartItemCheckbox"
         name="selectItem"
         ref={ref}
+        data-id={id}
       />
       <ItemData imageUrl={imageUrl} price={price} title={title} />
       <div className="cartItemAmount">
