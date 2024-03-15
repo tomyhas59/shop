@@ -8,12 +8,7 @@ import { useMutation } from "react-query";
 import { graphqlFetcher } from "@/queryClient";
 import { EXECUTE_PAY } from "@/graphql/payment";
 
-type PayInfo = {
-  id: string;
-  amount: number;
-};
-
-type PaymnetInfos = PayInfo[];
+type PaymnetInfos = string[];
 
 const Payment = () => {
   const router = useRouter();
@@ -29,7 +24,7 @@ const Payment = () => {
     toggleModal(true);
   };
   const proceed = () => {
-    const payInfos = checkedCartData.map(({ id, amount }) => ({ id, amount }));
+    const payInfos = checkedCartData.map(({ id }) => id);
     executePay(payInfos);
     router.replace("/products");
     setCheckedCartData([]);

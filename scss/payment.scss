@@ -7,10 +7,12 @@
 
   .modalInner {
     position: absolute;
+    text-align: center;
     top: 50%;
     left: 50%;
     background-color: white;
-    padding: 20px;
+    font-size: 2rem;
+    padding: 50px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translate(-50%, -50%);
@@ -35,8 +37,10 @@
 
 .modal button {
   background-color: #007bff;
+  width: 200px;
   color: white;
   border: none;
+  font-size: 1.5rem;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;

@@ -13,7 +13,7 @@ import { v4 as uuid } from "uuid";
 const mockProducts = (() =>
   Array.from({ length: 20 }).map((_, i) => ({
     id: i + 1 + "",
-    imageUrl: `https://picsum.photos/id/${i + 1}/200/200`,
+    imageUrl: `https://picsum.photos/id/${i + 10}/200/200`,
     price: 50000,
     title: `임시상품${i + 1}`,
     description: `임시상품내용${i + 1}`,
@@ -89,7 +89,9 @@ export const handlers = [
   }),
 
   graphql.mutation(EXECUTE_PAY, (req, res, ctx) => {
-    console.log(req.variables);
-    return res();
+    const ids = req.variables;
+    console.log(ids);
+    ids.forEach((id: string) => delete cartData[id]);
+    return res(ctx.data(ids));
   }),
 ];
