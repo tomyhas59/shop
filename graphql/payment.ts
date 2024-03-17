@@ -1,7 +1,7 @@
 import { gql } from "graphql-tag";
 
 export const EXECUTE_PAY = gql`
-  mutation EXECUTE_PAY($info: [PayInfo]) {
-    payInfo(info: $info)
+  mutation ExecutePay($ids: [ID!]) {
+    executePay(ids: $ids)
   }
 `;

@@ -15,23 +15,27 @@ export type Products = {
 
 export const GET_PRODUCT = gql`
   query GET_PRODUCT($id: string) {
-    id
-    imageUrl
-    price
-    title
-    description
-    createAt
+    product(id: $id) {
+      id
+      imageUrl
+      price
+      title
+      description
+      createAt
+    }
   }
 `;
 
 const GET_PRODUCTS = gql`
   query GET_PRODUCTS {
-    id
-    imageUrl
-    price
-    title
-    description
-    createAt
+    products {
+      id
+      imageUrl
+      price
+      title
+      description
+      createAt
+    }
   }
 `;
 

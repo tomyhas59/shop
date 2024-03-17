@@ -8,16 +8,14 @@ import { useMutation } from "react-query";
 import { graphqlFetcher } from "@/queryClient";
 import { EXECUTE_PAY } from "@/graphql/payment";
 
-type PaymnetInfos = string[];
-
 const Payment = () => {
   const router = useRouter();
   const [checkedCartData, setCheckedCartData] =
     useRecoilState(checkedCartState);
   const [modalShown, toggleModal] = useState(false);
 
-  const { mutate: executePay } = useMutation((payInfos: PaymnetInfos) =>
-    graphqlFetcher(EXECUTE_PAY, payInfos)
+  const { mutate: executePay } = useMutation((ids: string[]) =>
+    graphqlFetcher(EXECUTE_PAY, ids)
   );
 
   const showModal = () => {
@@ -28,6 +26,7 @@ const Payment = () => {
     executePay(payInfos);
     router.replace("/products");
     setCheckedCartData([]);
+    alert("결제가 완료되었습니다");
   };
   const cancel = () => {
     toggleModal(false);
