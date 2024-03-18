@@ -1,6 +1,13 @@
 import { Cart } from "@/graphql/cart";
 import CartItem from "./CartItem";
-import { createRef, useRef, SyntheticEvent, useEffect, useState } from "react";
+import {
+  createRef,
+  useRef,
+  SyntheticEvent,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { checkedCartState } from "@/recolis/cart";
 import Estimate from "@/pages/cart/Estimate";
@@ -29,22 +36,25 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
   };
 
   //천 단위 쉼표-------------------------------
-  const totalPrice = checkedItems.reduce((res, { price, amount }) => {
-    res += price * amount;
-    return res;
-  }, 0);
+  const totalPrice = checkedItems.reduce(
+    (res, { product: { price }, amount }) => {
+      res += price * amount;
+      return res;
+    },
+    0
+  );
 
   const formattedTotalPrice = formatPrice(totalPrice);
 
   //개별 체크 올 체크 시------------------------------------------------
-  const setAllCheckedFromItems = () => {
+  const setAllCheckedFromItems = useCallback(() => {
     if (!formRef.current) return;
     const data = new FormData(formRef.current);
     const selectedCount = data.getAll("selectItem").length; //name="selectItem"
     const allChecked = selectedCount === cartItems.length;
     formRef.current.querySelector<HTMLInputElement>(".selectAll")!.checked =
       allChecked;
-  };
+  }, [cartItems.length]);
 
   //올 체크 시-----------------------------------------------
   const setItemsCheckedFromAll = (targetInput: HTMLInputElement) => {
@@ -76,7 +86,7 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
       if (itemRef) itemRef.current!.checked = true;
     });
     setAllCheckedFromItems();
-  }, []);
+  }, [checkboxRefs, checkedCartData, setAllCheckedFromItems]);
 
   //recoil data 추가
   useEffect(() => {
@@ -85,7 +95,7 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
       return res;
     }, []);
     setCheckedCartData(checkedItems);
-  }, [cartItems, formData]);
+  }, [cartItems, checkboxRefs, formData, setCheckedCartData]);
 
   return (
     <div className="CartListWrapper">

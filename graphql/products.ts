@@ -6,7 +6,15 @@ export type Product = {
   price: number;
   title: string;
   description: string;
-  createAt: number;
+  createAt: string;
+  product: {
+    id: string;
+    imageUrl: string;
+    price: number;
+    title: string;
+    description: string;
+    createAt: string;
+  };
 };
 
 export type Products = {

@@ -9,16 +9,33 @@ const Estimate = () => {
 
   return (
     <ul className="estimate">
-      {checkedItems.map(({ amount, imageUrl, title, price, id }) => {
-        const formattedPrice = formatPrice(price * amount);
-        return (
-          <li className="estimateData" key={id}>
-            <ItemData imageUrl={imageUrl} title={title} price={price} />
-            <p>수량: {amount}</p>
-            <p>금액: {formattedPrice}원</p>
-          </li>
-        );
-      })}
+      {checkedItems.map(
+        ({ amount, product: { imageUrl, title, price }, id }) => {
+          const formattedPrice = formatPrice(price * amount);
+          return (
+            <li className="estimateData" key={id}>
+              <ItemData
+                imageUrl={imageUrl}
+                title={title}
+                price={price}
+                id={""}
+                description={""}
+                createAt={""}
+                product={{
+                  id: "",
+                  imageUrl: "",
+                  price: 0,
+                  title: "",
+                  description: "",
+                  createAt: "",
+                }}
+              />
+              <p>수량: {amount}</p>
+              <p>금액: {formattedPrice}원</p>
+            </li>
+          );
+        }
+      )}
     </ul>
   );
 };

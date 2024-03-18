@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { ADD_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";

@@ -72,7 +72,14 @@ const CartItem = (
         ref={ref}
         data-id={id}
       />
-      <ItemData imageUrl={imageUrl} price={price} title={title} />
+      <ItemData imageUrl={imageUrl} price={price} title={title} id={""} description={""} createAt={""} product={{
+        id: "",
+        imageUrl: "",
+        price: 0,
+        title: "",
+        description: "",
+        createAt: ""
+      }} />
       <div className="cartItemAmount">
         수량
         <input

@@ -15,9 +15,21 @@ const ProductDetailPage = () => {
 
   if (!data) return null;
 
+  const item = data.product;
+
   return (
     <div>
-      <ProductDetail {...data} />
+      <ProductDetail
+        product={{
+          id: "",
+          imageUrl: "",
+          price: 0,
+          title: "",
+          description: "",
+          createAt: "",
+        }}
+        {...item}
+      />
     </div>
   );
 };

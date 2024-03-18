@@ -1,8 +1,9 @@
-import { Cart } from "@/graphql/cart";
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { formatPrice } from "../products";
+import { Product } from "@/graphql/products";
 
-const ItemData = ({ title, imageUrl, price }: Omit<Cart, "id" | "amount">) => {
+const ItemData = ({ title, imageUrl, price }: Product) => {
   const formattedPrice = formatPrice(price);
   return (
     <div>

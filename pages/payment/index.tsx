@@ -15,18 +15,21 @@ const Payment = () => {
   const [modalShown, toggleModal] = useState(false);
 
   const { mutate: executePay } = useMutation((ids: string[]) =>
-    graphqlFetcher(EXECUTE_PAY, ids)
+    graphqlFetcher(EXECUTE_PAY, { ids })
   );
 
   const showModal = () => {
     toggleModal(true);
   };
   const proceed = () => {
-    const payInfos = checkedCartData.map(({ id }) => id);
-    executePay(payInfos);
-    router.replace("/products");
-    setCheckedCartData([]);
-    alert("결제가 완료되었습니다");
+    const ids = checkedCartData.map(({ id }) => id);
+    executePay(ids, {
+      onSuccess: () => {
+        router.replace("/products");
+        setCheckedCartData([]);
+        alert("결제가 완료되었습니다");
+      },
+    });
   };
   const cancel = () => {
     toggleModal(false);
