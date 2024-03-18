@@ -5,7 +5,7 @@ import { ForwardedRef, SyntheticEvent, forwardRef } from "react";
 import { useMutation } from "react-query";
 
 const CartItem = (
-  { id, imageUrl, price, title, amount }: Cart,
+  { id, product: { imageUrl, price, title }, amount }: Cart,
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const queryClient = getClient();
