@@ -7,14 +7,6 @@ export type Product = {
   title: string;
   description: string;
   createAt: string;
-  product: {
-    id: string;
-    imageUrl: string;
-    price: number;
-    title: string;
-    description: string;
-    createAt: string;
-  };
 };
 
 export type Products = {

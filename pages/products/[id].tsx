@@ -9,27 +9,16 @@ import { useQuery } from "react-query";
 const ProductDetailPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data } = useQuery<Product>([QueryKeys.PRODUCTS, id], () =>
-    graphqlFetcher<Product>(GET_PRODUCT, { id })
+  const { data } = useQuery<{ product: Product }>(
+    [QueryKeys.PRODUCTS, id],
+    () => graphqlFetcher<{ product: Product }>(GET_PRODUCT, { id })
   );
 
   if (!data) return null;
 
-  const item = data.product;
-
   return (
     <div>
-      <ProductDetail
-        product={{
-          id: "",
-          imageUrl: "",
-          price: 0,
-          title: "",
-          description: "",
-          createAt: "",
-        }}
-        {...item}
-      />
+      <ProductDetail {...data.product} />
     </div>
   );
 };

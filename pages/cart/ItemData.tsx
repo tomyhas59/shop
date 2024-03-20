@@ -3,7 +3,11 @@ import React from "react";
 import { formatPrice } from "../products";
 import { Product } from "@/graphql/products";
 
-const ItemData = ({ title, imageUrl, price }: Product) => {
+const ItemData = ({
+  title,
+  imageUrl,
+  price,
+}: Omit<Product, "description" | "id" | "createAt">) => {
   const formattedPrice = formatPrice(price);
   return (
     <div>

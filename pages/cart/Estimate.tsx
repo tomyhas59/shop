@@ -14,22 +14,7 @@ const Estimate = () => {
           const formattedPrice = formatPrice(price * amount);
           return (
             <li className="estimateData" key={id}>
-              <ItemData
-                imageUrl={imageUrl}
-                title={title}
-                price={price}
-                id={""}
-                description={""}
-                createAt={""}
-                product={{
-                  id: "",
-                  imageUrl: "",
-                  price: 0,
-                  title: "",
-                  description: "",
-                  createAt: "",
-                }}
-              />
+              <ItemData imageUrl={imageUrl} title={title} price={price} />
               <p>수량: {amount}</p>
               <p>금액: {formattedPrice}원</p>
             </li>

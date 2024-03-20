@@ -5,10 +5,14 @@ import React from "react";
 import { useQuery } from "react-query";
 
 const CartPage = () => {
-  const { data } = useQuery(QueryKeys.CART, () => graphqlFetcher(GET_CART), {
-    staleTime: 0, //데이터가 만료되자마자 새로운 데이터를 가져옮
-    cacheTime: 1000, //1초 뒤 캐시 삭제
-  });
+  const { data } = useQuery<{ cart: Cart[] }>(
+    QueryKeys.CART,
+    () => graphqlFetcher<{ cart: Cart[] }>(GET_CART),
+    {
+      staleTime: 0, //데이터가 만료되자마자 새로운 데이터를 가져옮
+      cacheTime: 1000, //1초 뒤 캐시 삭제
+    }
+  );
   const cartItems = (data?.cart || []) as Cart[];
   console.log(data);
   if (!cartItems.length)
