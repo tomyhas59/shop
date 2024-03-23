@@ -86,7 +86,7 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
       if (itemRef) itemRef.current!.checked = true;
     });
     setAllCheckedFromItems();
-  }, [checkboxRefs, checkedCartData, setAllCheckedFromItems]);
+  }, []);
 
   //recoil data 추가
   useEffect(() => {
@@ -95,7 +95,7 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
       return res;
     }, []);
     setCheckedCartData(checkedItems);
-  }, [cartItems, checkboxRefs, formData, setCheckedCartData]);
+  }, [cartItems, formData]);
 
   return (
     <div className="CartListWrapper">

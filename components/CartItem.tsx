@@ -12,34 +12,40 @@ const CartItem = (
 
   const { mutate: updateCartAmount } = useMutation(
     ({ id, amount }: { id: string; amount: number }) =>
-      graphqlFetcher(UPDATE_CART, { id, amount }),
+      graphqlFetcher<any>(UPDATE_CART, { id, amount }),
     {
       //서버 요청 전 실행으로 로컬 상태 변경
       onMutate: async ({ id, amount }) => {
         await queryClient.cancelQueries(QueryKeys.CART); //모든 이전 요청을 취소
-
-        const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>(
-          QueryKeys.CART
+        const { cart: prevCart } = queryClient.getQueryData<{ cart: Cart[] }>(
+          QueryKeys.CART || { cart: [] }
         );
-        if (!prevCart?.[id]) return prevCart;
+        if (!prevCart) return null;
 
-        const newCart = {
-          ...(prevCart || []),
-          [id]: { ...prevCart[id], amount },
-        };
-        queryClient.setQueryData(QueryKeys.CART, newCart);
+        const cartIndex = prevCart?.findIndex(
+          (cartItem: any) => cartItem.id === id
+        );
+        if (cartIndex === undefined || cartIndex < 0) return prevCart;
+
+        const newCart = [...prevCart];
+        newCart.splice(cartIndex, 1, { ...newCart[cartIndex], amount });
+
+        queryClient.setQueryData(QueryKeys.CART, { cart: newCart });
         return prevCart;
       },
       //서버 응답 후 실행
-      onSuccess: (newValue) => {
-        const prevCart = queryClient.getQueryData<{ [key: string]: Cart }>(
-          QueryKeys.CART
+      onSuccess: ({ updateCart }) => {
+        const { cart: prevCart } = queryClient.getQueryData<{ cart: Cart[] }>(
+          QueryKeys.CART || { cart: [] }
         );
-        const newCart = {
-          ...(prevCart || []),
-          [id]: newValue,
-        };
-        queryClient.setQueryData(QueryKeys.CART, newCart);
+        const cartIndex = prevCart?.findIndex(
+          (cartItem) => cartItem.id === updateCart.id
+        );
+
+        if (!prevCart || cartIndex === undefined || cartIndex < 0) return;
+        const newCart = [...prevCart];
+        newCart.splice(cartIndex, 1, updateCart);
+        queryClient.setQueryData(QueryKeys.CART, { cart: newCart });
       },
     }
   );

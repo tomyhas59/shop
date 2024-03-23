@@ -42,7 +42,7 @@ export const ADD_CART = gql`
 `;
 
 export const UPDATE_CART = gql`
-  mutation UPDATE_CART($id: ID!, $amount: Int) {
+  mutation UPDATE_CART($id: ID!, $amount: Int!) {
     updateCart(id: $id, amount: $amount) {
       id
       amount

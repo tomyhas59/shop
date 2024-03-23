@@ -25,9 +25,9 @@ const Payment = () => {
     const ids = checkedCartData.map(({ id }) => id);
     executePay(ids, {
       onSuccess: () => {
-        router.replace("/products");
         setCheckedCartData([]);
         alert("결제가 완료되었습니다");
+        router.replace("/products");
       },
     });
   };
