@@ -22,7 +22,8 @@ const Payment = () => {
     toggleModal(true);
   };
   const proceed = () => {
-    const ids = checkedCartData.map(({ id }) => id);
+    const ids = checkedCartData.map((item) => item.id);
+    console.log(ids);
     executePay(ids, {
       onSuccess: () => {
         setCheckedCartData([]);

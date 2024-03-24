@@ -14,7 +14,7 @@ const CartPage = () => {
     }
   );
   const cartItems = (data?.cart || []) as Cart[];
-  console.log(data);
+
   if (!cartItems.length)
     return <div className="emptyCart">장바구니가 비었습니다</div>;
 

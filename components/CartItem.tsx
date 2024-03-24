@@ -17,11 +17,12 @@ const CartItem = (
       //서버 요청 전 실행으로 로컬 상태 변경
       onMutate: async ({ id, amount }) => {
         await queryClient.cancelQueries(QueryKeys.CART); //모든 이전 요청을 취소
-        const { cart: prevCart } = queryClient.getQueryData<{ cart: Cart[] }>(
-          QueryKeys.CART || { cart: [] }
+        const cartData = queryClient.getQueryData<{ cart: Cart[] }>(
+          QueryKeys.CART || []
         );
-        if (!prevCart) return null;
+        if (!cartData) return null;
 
+        const prevCart = cartData?.cart;
         const cartIndex = prevCart?.findIndex(
           (cartItem: any) => cartItem.id === id
         );
@@ -35,9 +36,11 @@ const CartItem = (
       },
       //서버 응답 후 실행
       onSuccess: ({ updateCart }) => {
-        const { cart: prevCart } = queryClient.getQueryData<{ cart: Cart[] }>(
-          QueryKeys.CART || { cart: [] }
+        const cartData = queryClient.getQueryData<{ cart: Cart[] }>(
+          QueryKeys.CART || []
         );
+
+        const prevCart = cartData?.cart;
         const cartIndex = prevCart?.findIndex(
           (cartItem) => cartItem.id === updateCart.id
         );
