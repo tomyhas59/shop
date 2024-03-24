@@ -1,5 +1,10 @@
 .CartListWrapper {
   padding: 150px;
+  button {
+    background-color: rgb(161, 18, 18);
+    color: aliceblue;
+    cursor: pointer;
+  }
 }
 
 .cartList {
@@ -32,6 +37,8 @@
     font-size: 1.5rem;
     border: none;
     border-radius: 0 0 20px 20px;
+    color: aliceblue;
+    cursor: pointer;
   }
   img {
     object-fit: contain;

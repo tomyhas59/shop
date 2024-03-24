@@ -1,4 +1,4 @@
-import { Cart } from "@/graphql/cart";
+import { Cart, DELETE_ALL_CART } from "@/graphql/cart";
 import CartItem from "./CartItem";
 import {
   createRef,
@@ -13,16 +13,19 @@ import { checkedCartState } from "@/recolis/cart";
 import Estimate from "@/pages/cart/Estimate";
 import { useRouter } from "next/router";
 import { formatPrice } from "@/pages/products";
+import { useMutation } from "react-query";
+import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 
 const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
   const router = useRouter();
-
+  const queryClient = getClient();
   const [checkedCartData, setCheckedCartData] =
     useRecoilState(checkedCartState);
   const formRef = useRef<HTMLFormElement>(null);
   const checkboxRefs = cartItems.map(() => createRef<HTMLInputElement>());
   const [formData, setFormData] = useState<FormData>();
   const checkedItems = useRecoilValue(checkedCartState);
+  const [deleteAllButton, setDeleteAllButton] = useState(false);
 
   const handleSubmit = () => {
     if (checkedItems.length) {
@@ -51,10 +54,15 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
     if (!formRef.current) return;
     const data = new FormData(formRef.current);
     const selectedCount = data.getAll("selectItem").length; //name="selectItem"
-    const allChecked = selectedCount === cartItems.length;
-    formRef.current.querySelector<HTMLInputElement>(".selectAll")!.checked =
-      allChecked;
-  }, [cartItems.length]);
+    const allItemsSelected = selectedCount === cartItems.length;
+
+    const selectAllCheckbox =
+      formRef.current.querySelector<HTMLInputElement>(".selectAll");
+    if (selectAllCheckbox) {
+      selectAllCheckbox.checked = allItemsSelected;
+      setDeleteAllButton(allItemsSelected);
+    }
+  }, [cartItems.length, deleteAllButton]);
 
   //올 체크 시-----------------------------------------------
   const setItemsCheckedFromAll = (targetInput: HTMLInputElement) => {
@@ -69,12 +77,33 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
     const targetInput = e.target as HTMLInputElement;
 
     if (targetInput && targetInput.classList.contains("selectAll")) {
+      setDeleteAllButton(targetInput.checked);
       setItemsCheckedFromAll(targetInput);
     } else {
       setAllCheckedFromItems();
     }
+
     const data = new FormData(formRef.current);
     setFormData(data);
+  };
+
+  //전체 카트 삭제
+  const { mutate: deleteAllCart } = useMutation(
+    () => graphqlFetcher(DELETE_ALL_CART),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QueryKeys.CART); //데이터 전체 다시 가져옴
+      },
+    }
+  );
+
+  const handleDeleteAllItem = (e: SyntheticEvent) => {
+    const confirmed = window.confirm("정말 삭제하시겠습니까?");
+    if (confirmed) {
+      deleteAllCart();
+    } else {
+      e.preventDefault();
+    }
   };
 
   //recoil checked 업데이트
@@ -101,9 +130,12 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
     <div className="CartListWrapper">
       <form ref={formRef} onChange={handleCheckboxChanged}>
         <label>
-          <input type="checkbox" className="selectAll" />
+          <input type="checkbox" className="selectAll" name="selectAll" />
           전체 선택
         </label>
+        {deleteAllButton ? (
+          <button onClick={handleDeleteAllItem}>삭제</button>
+        ) : null}
         <div className="cartList">
           {cartItems.map((cartItem, i) => (
             <CartItem {...cartItem} key={cartItem.id} ref={checkboxRefs[i]} />

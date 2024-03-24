@@ -63,3 +63,12 @@ export const DELETE_CART = gql`
     deleteCart(id: $id)
   }
 `;
+
+export const DELETE_ALL_CART = gql`
+  mutation DELETE_ALL_CART {
+    deleteAllCart
+  }
+`;
+
+//client: graphql
+//server: resolver, schema 연결
