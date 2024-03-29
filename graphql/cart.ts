@@ -18,7 +18,7 @@ export const GET_CART = gql`
         price
         title
         description
-        createAt
+        createdAt
       }
     }
   }
@@ -35,7 +35,7 @@ export const ADD_CART = gql`
         price
         title
         description
-        createAt
+        createdAt
       }
     }
   }
@@ -52,7 +52,7 @@ export const UPDATE_CART = gql`
         price
         title
         description
-        createAt
+        createdAt
       }
     }
   }

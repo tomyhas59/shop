@@ -10,7 +10,7 @@ const ProductListPage = () => {
   const intersecting = useIntersection(fetchMoreRef);
   const { data, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery<Products>(
-      QueryKeys.PRODUCTS,
+      [QueryKeys.PRODUCTS, false],
       ({ pageParam = "" }) =>
         graphqlFetcher<Products>(GET_PRODUCTS, { cursor: pageParam }),
       {

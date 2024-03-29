@@ -14,6 +14,9 @@ const Header = () => {
         <li>
           <Link href={"/cart"}>장바구니</Link>
         </li>
+        <li>
+          <Link href={"/admin"}>어드민</Link>
+        </li>
       </ul>
     </div>
   );

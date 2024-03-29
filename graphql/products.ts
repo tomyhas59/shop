@@ -6,7 +6,7 @@ export type Product = {
   price: number;
   title: string;
   description: string;
-  createAt: string;
+  createdAt: string;
 };
 
 export type Products = {
@@ -21,20 +21,43 @@ export const GET_PRODUCT = gql`
       price
       title
       description
-      createAt
+      createdAt
     }
   }
 `;
 
 const GET_PRODUCTS = gql`
-  query GET_PRODUCTS($cursor: ID!) {
-    products(cursor: $cursor) {
+  query GET_PRODUCTS($cursor: ID!, $showDeleted: Boolean) {
+    products(cursor: $cursor, showDeleted: $showDeleted) {
       id
       imageUrl
       price
       title
       description
-      createAt
+      createdAt
+    }
+  }
+`;
+
+export const ADD_PRODUCT = gql`
+  mutation ADD_PRODUCT(
+    $imageUrl: String!
+    $price: Int!
+    $title: String!
+    $description: String!
+  ) {
+    addProduct(
+      imageUrl: $imageUrl
+      price: $price
+      title: $title
+      description: $description
+    ) {
+      id
+      imageUrl
+      price
+      title
+      description
+      createdAt
     }
   }
 `;

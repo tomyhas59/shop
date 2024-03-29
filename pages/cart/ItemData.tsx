@@ -7,7 +7,7 @@ const ItemData = ({
   title,
   imageUrl,
   price,
-}: Omit<Product, "description" | "id" | "createAt">) => {
+}: Omit<Product, "description" | "id" | "createdAt">) => {
   const formattedPrice = formatPrice(price);
   return (
     <div>

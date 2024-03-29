@@ -6,7 +6,7 @@ import { graphqlFetcher } from "@/queryClient";
 import { useMutation } from "react-query";
 
 const ProductDetail = ({
-  createAt,
+  createdAt,
   description,
   imageUrl,
   price,
@@ -22,7 +22,7 @@ const ProductDetail = ({
   return (
     <div className="productDetailWrapper">
       <div className="productDetail">
-        <p className="createAt">{createAt}</p>
+        <p className="createdAt">{createdAt}</p>
         <p className="title">{title}</p>
         <img className="image" src={imageUrl} alt={title} />
         <p className="description">{description}</p>
