@@ -62,4 +62,33 @@ export const ADD_PRODUCT = gql`
   }
 `;
 
+export const UPDATE_PRODUCT = gql`
+  mutation UPDATE_PRODUCT(
+    $id: ID!
+    $imageUrl: String!
+    $price: Int!
+    $title: String!
+    $description: String!
+  ) {
+    updateProduct(
+      id: $id
+      imageUrl: $imageUrl
+      price: $price
+      title: $title
+      description: $description
+    ) {
+      id
+      imageUrl
+      price
+      title
+      description
+      createdAt
+    }
+  }
+`;
+export const DELETE_PRODUCT = gql`
+  mutation DELETE_PRODUCT($id: ID!) {
+    deleteProduct(id: $id)
+  }
+`;
 export default GET_PRODUCTS;

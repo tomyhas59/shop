@@ -4,13 +4,14 @@ import React, { useEffect, useRef } from "react";
 import GET_PRODUCTS, { Products } from "@/graphql/products";
 import ProductList from "@/components/ProductList";
 import useIntersection from "@/hooks/useIntersection";
+import ProductItem from "@/components/ProductItem";
 
 const ProductListPage = () => {
   const fetchMoreRef = useRef<HTMLDivElement>(null);
   const intersecting = useIntersection(fetchMoreRef);
   const { data, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery<Products>(
-      [QueryKeys.PRODUCTS, false],
+      [QueryKeys.PRODUCTS, "products"],
       ({ pageParam = "" }) =>
         graphqlFetcher<Products>(GET_PRODUCTS, { cursor: pageParam }),
       {
@@ -49,7 +50,7 @@ data: {
     <div>
       <div className="productWrapper">
         <div className="productsTitle">상품 목록</div>
-        <ProductList list={data?.pages || []} />
+        <ProductList list={data?.pages || []} Item={ProductItem} />
         <div ref={fetchMoreRef} />
       </div>
     </div>

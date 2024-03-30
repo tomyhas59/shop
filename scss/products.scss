@@ -22,6 +22,7 @@ body {
 }
 
 .productItem {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, 50%);
   place-items: center;
@@ -81,6 +82,20 @@ body {
     background-color: #875959;
     &:hover {
       color: #ffcc00;
+    }
+  }
+  > .deleteButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    border-radius: 0 20px 0 0;
+    font-size: 1.3rem;
+    color: #fff;
+    cursor: pointer;
+    &:hover {
+      background-color: rgb(98, 18, 34);
+      color: #efcece;
     }
   }
 }
