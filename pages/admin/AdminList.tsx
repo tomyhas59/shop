@@ -1,8 +1,8 @@
 import { Product } from "@/graphql/products";
 import React from "react";
-import ProductItem from "./ProductItem";
+import AdminItem from "./AdminItem";
 
-const ProductList = ({
+const AdminList = ({
   list,
 }: {
   list: {
@@ -13,11 +13,11 @@ const ProductList = ({
     <ul className="productList">
       {list.map((page) =>
         page.products.map((product) => (
-          <ProductItem {...product} key={product.id} />
+          <AdminItem {...product} key={product.id} />
         ))
       )}
     </ul>
   );
 };
 
-export default ProductList;
+export default AdminList;

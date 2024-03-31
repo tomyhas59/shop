@@ -1,13 +1,14 @@
 import { useInfiniteQuery } from "react-query";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import GET_PRODUCTS, { Products } from "@/graphql/products";
-import ProductList from "@/components/ProductList";
 import useIntersection from "@/hooks/useIntersection";
-import AdminItem from "./AdminItem";
 import AddForm from "./AddForm";
+import AdminList from "./AdminList";
 
 const AdminPage = () => {
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
   const fetchMoreRef = useRef<HTMLDivElement>(null);
   const intersecting = useIntersection(fetchMoreRef);
   const { data, isSuccess, isFetchingNextPage, fetchNextPage, hasNextPage } =
@@ -55,7 +56,7 @@ data: {
       <div className="productWrapper">
         <AddForm />
         <div className="productsTitle">어드민</div>
-        <ProductList list={data?.pages || []} Item={AdminItem} />
+        <AdminList list={data?.pages || []} />
         <div ref={fetchMoreRef} />
       </div>
     </div>

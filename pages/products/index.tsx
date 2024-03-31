@@ -50,7 +50,7 @@ data: {
     <div>
       <div className="productWrapper">
         <div className="productsTitle">상품 목록</div>
-        <ProductList list={data?.pages || []} Item={ProductItem} />
+        <ProductList list={data?.pages || []} />
         <div ref={fetchMoreRef} />
       </div>
     </div>
