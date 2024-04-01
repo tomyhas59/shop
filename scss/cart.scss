@@ -1,9 +1,15 @@
 .CartListWrapper {
   padding: 150px;
-  button {
+  .deleteAll {
+    margin-left: 20px;
+    border-radius: 20px;
+    padding: 5px;
     background-color: rgb(161, 18, 18);
     color: aliceblue;
     cursor: pointer;
+    &:hover {
+      background-color: rgb(234, 124, 124);
+    }
   }
 }
 

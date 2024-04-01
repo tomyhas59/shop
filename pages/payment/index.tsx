@@ -30,6 +30,10 @@ const Payment = () => {
         alert("결제가 완료되었습니다");
         router.replace("/products");
       },
+      onError: () => {
+        alert("삭제된 상품이 포함되어 결제를 진행할 수 없습니다");
+        router.replace("/cart");
+      },
     });
   };
   const cancel = () => {

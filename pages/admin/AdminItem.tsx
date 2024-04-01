@@ -148,7 +148,7 @@ const AdminItem = ({
       <button className="addCart" onClick={() => addCart(id)}>
         담기
       </button>
-      {!createdAt && <span>삭제된 상품</span>}
+      {!createdAt && <div className="Xmark">삭제된 상품</div>}
     </li>
   );
 };

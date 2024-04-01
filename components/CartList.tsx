@@ -25,7 +25,6 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
   const checkboxRefs = cartItems.map(() => createRef<HTMLInputElement>());
   const [formData, setFormData] = useState<FormData>();
   const checkedItems = useRecoilValue(checkedCartState);
-  const [deleteAllButton, setDeleteAllButton] = useState(false);
 
   const handleSubmit = () => {
     if (checkedItems.length) {
@@ -50,26 +49,32 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
   const formattedTotalPrice = formatPrice(totalPrice);
 
   //개별 체크 올 체크 시------------------------------------------------
+  const enabledItem = cartItems.filter((item) => item.product.createdAt);
+
   const setAllCheckedFromItems = useCallback(() => {
     if (!formRef.current) return;
     const data = new FormData(formRef.current);
     const selectedCount = data.getAll("selectItem").length; //name="selectItem"
-    const allItemsSelected = selectedCount === cartItems.length;
+    const allItemsSelected = selectedCount === enabledItem.length;
 
     const selectAllCheckbox =
-      formRef.current.querySelector<HTMLInputElement>(".selectAll");
+      document.querySelector<HTMLInputElement>(".selectAll");
+
     if (selectAllCheckbox) {
       selectAllCheckbox.checked = allItemsSelected;
-      setDeleteAllButton(allItemsSelected);
     }
-  }, [cartItems.length, deleteAllButton]);
+  }, [cartItems.length]);
 
   //올 체크 시-----------------------------------------------
   const setItemsCheckedFromAll = (targetInput: HTMLInputElement) => {
     const allChecked = targetInput.checked;
-    checkboxRefs.forEach((inputElem) => {
-      inputElem.current!.checked = allChecked;
-    });
+    checkboxRefs
+      .filter((inputElem) => {
+        return !inputElem.current?.disabled;
+      })
+      .forEach((inputElem) => {
+        inputElem.current!.checked = allChecked;
+      });
   };
 
   const handleCheckboxChanged = (e: SyntheticEvent) => {
@@ -77,7 +82,6 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
     const targetInput = e.target as HTMLInputElement;
 
     if (targetInput && targetInput.classList.contains("selectAll")) {
-      setDeleteAllButton(targetInput.checked);
       setItemsCheckedFromAll(targetInput);
     } else {
       setAllCheckedFromItems();
@@ -126,6 +130,19 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
     setCheckedCartData(checkedItems);
   }, [cartItems, formData]);
 
+  useEffect(() => {
+    const selectAllCheckbox =
+      document.querySelector<HTMLInputElement>(".selectAll");
+
+    if (selectAllCheckbox) {
+      if (enabledItem.length === 0) {
+        selectAllCheckbox.disabled = true;
+      } else {
+        selectAllCheckbox.disabled = false;
+      }
+    }
+  }, [enabledItem]);
+
   return (
     <div className="CartListWrapper">
       <form ref={formRef} onChange={handleCheckboxChanged}>
@@ -133,9 +150,9 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
           <input type="checkbox" className="selectAll" name="selectAll" />
           전체 선택
         </label>
-        {deleteAllButton ? (
-          <button onClick={handleDeleteAllItem}>삭제</button>
-        ) : null}
+        <button className="deleteAll" onClick={handleDeleteAllItem}>
+          전체 삭제
+        </button>
         <div className="cartList">
           {cartItems.map((cartItem, i) => (
             <CartItem {...cartItem} key={cartItem.id} ref={checkboxRefs[i]} />

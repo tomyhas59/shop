@@ -29,14 +29,6 @@ export const ADD_CART = gql`
     addCart(id: $id) {
       id
       amount
-      product {
-        id
-        imageUrl
-        price
-        title
-        description
-        createdAt
-      }
     }
   }
 `;
