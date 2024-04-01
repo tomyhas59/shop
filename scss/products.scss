@@ -84,10 +84,12 @@ body {
       color: #ffcc00;
     }
   }
-  > .deleteButton {
+  > .deleteButton,
+  .updateButton {
     position: absolute;
     top: 0;
     right: 0;
+    width: 70px;
     background-color: red;
     border-radius: 0 20px 0 0;
     font-size: 1.3rem;
@@ -96,6 +98,15 @@ body {
     &:hover {
       background-color: rgb(98, 18, 34);
       color: #efcece;
+    }
+  }
+
+  .updateButton {
+    left: 0;
+    background-color: yellowgreen;
+    border-radius: 20px 0 0 0;
+    &:hover {
+      background-color: rgb(85, 118, 18);
     }
   }
 }

@@ -1,11 +1,16 @@
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useRef } from "react";
 import { useMutation } from "react-query";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
-import { ADD_PRODUCT, Product } from "@/graphql/products";
+import { ADD_PRODUCT, MutableProduct, Product } from "@/graphql/products";
 import arrToObj from "@/util/arrToObj";
 
 const AddForm = () => {
   const queryClient = getClient();
+  const titleRef = useRef<HTMLInputElement>(null);
+  const imageUrlRef = useRef<HTMLInputElement>(null);
+  const priceRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
   const { mutate: addProduct } = useMutation(
     ({
       title,
@@ -28,8 +33,13 @@ const AddForm = () => {
     e.preventDefault();
     const formData = arrToObj([...new FormData(e.target as HTMLFormElement)]);
     formData.price = Number(formData.price);
-    addProduct(formData as Omit<Product, "id" | "createdAt">);
+    addProduct(formData as MutableProduct);
     console.log(formData);
+
+    titleRef.current!.value = "";
+    imageUrlRef.current!.value = "";
+    priceRef.current!.value = "";
+    descriptionRef.current!.value = "";
   };
 
   return (
@@ -37,6 +47,7 @@ const AddForm = () => {
       <label>
         상품명:
         <input
+          ref={titleRef}
           className="inputField"
           name="title"
           placeholder="title"
@@ -47,6 +58,7 @@ const AddForm = () => {
       <label>
         이미지URL:
         <input
+          ref={imageUrlRef}
           className="inputField"
           name="imageUrl"
           type="text"
@@ -56,6 +68,7 @@ const AddForm = () => {
       <label>
         가격:
         <input
+          ref={priceRef}
           className="inputField"
           placeholder="Price"
           name="price"
@@ -67,6 +80,7 @@ const AddForm = () => {
       <label>
         상세:
         <textarea
+          ref={descriptionRef}
           className="textareaField"
           name="description"
           placeholder="Description"

@@ -4,16 +4,28 @@ import AdminItem from "./AdminItem";
 
 const AdminList = ({
   list,
+  startEdit,
+  doneEdit,
+  editingIndex,
 }: {
   list: {
     products: Product[];
   }[];
+  editingIndex: number | null;
+  doneEdit: () => void;
+  startEdit: (index: number) => () => void;
 }) => {
   return (
     <ul className="productList">
       {list.map((page) =>
-        page.products.map((product) => (
-          <AdminItem {...product} key={product.id} />
+        page.products.map((product, i) => (
+          <AdminItem
+            {...product}
+            key={product.id}
+            isEditing={editingIndex === i}
+            startEdit={startEdit(i)}
+            doneEdit={doneEdit}
+          />
         ))
       )}
     </ul>

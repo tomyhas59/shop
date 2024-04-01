@@ -50,13 +50,20 @@ data: {
       -intersectionObserver
       -이벤트 등록 X, 브라우저에서 제공하는 별개의 감시자. 성능 탁월
    */
+  const startEdit = (index: number) => () => setEditingIndex(index);
+  const doneEdit = () => setEditingIndex(null);
 
   return (
     <div>
       <div className="productWrapper">
         <AddForm />
         <div className="productsTitle">어드민</div>
-        <AdminList list={data?.pages || []} />
+        <AdminList
+          list={data?.pages || []}
+          editingIndex={editingIndex}
+          startEdit={startEdit}
+          doneEdit={doneEdit}
+        />
         <div ref={fetchMoreRef} />
       </div>
     </div>
