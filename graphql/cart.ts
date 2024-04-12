@@ -9,7 +9,7 @@ export type Cart = {
 
 export const GET_CART = gql`
   query GET_CART {
-    cartList {
+    cart {
       id
       amount
       product {
