@@ -1,9 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 import { ADD_CART, Cart, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 
 const ProductItem = ({ imageUrl, price, title, id }: Product) => {
@@ -13,7 +13,7 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
 
   const formatedPrice = formatPrice(price);
 
-  const { data, refetch } = useQuery<{ cart: Cart[] }>(
+  const { data } = useQuery<{ cart: Cart[] }>(
     "cart",
     () => graphqlFetcher<{ cart: Cart[] }>(GET_CART),
     {
@@ -23,11 +23,20 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
   );
 
   const cartIds = data?.cart ? data.cart.map((item) => item.product.id) : [];
+  const [isAddedToCart, setIsAddedToCart] = useState(cartIds.includes(id));
 
-  const handleAddToCart = async () => {
-    addCart(id);
-    refetch();
+  const handleAddToCart = () => {
+    if (!isAddedToCart) {
+      addCart(id);
+      setIsAddedToCart(true);
+    }
   };
+
+  useEffect(() => {
+    if (cartIds.includes(id)) {
+      setIsAddedToCart(true);
+    }
+  }, [cartIds, id]);
 
   return (
     <li className="productItem">
@@ -37,8 +46,12 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
         상세 보기
       </Link>
       <span className="price">{formatedPrice}원</span>
-      <button className="addCart" onClick={handleAddToCart}>
-        {!cartIds?.includes(id) ? "담기" : "담기 완료"}
+      <button
+        className="addCart"
+        onClick={handleAddToCart}
+        disabled={isAddedToCart}
+      >
+        {isAddedToCart ? "담기 완료" : "담기"}
       </button>
     </li>
   );
