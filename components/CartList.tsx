@@ -27,14 +27,14 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
   const checkedItems = useRecoilValue(checkedCartState);
 
   const handleSubmit = () => {
-    if (checkedItems.length) {
-      router.push("/payment");
-      // 새로운 경로로 이동하고 페이지 다시 로드
-      // router.replace('/another-page');
+    if (checkedItems.length < 1) {
+      alert("구매할 상품을 선택하세요");
+    } else router.push("/payment");
+    // 새로운 경로로 이동하고 페이지 다시 로드
+    // router.replace('/another-page');
 
-      // 이전 페이지로 이동
-      // router.back();
-    }
+    // 이전 페이지로 이동
+    // router.back();
   };
 
   //천 단위 쉼표-------------------------------

@@ -129,6 +129,13 @@ const AdminItem = ({
         <button type="submit" className="submitButton">
           저장
         </button>
+        <button
+          type="button"
+          className="cencelButton"
+          onClick={() => doneEdit()}
+        >
+          취소
+        </button>
       </form>
     );
   return (
