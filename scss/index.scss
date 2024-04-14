@@ -1,11 +1,13 @@
 @import "products";
 @import "cart";
 @import "payment";
+@import "signUp";
 
 .mainPage,
 .emptyCart,
 .paymentWrapper,
-.adminWrapper {
+.adminWrapper,
+.signUpPage {
   padding: 200px;
 }
 

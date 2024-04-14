@@ -19,10 +19,13 @@ const ProductDetail = ({
 
   const formatedPrice = formatPrice(price);
 
+  const timestamp = Number(createdAt) * 1000; // Firebase 타임스탬프를 밀리초 단위로 변환
+  const date = new Date(timestamp); // Date 객체로 변환
+
   return (
     <div className="productDetailWrapper">
       <div className="productDetail">
-        <p className="createdAt">{createdAt}</p>
+        <p className="createdAt">{date.toLocaleDateString()}</p>
         <p className="title">{title}</p>
         <img className="image" src={imageUrl} alt={title} />
         <p className="description">{description}</p>

@@ -67,4 +67,5 @@ export const QueryKeys = {
   PRODUCTS: "PRODUCTS",
   PRODUCT: "PRODUCT",
   CART: "CART",
+  SIGN_UP: "SIHN_UP",
 };

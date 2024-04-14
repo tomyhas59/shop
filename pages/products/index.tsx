@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from "react";
 import GET_PRODUCTS, { Products } from "@/graphql/products";
 import ProductList from "@/components/ProductList";
 import useIntersection from "@/hooks/useIntersection";
-import ProductItem from "@/components/ProductItem";
 
 const ProductListPage = () => {
   const fetchMoreRef = useRef<HTMLDivElement>(null);
