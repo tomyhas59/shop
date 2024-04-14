@@ -13,7 +13,16 @@ const SignUpPage = () => {
 
   const { mutate: signUp } = useMutation(
     ({ email, nickname, password }: SignUp) =>
-      graphqlFetcher<any>(SIGN_UP, { email, nickname, password })
+      graphqlFetcher<any>(SIGN_UP, { email, nickname, password }),
+    {
+      onError: (error: any) => {
+        alert(error.response.errors[0].message);
+      },
+      onSuccess: () => {
+        alert("가입이 완료되었습니다");
+        router.push("/");
+      },
+    }
   );
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -23,13 +32,7 @@ const SignUpPage = () => {
       return;
     }
 
-    try {
-      signUp({ email, nickname, password });
-      alert("가입이 완료되었습니다");
-      router.push("/");
-    } catch (error) {
-      alert(error);
-    }
+    signUp({ email, nickname, password });
   };
 
   return (
@@ -84,7 +87,9 @@ const SignUpPage = () => {
             required
           />
         </label>
-        <button type="submit">확인</button>
+        <button className="signUpButton" type="submit">
+          확인
+        </button>
       </form>
     </div>
   );
