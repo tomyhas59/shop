@@ -6,6 +6,7 @@ import "../scss/index.scss";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { RecoilRoot } from "recoil";
+import { initializeApp } from "firebase/app";
 
 interface PropTypes {
   Component: React.FC;

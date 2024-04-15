@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@types/uuid": "^9.0.8",
+    "dotenv": "^16.4.5",
+    "firebase": "^10.11.0",
     "graphql-request": "^6.1.0",
     "graphql-tag": "^2.12.6",
     "headers-polyfill": "^4.0.2",
