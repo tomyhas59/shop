@@ -25,6 +25,14 @@ const Header = () => {
     }
   };
 
+  const goToCart = () => {
+    if (!user) {
+      alert("로그인이 필요합니다");
+      return;
+    }
+    router.push("/cart");
+  };
+
   return (
     <div className="header">
       <ul className="headerList">
@@ -35,7 +43,7 @@ const Header = () => {
           <Link href={"/"}>메인</Link>
         </li>
         <li>
-          <Link href={"/cart"}>장바구니</Link>
+          <a onClick={goToCart}>장바구니</a>
         </li>
         {user ? (
           <>
