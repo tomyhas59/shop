@@ -19,8 +19,6 @@ const UserInfoPage: React.FC = () => {
         <div>
           <p>Email: {user.email}</p>
           <p>Display Name: {user.displayName}</p>
-          {user.photoURL && <img src={user.photoURL} alt="Profile" />}
-          {/* Render other user information here */}
         </div>
       ) : (
         <p>Loading...</p>

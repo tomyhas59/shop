@@ -1,16 +1,5 @@
 .CartListWrapper {
   padding: 150px;
-  .deleteAll {
-    margin-left: 20px;
-    border-radius: 20px;
-    padding: 5px;
-    background-color: rgb(161, 18, 18);
-    color: aliceblue;
-    cursor: pointer;
-    &:hover {
-      background-color: rgb(234, 124, 124);
-    }
-  }
 }
 
 .cartList {
@@ -26,7 +15,7 @@
   border: 1px solid;
   border-radius: 20px;
   text-align: center;
-
+  width: 300px;
   > .cartItemAmount {
     background-color: coral;
     font-size: 1.5rem;
@@ -48,7 +37,7 @@
   }
   img {
     width: 300px;
-    height: 300px;
+    min-height: 300px;
     object-fit: contain;
   }
 }
@@ -98,4 +87,62 @@
   &:hover {
     opacity: 1;
   }
+}
+
+.customSelectAll,
+.deleteAll {
+  font-size: 1rem;
+  margin-left: 20px;
+  border-radius: 20px;
+  padding: 15px;
+  background-color: rgb(161, 18, 18);
+  color: aliceblue;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(234, 124, 124);
+  }
+}
+
+.customSelectAll {
+  background-color: blue;
+  &:hover {
+    background-color: rgb(52, 52, 134);
+  }
+}
+
+.selectAll,
+.cartItemCheckbox {
+  display: none;
+}
+
+.customCheckbox {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.customCheckbox::after {
+  content: "\2713"; /* Unicode checkmark symbol */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #5410dc; /* Color of the checkmark */
+  font-size: 30px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.cartItemCheckbox:checked + .customCheckbox::after {
+  opacity: 1;
+}
+
+.cartItemCheckbox:disabled + .customCheckbox {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

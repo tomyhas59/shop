@@ -1,3 +1,4 @@
+import { signOut } from "firebase/auth";
 import { gql } from "graphql-tag";
 
 export type SignUp = {
@@ -23,5 +24,11 @@ export const SIGN_UP = gql`
       email
       nickname
     }
+  }
+`;
+
+export const SIGN_OUT = gql`
+  mutation SIGN_OUT($uid: String!) {
+    signOut
   }
 `;

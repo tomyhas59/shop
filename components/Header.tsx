@@ -1,11 +1,12 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import auth from "@/firebaseConfig";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [user, setUser] = useState<User | null>(null);
-
+  const router = useRouter();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -13,6 +14,16 @@ const Header = () => {
 
     return () => unsubscribe();
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+      router.push("/");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   return (
     <div className="header">
@@ -31,7 +42,14 @@ const Header = () => {
             <li>
               <Link href={"/userInfo"}>내 정보</Link>
             </li>
-            <li>로그아웃</li>
+            {user.displayName === "admin" && (
+              <li>
+                <Link href={"/admin"}>상품 관리</Link>
+              </li>
+            )}
+            <li className="signOut" onClick={handleLogout}>
+              로그아웃
+            </li>
           </>
         ) : null}
       </ul>

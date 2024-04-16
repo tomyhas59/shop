@@ -146,9 +146,15 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
   return (
     <div className="CartListWrapper">
       <form ref={formRef} onChange={handleCheckboxChanged}>
-        <label>
-          <input type="checkbox" className="selectAll" name="selectAll" />
+        <label className="customSelectAll">
+          <input
+            id="allCheckBox"
+            type="checkbox"
+            className="selectAll"
+            name="selectAll"
+          />
           전체 선택
+          <label htmlFor="allCheckBox"></label>
         </label>
         <button className="deleteAll" onClick={handleDeleteAllItem}>
           전체 삭제

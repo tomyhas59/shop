@@ -74,14 +74,18 @@ const CartItem = (
 
   return (
     <li className="cartItem">
-      <input
-        type="checkbox"
-        className="cartItemCheckbox"
-        name="selectItem"
-        ref={ref}
-        data-id={id}
-        disabled={!createdAt}
-      />
+      <div>
+        <input
+          type="checkbox"
+          id={`checkbox-${id}`}
+          className="cartItemCheckbox"
+          name="selectItem"
+          ref={ref}
+          data-id={id}
+          disabled={!createdAt}
+        />
+        <label htmlFor={`checkbox-${id}`} className="customCheckbox"></label>
+      </div>
       <ItemData imageUrl={imageUrl} price={price} title={title} />
       <div className="cartItemAmount">
         수량
