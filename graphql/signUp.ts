@@ -1,4 +1,3 @@
-import { signOut } from "firebase/auth";
 import { gql } from "graphql-tag";
 
 export type SignUp = {
