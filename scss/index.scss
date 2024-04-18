@@ -54,11 +54,17 @@ li {
 }
 
 .footer {
-  background-color: rgb(137, 103, 103);
+  border-top: 1px solid silver;
   width: 100%;
   font-size: 2rem;
   text-align: center;
-  color: #fff;
+  text-decoration: none;
+}
+
+.footerList {
+  color: #333;
+  font-size: 14px;
+  padding: 10px;
 }
 
 .inputField,

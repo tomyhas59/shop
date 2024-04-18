@@ -26,17 +26,25 @@ const CartItem = (
     }
   );
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value > 0) {
+      setNewAmount(value);
+      updateCartAmount({ id, amount: value });
+    }
+  };
+
   const handleIncrementAmount = () => {
     const newAmountValue = newAmount + 1;
-    setNewAmount(newAmountValue); // 증가 버튼 클릭 시 화면에 표시된 수량을 증가시킴
-    updateCartAmount({ id, amount: newAmountValue }); // 서버에 새로운 수량 값을 전달
+    setNewAmount(newAmountValue);
+    updateCartAmount({ id, amount: newAmountValue });
   };
 
   const handleDecreaseAmount = () => {
     if (newAmount > 1) {
       const newAmountValue = newAmount - 1;
-      setNewAmount(newAmountValue); // 감소 버튼 클릭 시 화면에 표시된 수량을 감소시킴
-      updateCartAmount({ id, amount: newAmountValue }); // 서버에 새로운 수량 값을 전달
+      setNewAmount(newAmountValue);
+      updateCartAmount({ id, amount: newAmountValue });
     }
   };
 
@@ -60,13 +68,21 @@ const CartItem = (
       </div>
       <ItemData imageUrl={imageUrl} price={price} title={title} />
       <div className="cartItemAmount">
-        수량 {newAmount}
-        <button type="button" onClick={handleDecreaseAmount}>
-          ▼
-        </button>
-        <button type="button" onClick={handleIncrementAmount}>
-          ▲
-        </button>
+        수량:
+        <input
+          type="number"
+          className="amountInput"
+          value={newAmount}
+          onChange={handleInputChange}
+        />
+        <span className="amountButton">
+          <button type="button" onClick={handleDecreaseAmount}>
+            ▼
+          </button>
+          <button type="button" onClick={handleIncrementAmount}>
+            ▲
+          </button>
+        </span>
       </div>
       <button
         type="button"

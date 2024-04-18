@@ -4,7 +4,7 @@ import { ADD_CART, Cart, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
-import { SyntheticEvent, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 
 const ProductDetail = ({
@@ -23,7 +23,7 @@ const ProductDetail = ({
       graphqlFetcher(ADD_CART, { uid, id })
   );
 
-  const { data } = useQuery<{ cart: Cart[] }>(
+  const { data, refetch } = useQuery<{ cart: Cart[] }>(
     [QueryKeys.CART, uid],
     () => {
       if (uid) return graphqlFetcher<{ cart: Cart[] }>(GET_CART, { uid });
@@ -37,17 +37,24 @@ const ProductDetail = ({
     }
   );
 
-  const cartIds = data?.cart ? data.cart.map((item) => item.product.id) : [];
-  const [isAddedToCart, setIsAddedToCart] = useState(cartIds.includes(id));
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
-  const handleAddToCart = (e: SyntheticEvent) => {
-    if (!isAddedToCart) {
-      if (uid) {
-        addCart({ uid, id });
-        setIsAddedToCart(true);
-      }
+  const cartIds = data?.cart ? data.cart.map((item) => item.product.id) : [];
+  const isAddedToCart = cartIds.includes(id);
+  const [addedCart, setAddedCart] = useState(isAddedToCart);
+
+  const handleAddToCart = () => {
+    if (uid) {
+      addCart({ uid, id });
+      setAddedCart(true);
     }
   };
+
+  useEffect(() => {
+    setAddedCart(isAddedToCart);
+  }, [data, isAddedToCart]);
 
   const formatedPrice = formatPrice(price);
 
@@ -57,13 +64,13 @@ const ProductDetail = ({
   return (
     <div className="productDetailWrapper">
       <div className="productDetail">
-        <p className="createdAt">{date.toLocaleDateString()}</p>
+        {/*     <p className="createdAt">{date.toLocaleDateString()}</p> */}
         <p className="title">{title}</p>
         <img className="image" src={imageUrl} alt={title} />
         <p className="description">{description}</p>
         <span className="price">{formatedPrice}원</span>
         <button className="addCart" onClick={handleAddToCart}>
-          {isAddedToCart ? "담기 완료" : "담기"}
+          {addedCart ? "담기 완료" : "담기"}
         </button>
       </div>
     </div>

@@ -1,12 +1,11 @@
 import { useUser } from "@/context/UserProvider";
-import auth from "@/firebaseConfig";
+
 import { ADD_CART, Cart, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
-import { User, onAuthStateChanged } from "firebase/auth";
 import Link from "next/link";
-import { SyntheticEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 
 const ProductItem = ({ imageUrl, price, title, id }: Product) => {
@@ -20,7 +19,7 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
 
   const formatedPrice = formatPrice(price);
 
-  const { data } = useQuery<{ cart: Cart[] }>(
+  const { data, refetch } = useQuery<{ cart: Cart[] }>(
     [QueryKeys.CART, uid],
     () => {
       if (uid) return graphqlFetcher<{ cart: Cart[] }>(GET_CART, { uid });
@@ -34,23 +33,24 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
     }
   );
 
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   const cartIds = data?.cart ? data.cart.map((item) => item.product.id) : [];
-  const [isAddedToCart, setIsAddedToCart] = useState(cartIds.includes(id));
+  const isAddedToCart = cartIds.includes(id);
+  const [addedCart, setAddedCart] = useState(isAddedToCart);
 
   const handleAddToCart = () => {
-    if (!isAddedToCart) {
-      if (uid) {
-        addCart({ uid, id });
-        setIsAddedToCart(true);
-      }
+    if (uid) {
+      addCart({ uid, id });
+      setAddedCart(true);
     }
   };
 
   useEffect(() => {
-    if (cartIds.includes(id)) {
-      setIsAddedToCart(true);
-    }
-  }, [cartIds, id]);
+    setAddedCart(isAddedToCart);
+  }, [data, isAddedToCart]);
 
   return (
     <li className="productItem">
@@ -65,7 +65,7 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
         onClick={handleAddToCart}
         disabled={isAddedToCart}
       >
-        {isAddedToCart ? "담기 완료" : "담기"}
+        {addedCart ? "담기 완료" : "담기"}
       </button>
     </li>
   );
