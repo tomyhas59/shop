@@ -1,26 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { onAuthStateChanged, User } from "firebase/auth";
-import auth from "@/firebaseConfig";
+import React from "react";
 
+import { useUser } from "@/context/UserProvider";
 
 const UserInfoPage: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
+  const { user } = useUser();
   return (
     <div className="userInfoPage">
       <h1>User Information</h1>
       {user ? (
         <div>
           <p>Email: {user.email}</p>
-          <p>Display Name: {user.displayName}</p>
+          <p>Nickname: {user.displayName}</p>
         </div>
       ) : (
         <p>Loading...</p>

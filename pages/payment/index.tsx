@@ -7,15 +7,19 @@ import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import { graphqlFetcher } from "@/queryClient";
 import { EXECUTE_PAY } from "@/graphql/payment";
+import { useUser } from "@/context/UserProvider";
 
 const Payment = () => {
+  const { user } = useUser();
+  const uid = user?.uid;
   const router = useRouter();
   const [checkedCartData, setCheckedCartData] =
     useRecoilState(checkedCartState);
   const [modalShown, toggleModal] = useState(false);
 
-  const { mutate: executePay } = useMutation((ids: string[]) =>
-    graphqlFetcher(EXECUTE_PAY, { ids })
+  const { mutate: executePay } = useMutation(
+    ({ uid, ids }: { uid: string; ids: string[] }) =>
+      graphqlFetcher(EXECUTE_PAY, { uid, ids })
   );
 
   const showModal = () => {
@@ -24,17 +28,22 @@ const Payment = () => {
   const proceed = () => {
     const ids = checkedCartData.map((item) => item.id);
     console.log(ids);
-    executePay(ids, {
-      onSuccess: () => {
-        setCheckedCartData([]);
-        alert("결제가 완료되었습니다");
-        router.replace("/products");
-      },
-      onError: () => {
-        alert("삭제된 상품이 포함되어 결제를 진행할 수 없습니다");
-        router.replace("/cart");
-      },
-    });
+    if (uid) {
+      executePay(
+        { uid, ids },
+        {
+          onSuccess: () => {
+            setCheckedCartData([]);
+            alert("결제가 완료되었습니다");
+            router.replace("/products");
+          },
+          onError: () => {
+            alert("삭제된 상품이 포함되어 결제를 진행할 수 없습니다");
+            router.replace("/cart");
+          },
+        }
+      );
+    }
   };
   const cancel = () => {
     toggleModal(false);

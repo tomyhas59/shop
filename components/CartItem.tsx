@@ -1,7 +1,7 @@
 import { Cart, DELETE_CART, UPDATE_CART } from "@/graphql/cart";
 import ItemData from "@/pages/cart/ItemData";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
-import { ForwardedRef, SyntheticEvent, forwardRef } from "react";
+import { ForwardedRef, SyntheticEvent, forwardRef, useState } from "react";
 import { useMutation } from "react-query";
 
 const CartItem = (
@@ -10,62 +10,34 @@ const CartItem = (
 ) => {
   const queryClient = getClient();
 
+  const [newAmount, setNewAmount] = useState(amount);
+
   const { mutate: updateCartAmount } = useMutation(
     ({ id, amount }: { id: string; amount: number }) =>
-      graphqlFetcher<any>(UPDATE_CART, { id, amount }),
-    {
-      //서버 요청 전 실행으로 로컬 상태 변경
-      onMutate: async ({ id, amount }) => {
-        await queryClient.cancelQueries(QueryKeys.CART); //모든 이전 요청을 취소
-        const cartData = queryClient.getQueryData<{ cart: Cart[] }>(
-          QueryKeys.CART || []
-        );
-        if (!cartData) return null;
-
-        const prevCart = cartData?.cart;
-        const cartIndex = prevCart?.findIndex(
-          (cartItem: any) => cartItem.id === id
-        );
-        if (cartIndex === undefined || cartIndex < 0) return prevCart;
-
-        const newCart = [...prevCart];
-        newCart.splice(cartIndex, 1, { ...newCart[cartIndex], amount });
-
-        queryClient.setQueryData(QueryKeys.CART, { cart: newCart });
-        return prevCart;
-      },
-      //서버 응답 후 실행
-      onSuccess: ({ updateCart }) => {
-        const cartData = queryClient.getQueryData<{ cart: Cart[] }>(
-          QueryKeys.CART || []
-        );
-
-        const prevCart = cartData?.cart;
-        const cartIndex = prevCart?.findIndex(
-          (cartItem) => cartItem.id === updateCart.id
-        );
-
-        if (!prevCart || cartIndex === undefined || cartIndex < 0) return;
-        const newCart = [...prevCart];
-        newCart.splice(cartIndex, 1, updateCart);
-        queryClient.setQueryData(QueryKeys.CART, { cart: newCart });
-      },
-    }
+      graphqlFetcher<any>(UPDATE_CART, { id, amount })
   );
 
   const { mutate: deleteCart } = useMutation(
     (id: string) => graphqlFetcher(DELETE_CART, { id }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(QueryKeys.CART); //데이터 전체 다시 가져옴
+        queryClient.invalidateQueries(QueryKeys.CART); // 데이터 전체 다시 가져옴
       },
     }
   );
 
-  const handleUpdateAmount = (e: SyntheticEvent) => {
-    const amount = Number((e.target as HTMLInputElement).value);
-    if (amount < 1) return;
-    updateCartAmount({ id, amount });
+  const handleIncrementAmount = () => {
+    const newAmountValue = newAmount + 1;
+    setNewAmount(newAmountValue); // 증가 버튼 클릭 시 화면에 표시된 수량을 증가시킴
+    updateCartAmount({ id, amount: newAmountValue }); // 서버에 새로운 수량 값을 전달
+  };
+
+  const handleDecreaseAmount = () => {
+    if (newAmount > 1) {
+      const newAmountValue = newAmount - 1;
+      setNewAmount(newAmountValue); // 감소 버튼 클릭 시 화면에 표시된 수량을 감소시킴
+      updateCartAmount({ id, amount: newAmountValue }); // 서버에 새로운 수량 값을 전달
+    }
   };
 
   const handledeleteItem = () => {
@@ -88,21 +60,20 @@ const CartItem = (
       </div>
       <ItemData imageUrl={imageUrl} price={price} title={title} />
       <div className="cartItemAmount">
-        수량
-        <input
-          type="number"
-          value={amount}
-          onChange={handleUpdateAmount}
-          disabled={!createdAt}
-          min={1}
-        />
+        수량 {newAmount}
+        <button type="button" onClick={handleDecreaseAmount}>
+          ▼
+        </button>
+        <button type="button" onClick={handleIncrementAmount}>
+          ▲
+        </button>
       </div>
       <button
         type="button"
         className="cartItemDelete"
         onClick={handledeleteItem}
       >
-        삭제
+        X
       </button>
       {!createdAt && <div className="Xmark">삭제된 상품</div>}
     </li>

@@ -1,24 +1,36 @@
+import { useUser } from "@/context/UserProvider";
+import auth from "@/firebaseConfig";
 import { ADD_CART, Cart, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
+import { User, onAuthStateChanged } from "firebase/auth";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 
 const ProductItem = ({ imageUrl, price, title, id }: Product) => {
-  const { mutate: addCart } = useMutation((id: string) =>
-    graphqlFetcher(ADD_CART, { id })
+  const { user } = useUser();
+  const uid = user?.uid;
+
+  const { mutate: addCart } = useMutation(
+    ({ uid, id }: { uid: string; id: string }) =>
+      graphqlFetcher(ADD_CART, { uid, id })
   );
 
   const formatedPrice = formatPrice(price);
 
   const { data } = useQuery<{ cart: Cart[] }>(
-    "cart",
-    () => graphqlFetcher<{ cart: Cart[] }>(GET_CART),
+    [QueryKeys.CART, uid],
+    () => {
+      if (uid) return graphqlFetcher<{ cart: Cart[] }>(GET_CART, { uid });
+      else {
+        return Promise.resolve({ cart: [] });
+      }
+    },
     {
       staleTime: 0,
-      cacheTime: 0,
+      cacheTime: 1000,
     }
   );
 
@@ -27,8 +39,10 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
 
   const handleAddToCart = () => {
     if (!isAddedToCart) {
-      addCart(id);
-      setIsAddedToCart(true);
+      if (uid) {
+        addCart({ uid, id });
+        setIsAddedToCart(true);
+      }
     }
   };
 

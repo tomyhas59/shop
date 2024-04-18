@@ -3,22 +3,15 @@ import React, { useState, useEffect } from "react";
 import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import auth from "@/firebaseConfig";
 import { useRouter } from "next/router";
+import { useUser } from "@/context/UserProvider";
 
 const Header = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const { user } = useUser();
   const router = useRouter();
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setUser(null);
       router.push("/");
     } catch (error) {
       console.error("Error signing out:", error);
@@ -30,17 +23,17 @@ const Header = () => {
       alert("로그인이 필요합니다");
       return;
     }
-    router.push("/cart");
+    router.replace("/cart");
   };
 
   return (
     <div className="header">
       <ul className="headerList">
         <li>
-          <Link href={"/products"}>상품 목록</Link>
+          <Link href={"/"}>메인</Link>
         </li>
         <li>
-          <Link href={"/"}>메인</Link>
+          <Link href={"/products"}>상품 목록</Link>
         </li>
         <li>
           <a onClick={goToCart}>장바구니</a>

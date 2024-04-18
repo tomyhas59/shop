@@ -6,24 +6,7 @@ export const checkedCartState = atom<Cart[]>({
   default: [],
 });
 
-/* export const cartItemSelector = selectorFamily<number | undefined, string>({
-  key: "cartItem",
-  get:
-    (id: string) =>
-    ({ get }) => {
-      const carts = get(cartState);
-      return carts[id];
-    },
-  set:
-    (id: string) =>
-    ({ get, set }, newValue) => {
-      if (typeof newValue === "number") {
-        console.log(newValue);
-        set(cartState, {
-          ...get(cartState),
-          [id]: newValue,
-        });
-      }
-    },
+export const addedCartState = atom({
+  key: "addedCartState",
+  default: [],
 });
- */

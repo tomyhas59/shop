@@ -1,18 +1,37 @@
 import CartList from "@/components/CartList";
+import auth from "@/firebaseConfig";
 import { Cart, GET_CART } from "@/graphql/cart";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
-import React from "react";
+import { User, onAuthStateChanged } from "firebase/auth";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 const CartPage = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const uid = user?.uid;
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const { data } = useQuery<{ cart: Cart[] }>(
-    QueryKeys.CART,
-    () => graphqlFetcher<{ cart: Cart[] }>(GET_CART),
+    [QueryKeys.CART, uid],
+    () => {
+      if (uid) return graphqlFetcher<{ cart: Cart[] }>(GET_CART, { uid });
+      else {
+        return Promise.resolve({ cart: [] });
+      }
+    },
     {
-      staleTime: 0, //데이터가 만료되자마자 새로운 데이터를 가져옮
-      cacheTime: 1000, //1초 뒤 캐시 삭제
+      staleTime: 0,
+      cacheTime: 1000,
     }
   );
+
   const cartItems = (data?.cart || []) as Cart[];
   console.log("카트", cartItems);
   if (!cartItems.length)

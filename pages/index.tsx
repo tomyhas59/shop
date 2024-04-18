@@ -2,12 +2,15 @@ import React, { SyntheticEvent, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../firebaseConfig";
 import { useRouter } from "next/router";
+import { useUser } from "@/context/UserProvider";
 
 const MainPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+
+  const { user } = useUser();
 
   const goToSignUpPage = () => {
     router.replace("/signUp");
@@ -36,32 +39,53 @@ const MainPage = () => {
     }
   };
 
-  return (
-    <div className="mainPage">
-      <h1>MainPage</h1>
-      <form onSubmit={handleSignIn}>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="형식: aa@aa.aa"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="비밀번호 6자 이상"
-          required
-        />
-        <button type="submit">로그인</button>
-        <button type="button" className="signUp" onClick={goToSignUpPage}>
-          회원가입
-        </button>
-      </form>
-      {error && <p className="error">{error}</p>}
-    </div>
-  );
+  const enterSignIn = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      await handleSignIn(e);
+    }
+  };
+
+  if (user) {
+    return (
+      <div className="userPage">
+        <div>UserPage</div>
+      </div>
+    );
+  } else
+    return (
+      <div className="mainPage">
+        <h1>MainPage</h1>
+        <form onSubmit={handleSignIn}>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="형식: aa@aa.aa"
+            required
+            onKeyDown={enterSignIn}
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호 6자 이상"
+            required
+            onKeyDown={enterSignIn}
+          />
+          <button type="submit" className="signInButton">
+            로그인
+          </button>
+          <button
+            type="button"
+            className="signUpButton"
+            onClick={goToSignUpPage}
+          >
+            회원가입
+          </button>
+        </form>
+        {error && <p className="error">{error}</p>}
+      </div>
+    );
 };
 
 export default MainPage;

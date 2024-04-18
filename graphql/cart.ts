@@ -8,8 +8,8 @@ export type Cart = {
 };
 
 export const GET_CART = gql`
-  query GET_CART {
-    cart {
+  query GET_CART($uid: ID!) {
+    cart(uid: $uid) {
       id
       amount
       product {
@@ -25,8 +25,8 @@ export const GET_CART = gql`
 `;
 
 export const ADD_CART = gql`
-  mutation ADD_CART($id: ID!) {
-    addCart(productId: $id) {
+  mutation ADD_CART($uid: ID!, $id: ID!) {
+    addCart(uid: $uid, productId: $id) {
       id
       amount
     }

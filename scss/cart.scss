@@ -10,15 +10,17 @@
 }
 
 .cartItem {
+  position: relative;
   display: flex;
   flex-direction: column;
   border: 1px solid;
-  border-radius: 20px;
+  border-radius: 10px;
   text-align: center;
   width: 300px;
   > .cartItemAmount {
     background-color: coral;
     font-size: 1.5rem;
+    border-radius: 0 0 10px 10px;
     > input {
       background-color: transparent;
       font-size: 1.5rem;
@@ -28,12 +30,18 @@
     }
   }
   > .cartItemDelete {
+    position: absolute;
+    right: 0;
     background-color: rgb(161, 18, 18);
     font-size: 1.5rem;
     border: none;
-    border-radius: 0 0 20px 20px;
+    border-radius: 0 10px 0 0;
     color: aliceblue;
     cursor: pointer;
+    &:hover {
+      background-color: rgb(240, 90, 90);
+      color: black;
+    }
   }
   img {
     width: 300px;

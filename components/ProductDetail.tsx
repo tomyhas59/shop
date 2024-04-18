@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { ADD_CART } from "@/graphql/cart";
+import { useUser } from "@/context/UserProvider";
+import { ADD_CART, Cart, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";
-import { graphqlFetcher } from "@/queryClient";
-import { useMutation } from "react-query";
+import { QueryKeys, graphqlFetcher } from "@/queryClient";
+import { SyntheticEvent, useState } from "react";
+import { useMutation, useQuery } from "react-query";
 
 const ProductDetail = ({
   createdAt,
@@ -13,9 +15,39 @@ const ProductDetail = ({
   title,
   id,
 }: Product) => {
-  const { mutate: addCart } = useMutation((id: string) =>
-    graphqlFetcher(ADD_CART, { id })
+  const { user } = useUser();
+  const uid = user?.uid;
+
+  const { mutate: addCart } = useMutation(
+    ({ uid, id }: { uid: string; id: string }) =>
+      graphqlFetcher(ADD_CART, { uid, id })
   );
+
+  const { data } = useQuery<{ cart: Cart[] }>(
+    [QueryKeys.CART, uid],
+    () => {
+      if (uid) return graphqlFetcher<{ cart: Cart[] }>(GET_CART, { uid });
+      else {
+        return Promise.resolve({ cart: [] });
+      }
+    },
+    {
+      staleTime: 0,
+      cacheTime: 1000,
+    }
+  );
+
+  const cartIds = data?.cart ? data.cart.map((item) => item.product.id) : [];
+  const [isAddedToCart, setIsAddedToCart] = useState(cartIds.includes(id));
+
+  const handleAddToCart = (e: SyntheticEvent) => {
+    if (!isAddedToCart) {
+      if (uid) {
+        addCart({ uid, id });
+        setIsAddedToCart(true);
+      }
+    }
+  };
 
   const formatedPrice = formatPrice(price);
 
@@ -30,8 +62,8 @@ const ProductDetail = ({
         <img className="image" src={imageUrl} alt={title} />
         <p className="description">{description}</p>
         <span className="price">{formatedPrice}원</span>
-        <button className="addCart" onClick={() => addCart(id)}>
-          담기
+        <button className="addCart" onClick={handleAddToCart}>
+          {isAddedToCart ? "담기 완료" : "담기"}
         </button>
       </div>
     </div>
