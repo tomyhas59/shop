@@ -144,7 +144,7 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
   }, [enabledItem]);
 
   return (
-    <div className="CartListWrapper">
+    <div>
       <form ref={formRef} onChange={handleCheckboxChanged}>
         <label className="customSelectAll">
           <input

@@ -47,7 +47,7 @@ data: {
 
   return (
     <div>
-      <div className="productWrapper">
+      <div className="productsPage">
         <div className="productsTitle">상품 목록</div>
         <ProductList list={data?.pages || []} />
         <div ref={fetchMoreRef} />

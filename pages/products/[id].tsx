@@ -16,7 +16,7 @@ const ProductDetailPage = () => {
   if (!data) return null;
 
   return (
-    <div>
+    <div className="productDetailPage">
       <ProductDetail {...data.product} />
     </div>
   );

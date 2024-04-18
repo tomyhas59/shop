@@ -12,10 +12,6 @@ const MainPage = () => {
 
   const { user } = useUser();
 
-  const goToSignUpPage = () => {
-    router.replace("/signUp");
-  };
-
   const handleSignIn = async (e: SyntheticEvent) => {
     e.preventDefault();
 
@@ -74,13 +70,6 @@ const MainPage = () => {
           />
           <button type="submit" className="signInButton">
             로그인
-          </button>
-          <button
-            type="button"
-            className="signUpButton"
-            onClick={goToSignUpPage}
-          >
-            회원가입
           </button>
         </form>
         {error && <p className="error">{error}</p>}

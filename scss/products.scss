@@ -3,10 +3,6 @@ body {
   padding: 0;
 }
 
-.productWrapper,
-.productDetailWrapper {
-  padding: 150px;
-}
 .productsTitle {
   line-height: 100px;
   text-align: center;
@@ -115,11 +111,10 @@ body {
 .productDetail {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 50px;
   text-align: center;
+  align-items: center;
   grid-template-areas:
     "a a"
-    "b c"
     "b c"
     "d e";
   > .createdAt {
@@ -145,15 +140,11 @@ body {
     grid-area: a;
   }
   > .price {
-    font-size: 1.5rem;
-    padding: 5px;
-    height: 50px;
+    font-size: 3rem;
     text-align: center;
-    background-color: #278b6d;
-    border-radius: 20px;
-    border: 2px solid #ebe1e1;
-    line-height: 50px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: yellow;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+      1px 1px 0 #000;
     grid-area: d;
   }
   > .description {

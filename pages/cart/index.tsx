@@ -38,7 +38,7 @@ const CartPage = () => {
     return <div className="emptyCart">장바구니가 비었습니다</div>;
 
   return (
-    <div>
+    <div className="cartPage">
       <CartList cartItems={cartItems} />
     </div>
   );

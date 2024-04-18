@@ -62,7 +62,7 @@ const ProductDetail = ({
   const date = new Date(timestamp); // Date 객체로 변환
 
   return (
-    <div className="productDetailWrapper">
+    <div>
       <div className="productDetail">
         {/*     <p className="createdAt">{date.toLocaleDateString()}</p> */}
         <p className="title">{title}</p>

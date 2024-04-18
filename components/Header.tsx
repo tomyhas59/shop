@@ -26,12 +26,24 @@ const Header = () => {
     router.replace("/cart");
   };
 
+  const goToSignUpPage = () => {
+    router.replace("/signUp");
+  };
+
   return (
     <div className="header">
-      <ul className="headerList">
-        <li>
-          <Link href={"/"}>메인</Link>
+      <Link href={"/"} className="mainLogo">
+        메인 로고
+      </Link>
+      <ul className="headerSign">
+        <Link className="signInButton" href={"/"}>
+          로그인
+        </Link>
+        <li className="signUpButton" onClick={goToSignUpPage}>
+          회원가입
         </li>
+      </ul>
+      <ul className="headerList">
         <li>
           <Link href={"/products"}>상품 목록</Link>
         </li>

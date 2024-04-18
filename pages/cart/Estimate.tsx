@@ -8,7 +8,7 @@ const Estimate = () => {
   const checkedItems = useRecoilValue(checkedCartState);
 
   return (
-    <ul className="estimate">
+    <ul className="estimatePage">
       {checkedItems.map(
         ({ amount, product: { imageUrl, title, price }, id }) => {
           const formattedPrice = formatPrice(price * amount);

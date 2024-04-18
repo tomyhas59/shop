@@ -55,7 +55,7 @@ data: {
 
   return (
     <div>
-      <div className="productWrapper">
+      <div className="adminPage">
         <AddForm />
         <div className="productsTitle">어드민</div>
         <AdminList

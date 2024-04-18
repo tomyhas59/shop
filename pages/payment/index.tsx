@@ -49,7 +49,7 @@ const Payment = () => {
     toggleModal(false);
   };
   return (
-    <div className="paymentWrapper">
+    <div className="paymentPage">
       <Estimate />
       <button onClick={showModal}>결제하기</button>
       <PaymentModal show={modalShown} cancel={cancel} proceed={proceed} />
