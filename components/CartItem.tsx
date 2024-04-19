@@ -1,8 +1,10 @@
 import { Cart, DELETE_CART, UPDATE_CART } from "@/graphql/cart";
 import ItemData from "@/pages/cart/ItemData";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
+import { checkedCartState } from "@/recolis/cart";
 import { ForwardedRef, SyntheticEvent, forwardRef, useState } from "react";
 import { useMutation } from "react-query";
+import { useRecoilState } from "recoil";
 
 const CartItem = (
   { id, product: { title, imageUrl, price, createdAt }, amount }: Cart,
@@ -26,6 +28,8 @@ const CartItem = (
     }
   );
 
+  const [checkedItems, setCheckedItems] = useRecoilState(checkedCartState);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     if (!isNaN(value) && value > 0) {
@@ -38,6 +42,11 @@ const CartItem = (
     const newAmountValue = newAmount + 1;
     setNewAmount(newAmountValue);
     updateCartAmount({ id, amount: newAmountValue });
+
+    const updatedItems = checkedItems.map((item) =>
+      item.id === id ? { ...item, amount: newAmountValue } : item
+    );
+    setCheckedItems(updatedItems);
   };
 
   const handleDecreaseAmount = () => {
@@ -45,6 +54,20 @@ const CartItem = (
       const newAmountValue = newAmount - 1;
       setNewAmount(newAmountValue);
       updateCartAmount({ id, amount: newAmountValue });
+
+      const updatedItems = checkedItems.map((item) =>
+        item.id === id ? { ...item, amount: newAmountValue } : item
+      );
+      setCheckedItems(updatedItems);
+    }
+  };
+
+  const handleChangeAmount = () => {
+    if (newAmount > 1) {
+      const updatedItems = checkedItems.map((item) =>
+        item.id === id ? { ...item, amount: newAmount } : item
+      );
+      setCheckedItems(updatedItems);
     }
   };
 
@@ -75,6 +98,13 @@ const CartItem = (
           value={newAmount}
           onChange={handleInputChange}
         />
+        <button
+          type="button"
+          className="changeAmount"
+          onClick={handleChangeAmount}
+        >
+          변경
+        </button>
         <span className="amountButton">
           <button type="button" onClick={handleDecreaseAmount}>
             ▼

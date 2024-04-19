@@ -25,13 +25,8 @@ const MainPage = () => {
       console.log(user);
       router.replace("/products");
     } catch (error: any) {
-      if (error.code === "auth/user-not-found") {
-        setError("가입되지 않은 이메일입니다.");
-      } else if (error.code === "auth/wrong-password") {
-        setError("잘못된 비밀번호입니다.");
-      } else {
-        setError("로그인에 실패했습니다.");
-      }
+      console.log(error);
+      setError("아이디 또는 비밀번호가 다릅니다");
     }
   };
 
@@ -68,7 +63,7 @@ const MainPage = () => {
             required
             onKeyDown={enterSignIn}
           />
-          <button type="submit" className="signInButton">
+          <button type="submit" className="signButton">
             로그인
           </button>
         </form>

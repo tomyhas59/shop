@@ -87,7 +87,7 @@ const SignUpPage = () => {
             required
           />
         </label>
-        <button className="signUpButton" type="submit">
+        <button className="signButton" type="submit">
           확인
         </button>
       </form>

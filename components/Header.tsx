@@ -36,12 +36,25 @@ const Header = () => {
         메인 로고
       </Link>
       <ul className="headerSign">
-        <Link className="signInButton" href={"/"}>
-          로그인
-        </Link>
-        <li className="signUpButton" onClick={goToSignUpPage}>
-          회원가입
-        </li>
+        {user ? (
+          <>
+            <li className="signButton" onClick={handleLogout}>
+              로그아웃
+            </li>
+            <Link className="signButton" href={"/userInfo"}>
+              내 정보
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link className="signButton" href={"/"}>
+              로그인
+            </Link>
+            <li className="signButton" onClick={goToSignUpPage}>
+              회원가입
+            </li>
+          </>
+        )}
       </ul>
       <ul className="headerList">
         <li>
@@ -52,17 +65,11 @@ const Header = () => {
         </li>
         {user ? (
           <>
-            <li>
-              <Link href={"/userInfo"}>내 정보</Link>
-            </li>
             {user.displayName === "admin" && (
               <li>
                 <Link href={"/admin"}>상품 관리</Link>
               </li>
             )}
-            <li className="signOut" onClick={handleLogout}>
-              로그아웃
-            </li>
           </>
         ) : null}
       </ul>
