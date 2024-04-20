@@ -38,8 +38,8 @@ const MainPage = () => {
 
   if (user) {
     return (
-      <div className="userPage">
-        <div>UserPage</div>
+      <div className="mainPage">
+        <div>MainPage</div>
       </div>
     );
   } else

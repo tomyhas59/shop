@@ -19,12 +19,10 @@ import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
   const router = useRouter();
   const queryClient = getClient();
-  const [checkedCartData, setCheckedCartData] =
-    useRecoilState(checkedCartState);
+  const [checkedItems, setCheckedCartData] = useRecoilState(checkedCartState);
   const formRef = useRef<HTMLFormElement>(null);
   const checkboxRefs = cartItems.map(() => createRef<HTMLInputElement>());
   const [formData, setFormData] = useState<FormData>();
-  const checkedItems = useRecoilValue(checkedCartState);
 
   const handleSubmit = () => {
     if (checkedItems.length < 1) {
@@ -112,7 +110,7 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
 
   //recoil checked 업데이트
   useEffect(() => {
-    checkedCartData.forEach((item) => {
+    checkedItems.forEach((item) => {
       const itemRef = checkboxRefs.find(
         (ref) => ref.current!.dataset.id === item.id
       );

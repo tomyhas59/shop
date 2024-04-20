@@ -12,7 +12,6 @@ const Estimate = () => {
       {checkedItems.map(
         ({ amount, product: { imageUrl, title, price }, id }) => {
           const formattedPrice = formatPrice(price * amount);
-
           return (
             <li className="estimateData" key={id}>
               <ItemData imageUrl={imageUrl} title={title} price={price} />

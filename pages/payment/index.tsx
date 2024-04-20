@@ -13,8 +13,7 @@ const Payment = () => {
   const { user } = useUser();
   const uid = user?.uid;
   const router = useRouter();
-  const [checkedCartData, setCheckedCartData] =
-    useRecoilState(checkedCartState);
+  const [checkedItems, setCheckedCartData] = useRecoilState(checkedCartState);
   const [modalShown, toggleModal] = useState(false);
 
   const { mutate: executePay } = useMutation(
@@ -26,7 +25,7 @@ const Payment = () => {
     toggleModal(true);
   };
   const proceed = () => {
-    const ids = checkedCartData.map((item) => item.id);
+    const ids = checkedItems.map((item) => item.id);
     console.log(ids);
     if (uid) {
       executePay(

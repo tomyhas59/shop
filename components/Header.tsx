@@ -1,9 +1,11 @@
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
-import { onAuthStateChanged, signOut, User } from "firebase/auth";
+import React from "react";
+import { signOut } from "firebase/auth";
 import auth from "@/firebaseConfig";
 import { useRouter } from "next/router";
 import { useUser } from "@/context/UserProvider";
+import mainLogo from "@/public/logo.png";
+import Image from "next/image";
 
 const Header = () => {
   const { user } = useUser();
@@ -32,8 +34,8 @@ const Header = () => {
 
   return (
     <div className="header">
-      <Link href={"/"} className="mainLogo">
-        메인 로고
+      <Link href={"/"}>
+        <Image className="logoImg" src={mainLogo} alt="mainLogo" />
       </Link>
       <ul className="headerSign">
         {user ? (

@@ -2,7 +2,7 @@ import { Cart, DELETE_CART, UPDATE_CART } from "@/graphql/cart";
 import ItemData from "@/pages/cart/ItemData";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 import { checkedCartState } from "@/recolis/cart";
-import { ForwardedRef, SyntheticEvent, forwardRef, useState } from "react";
+import { ForwardedRef, forwardRef, useState } from "react";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 
@@ -13,7 +13,6 @@ const CartItem = (
   const queryClient = getClient();
 
   const [newAmount, setNewAmount] = useState(amount);
-
   const { mutate: updateCartAmount } = useMutation(
     ({ id, amount }: { id: string; amount: number }) =>
       graphqlFetcher<any>(UPDATE_CART, { id, amount })
@@ -37,7 +36,6 @@ const CartItem = (
       updateCartAmount({ id, amount: value });
     }
   };
-
   const handleIncrementAmount = () => {
     const newAmountValue = newAmount + 1;
     setNewAmount(newAmountValue);
