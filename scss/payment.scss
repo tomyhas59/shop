@@ -66,5 +66,8 @@
     &:hover {
       opacity: 1;
     }
+    > span {
+      color: red;
+    }
   }
 }

@@ -7,7 +7,14 @@ import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 
 const CartItem = (
-  { id, product: { title, imageUrl, price, createdAt }, amount }: Cart,
+  {
+    id,
+    product: { title, imageUrl, price, createdAt },
+    amount,
+    onCheckboxChange,
+  }: Cart & {
+    onCheckboxChange: (itemId: string, isChecked: boolean) => void;
+  },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
   const queryClient = getClient();
@@ -73,6 +80,11 @@ const CartItem = (
     deleteCart(id);
   };
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isChecked = e.target.checked;
+    onCheckboxChange(id, isChecked);
+  };
+
   return (
     <li className="cartItem">
       <div>
@@ -84,6 +96,7 @@ const CartItem = (
           ref={ref}
           data-id={id}
           disabled={!createdAt}
+          onChange={handleCheckboxChange}
         />
         <label htmlFor={`checkbox-${id}`} className="customCheckbox"></label>
       </div>

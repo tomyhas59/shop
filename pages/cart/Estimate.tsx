@@ -4,11 +4,14 @@ import React from "react";
 import ItemData from "./ItemData";
 import { formatPrice } from "../products";
 
-const Estimate = () => {
-  const checkedItems = useRecoilValue(checkedCartState);
+interface EstimateProps {
+  style?: React.CSSProperties; // 스타일 prop을 선택적으로 받음
+}
 
+const Estimate: React.FC<EstimateProps> = ({ style }) => {
+  const checkedItems = useRecoilValue(checkedCartState);
   return (
-    <ul className="estimatePage">
+    <ul className="estimate" style={style}>
       {checkedItems.map(
         ({ amount, product: { imageUrl, title, price }, id }) => {
           const formattedPrice = formatPrice(price * amount);

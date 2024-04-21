@@ -190,13 +190,14 @@ body {
   resize: vertical; /* 수직 리사이즈 허용 */
 }
 
-.submitButton {
+.submitButton,
+.cancelButton {
   background-color: #4caf50;
   color: white;
   padding: 10px 20px;
-  margin: 10px 0;
   border: none;
   border-radius: 4px;
+  margin: 1px;
   cursor: pointer;
 }
 

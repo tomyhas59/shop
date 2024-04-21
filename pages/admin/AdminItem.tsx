@@ -131,7 +131,7 @@ const AdminItem = ({
         </button>
         <button
           type="button"
-          className="cencelButton"
+          className="cancelButton"
           onClick={() => doneEdit()}
         >
           취소

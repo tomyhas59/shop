@@ -8,6 +8,7 @@ import { useQuery } from "react-query";
 
 const CartPage = () => {
   const [user, setUser] = useState<User | null>(null);
+  const [cartItems, setCartItems] = useState<Cart[]>([]);
   const uid = user?.uid;
 
   useEffect(() => {
@@ -18,13 +19,11 @@ const CartPage = () => {
     return () => unsubscribe();
   }, []);
 
-  const { data } = useQuery<{ cart: Cart[] }>(
+  const { data, refetch } = useQuery<{ cart: Cart[] }>(
     [QueryKeys.CART, uid],
     () => {
       if (uid) return graphqlFetcher<{ cart: Cart[] }>(GET_CART, { uid });
-      else {
-        return Promise.resolve({ cart: [] });
-      }
+      else return Promise.resolve({ cart: [] });
     },
     {
       staleTime: 0,
@@ -32,14 +31,25 @@ const CartPage = () => {
     }
   );
 
-  const cartItems = (data?.cart || []) as Cart[];
-  console.log("카트", cartItems);
+  useEffect(() => {
+    if (data) setCartItems(data.cart);
+  }, [data]);
+
+  const handleCheckboxChange = async (itemId: string, isChecked: boolean) => {
+    // 체크박스가 변경될 때마다 데이터를 다시 불러오기
+    await refetch();
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === itemId ? { ...item, checked: isChecked } : item
+    );
+    setCartItems(updatedCartItems);
+  };
+
   if (!cartItems.length)
     return <div className="emptyCart">장바구니가 비었습니다</div>;
 
   return (
     <div className="cartPage">
-      <CartList cartItems={cartItems} />
+      <CartList cartItems={cartItems} onCheckboxChange={handleCheckboxChange} />
     </div>
   );
 };

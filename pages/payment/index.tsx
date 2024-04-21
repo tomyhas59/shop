@@ -8,6 +8,7 @@ import { useMutation } from "react-query";
 import { graphqlFetcher } from "@/queryClient";
 import { EXECUTE_PAY } from "@/graphql/payment";
 import { useUser } from "@/context/UserProvider";
+import { formatPrice } from "../products";
 
 const Payment = () => {
   const { user } = useUser();
@@ -44,13 +45,27 @@ const Payment = () => {
       );
     }
   };
+
   const cancel = () => {
     toggleModal(false);
   };
+
+  const totalPrice = checkedItems.reduce(
+    (res, { product: { price }, amount }) => {
+      res += price * amount;
+      return res;
+    },
+    0
+  );
+  const formattedTotalPrice = formatPrice(totalPrice);
+
   return (
     <div className="paymentPage">
       <Estimate />
-      <button onClick={showModal}>결제하기</button>
+      <button onClick={showModal}>
+        총 금액 :<span>{formattedTotalPrice}원</span> <br></br>
+        결제하기
+      </button>
       <PaymentModal show={modalShown} cancel={cancel} proceed={proceed} />
     </div>
   );

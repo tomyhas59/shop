@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
   useCallback,
+  CSSProperties,
 } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { checkedCartState } from "@/recolis/cart";
@@ -16,7 +17,13 @@ import { formatPrice } from "@/pages/products";
 import { useMutation } from "react-query";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 
-const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
+const CartList = ({
+  cartItems,
+  onCheckboxChange,
+}: {
+  cartItems: Cart[];
+  onCheckboxChange: (itemId: string, isChecked: boolean) => void;
+}) => {
   const router = useRouter();
   const queryClient = getClient();
   const [checkedItems, setCheckedCartData] = useRecoilState(checkedCartState);
@@ -141,6 +148,14 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
     }
   }, [enabledItem]);
 
+  const style: CSSProperties = {
+    position: "fixed",
+    display: "flex",
+    flexDirection: "column",
+    top: "20%",
+    left: "0",
+  };
+
   return (
     <div>
       <form ref={formRef} onChange={handleCheckboxChanged}>
@@ -159,11 +174,16 @@ const CartList = ({ cartItems }: { cartItems: Cart[] }) => {
         </button>
         <div className="cartList">
           {cartItems.map((cartItem, i) => (
-            <CartItem {...cartItem} key={cartItem.id} ref={checkboxRefs[i]} />
+            <CartItem
+              {...cartItem}
+              key={cartItem.id}
+              ref={checkboxRefs[i]}
+              onCheckboxChange={onCheckboxChange}
+            />
           ))}
         </div>
       </form>
-      <Estimate />
+      <Estimate style={style} />
       <div className="buyWrapper">
         <p>총예상결제액</p>
         <p className="totalEstimate">{formattedTotalPrice}원</p>
