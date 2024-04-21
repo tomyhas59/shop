@@ -54,9 +54,21 @@
   font-weight: bold;
 }
 
+.newBox {
+  width: 200px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  top: 20%;
+  left: 0;
+  overflow-y: auto;
+  max-height: calc(100% - 20%);
+}
+
 .estimate {
   display: flex;
   flex-wrap: wrap;
+  overflow-y: auto;
 
   .estimateData {
     border: 1px solid;
@@ -140,12 +152,12 @@
 }
 
 .customCheckbox::after {
-  content: "\2713"; /* Unicode checkmark symbol */
+  content: "\2713";
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #5410dc; /* Color of the checkmark */
+  color: #5410dc;
   font-size: 30px;
   opacity: 0;
   transition: opacity 0.3s;
@@ -167,13 +179,13 @@
   button {
     border-color: transparent;
     background-color: transparent;
-    color: #333; /* 버튼 텍스트 색상 */
-    font-size: 25px; /* 버튼 글꼴 크기 */
-    padding: 5px 10px; /* 버튼 내부 여백 */
-    cursor: pointer; /* 마우스 호버 시 커서 스타일 */
-    outline: none; /* 포커스 시 아웃라인 제거 */
+    color: #333;
+    font-size: 25px;
+    padding: 5px 10px;
+    cursor: pointer;
+    outline: none;
     &:hover {
-      color: #ddd; /* 호버 시 배경색 변경 */
+      color: #ddd;
     }
   }
 

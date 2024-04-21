@@ -3,7 +3,7 @@
 @import "payment";
 @import "signUp";
 
-.mainPage,
+.signInPage,
 .emptyCart,
 .paymentPage,
 .adminPage,
@@ -12,8 +12,10 @@
 .userPage,
 .productsPage,
 .productDetailPage,
-.cartPage {
+.cartPage,
+.mainPage {
   padding: 300px;
+  text-align: center;
 }
 
 .mainPage {
@@ -94,12 +96,14 @@ li {
 
 .inputField,
 .textareaField {
-  width: 100%;
+  width: 300px;
   padding: 8px;
   margin-bottom: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  margin: 0 auto;
+  resize: vertical;
 }
 
 @media screen and (max-width: 1024px) {
@@ -112,4 +116,38 @@ li {
   .footer {
     font-size: 1.5rem;
   }
+}
+
+.bannerImg {
+  max-width: 100%;
+  border-radius: 10px;
+  height: 500px;
+  display: block;
+  margin: 0 auto;
+}
+
+.bannerTitle {
+  font-weight: bold;
+  font-size: 50px;
+  color: #ff5733;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.bannerProductTitle {
+  font-weight: bold;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: black !important;
+}
+
+.slick-prev {
+  left: 10px;
+  z-index: 1;
+}
+
+.slick-next {
+  right: 10px;
+  z-index: 1;
 }

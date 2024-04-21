@@ -11,6 +11,7 @@ export type Product = {
 
 export type Products = {
   products: Product[];
+  allProducts: Product[];
 };
 
 export type MutableProduct = Omit<Product, "id" | "createdAt">;
@@ -31,6 +32,19 @@ export const GET_PRODUCT = gql`
 const GET_PRODUCTS = gql`
   query GET_PRODUCTS($cursor: ID!, $showDeleted: Boolean) {
     products(cursor: $cursor, showDeleted: $showDeleted) {
+      id
+      imageUrl
+      price
+      title
+      description
+      createdAt
+    }
+  }
+`;
+
+export const GET_ALLPRODUCTS = gql`
+  query GET_ALLPRODUCTS {
+    allProducts {
       id
       imageUrl
       price

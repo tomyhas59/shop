@@ -49,7 +49,7 @@ const Header = () => {
           </>
         ) : (
           <>
-            <Link className="signButton" href={"/"}>
+            <Link className="signButton" href={"/signIn"}>
               로그인
             </Link>
             <li className="signButton" onClick={goToSignUpPage}>

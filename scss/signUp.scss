@@ -1,11 +1,3 @@
-.inputField {
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
 .signButton {
   background-color: rgb(137, 103, 103);
   text-decoration: none;
@@ -19,26 +11,26 @@
   }
 }
 
-.mainPage h1 {
+.signInPage h1 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.mainPage form {
+.signInPage form {
   width: 500px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
 }
 
-.mainPage input {
+.signInPage input {
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-.mainPage .error {
+.signInPage .error {
   color: red;
   width: 500px;
   margin: 0 auto;
@@ -49,4 +41,12 @@
   &:hover {
     color: #fff;
   }
+}
+
+.inputForm {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  gap: 10px;
+  margin: 0 auto;
 }

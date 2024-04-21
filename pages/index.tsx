@@ -1,75 +1,56 @@
-import React, { SyntheticEvent, useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import auth from "../firebaseConfig";
-import { useRouter } from "next/router";
-import { useUser } from "@/context/UserProvider";
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useQuery } from "react-query";
+import { GET_ALLPRODUCTS, Product, Products } from "@/graphql/products";
+import { QueryKeys, graphqlFetcher } from "@/queryClient";
 
-const MainPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const router = useRouter();
-
-  const { user } = useUser();
-
-  const handleSignIn = async (e: SyntheticEvent) => {
-    e.preventDefault();
-
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      console.log(user);
-      router.replace("/products");
-    } catch (error: any) {
-      console.log(error);
-      setError("아이디 또는 비밀번호가 다릅니다");
-    }
+const MainPage: React.FC = () => {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 3000,
   };
 
-  const enterSignIn = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      await handleSignIn(e);
-    }
-  };
+  const { data } = useQuery<Products>(QueryKeys.PRODUCTS, () =>
+    graphqlFetcher<Products>(GET_ALLPRODUCTS)
+  );
 
-  if (user) {
-    return (
-      <div className="mainPage">
-        <div>MainPage</div>
-      </div>
-    );
-  } else
-    return (
-      <div className="mainPage">
-        <h1>MainPage</h1>
-        <form onSubmit={handleSignIn}>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="형식: aa@aa.aa"
-            required
-            onKeyDown={enterSignIn}
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="비밀번호 6자 이상"
-            required
-            onKeyDown={enterSignIn}
-          />
-          <button type="submit" className="signButton">
-            로그인
-          </button>
-        </form>
-        {error && <p className="error">{error}</p>}
-      </div>
-    );
+  const [randomProducts, setRandomProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    if (data && data.allProducts) {
+      const shuffledProducts = data.allProducts.sort(() => 0.5 - Math.random());
+      const selectedProducts = shuffledProducts.slice(0, 3);
+      setRandomProducts(selectedProducts);
+    }
+  }, [data]);
+
+  return (
+    <div className="mainPage">
+      <h1 className="bannerTitle">오늘의 추천 상품!</h1>
+      <Slider {...settings}>
+        {randomProducts.map(
+          (product) =>
+            product.createdAt && (
+              <div key={product.id}>
+                <img
+                  src={product.imageUrl}
+                  alt={product.title}
+                  className="bannerImg"
+                />
+                <div className="bannerProductTitle">{product.title}</div>
+              </div>
+            )
+        )}
+      </Slider>
+    </div>
+  );
 };
 
 export default MainPage;

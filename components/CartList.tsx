@@ -148,14 +148,6 @@ const CartList = ({
     }
   }, [enabledItem]);
 
-  const style: CSSProperties = {
-    position: "fixed",
-    display: "flex",
-    flexDirection: "column",
-    top: "20%",
-    left: "0",
-  };
-
   return (
     <div>
       <form ref={formRef} onChange={handleCheckboxChanged}>
@@ -183,7 +175,9 @@ const CartList = ({
           ))}
         </div>
       </form>
-      <Estimate style={style} />
+      <div className="newBox">
+        <Estimate />
+      </div>
       <div className="buyWrapper">
         <p>총예상결제액</p>
         <p className="totalEstimate">{formattedTotalPrice}원</p>

@@ -173,23 +173,6 @@ body {
   top: 30%;
 }
 
-.inputField {
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.textareaField {
-  padding: 8px;
-  margin: 5px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  resize: vertical; /* 수직 리사이즈 허용 */
-}
-
 .submitButton,
 .cancelButton {
   background-color: #4caf50;

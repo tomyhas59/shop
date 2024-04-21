@@ -43,7 +43,7 @@ const AddForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="inputForm">
       <label>
         상품명:
         <input
