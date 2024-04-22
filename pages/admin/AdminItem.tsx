@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { ADD_CART } from "@/graphql/cart";
 import {
   DELETE_PRODUCT,
@@ -9,6 +8,7 @@ import {
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 import arrToObj from "@/util/arrToObj";
+import Image from "next/image";
 import Link from "next/link";
 import { SyntheticEvent } from "react";
 import { useMutation } from "react-query";
@@ -146,7 +146,7 @@ const AdminItem = ({
       <button className="updateButton" onClick={startEdit}>
         수정
       </button>
-      <img className="image" src={imageUrl} alt={title} />
+      <Image className="image" src={imageUrl} alt={title} />
       <p className="title">{title}</p>
       <Link className="link" href={`/products/${id}`}>
         상세 보기

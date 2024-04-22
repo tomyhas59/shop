@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useQuery } from "react-query";
 import { GET_ALLPRODUCTS, Product, Products } from "@/graphql/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
+import Image from "next/image";
 
 const MainPage: React.FC = () => {
   const settings = {
@@ -39,7 +40,7 @@ const MainPage: React.FC = () => {
           (product) =>
             product.createdAt && (
               <div key={product.id}>
-                <img
+                <Image
                   src={product.imageUrl}
                   alt={product.title}
                   className="bannerImg"

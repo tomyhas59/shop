@@ -59,5 +59,5 @@ data: {
 export default ProductListPage;
 
 export const formatPrice = (price: number) => {
-  return price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  if (price) return price.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };

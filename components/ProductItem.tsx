@@ -4,6 +4,7 @@ import { ADD_CART, Cart, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
@@ -54,7 +55,7 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
 
   return (
     <li className="productItem">
-      <img className="image" src={imageUrl} alt={title} />
+      <Image className="image" src={imageUrl} alt={title} />
       <p className="title">{title}</p>
       <Link className="link" href={`/products/${id}`}>
         상세 보기

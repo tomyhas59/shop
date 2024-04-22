@@ -15,21 +15,22 @@ const AdminList = ({
   doneEdit: () => void;
   startEdit: (index: number) => () => void;
 }) => {
-  return (
-    <ul className="productList">
-      {list.map((page) =>
-        page.products.map((product, i) => (
-          <AdminItem
-            {...product}
-            key={product.id}
-            isEditing={editingIndex === i}
-            startEdit={startEdit(i)}
-            doneEdit={doneEdit}
-          />
-        ))
-      )}
-    </ul>
-  );
+  if (list)
+    return (
+      <ul className="productList">
+        {list.map((page) =>
+          page.products.map((product, i) => (
+            <AdminItem
+              {...product}
+              key={product.id}
+              isEditing={editingIndex === i}
+              startEdit={startEdit(i)}
+              doneEdit={doneEdit}
+            />
+          ))
+        )}
+      </ul>
+    );
 };
 
 export default AdminList;
