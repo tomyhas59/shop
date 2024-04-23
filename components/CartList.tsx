@@ -151,19 +151,21 @@ const CartList = ({
   return (
     <div>
       <form ref={formRef} onChange={handleCheckboxChanged}>
-        <label className="customSelectAll">
-          <input
-            id="allCheckBox"
-            type="checkbox"
-            className="selectAll"
-            name="selectAll"
-          />
-          전체 선택
-          <label htmlFor="allCheckBox"></label>
-        </label>
-        <button className="deleteAll" onClick={handleDeleteAllItem}>
-          전체 삭제
-        </button>
+        <div className="allButton">
+          <label className="customSelectAll">
+            <input
+              id="allCheckBox"
+              type="checkbox"
+              className="selectAll"
+              name="selectAll"
+            />
+            전체 선택
+            <label htmlFor="allCheckBox"></label>
+          </label>
+          <button className="deleteAll" onClick={handleDeleteAllItem}>
+            전체 삭제
+          </button>
+        </div>
         <div className="cartList">
           {cartItems.map((cartItem, i) => (
             <CartItem

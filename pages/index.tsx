@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -5,7 +6,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { useQuery } from "react-query";
 import { GET_ALLPRODUCTS, Product, Products } from "@/graphql/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
-import Image from "next/image";
 
 const MainPage: React.FC = () => {
   const settings = {

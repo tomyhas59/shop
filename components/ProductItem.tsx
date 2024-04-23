@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useUser } from "@/context/UserProvider";
 import { ADD_CART, Cart, DELETE_CART, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
