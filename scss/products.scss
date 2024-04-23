@@ -22,7 +22,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 50%);
   place-items: center;
-  border: 1px solid gray;
+  border: 1px solid silver;
   border-radius: 20px;
   text-decoration: none;
   color: #278b6d;
@@ -33,7 +33,7 @@ body {
 
   > .title {
     grid-area: b;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     background-color: #f2f2f2;
     padding: 10px;
@@ -49,38 +49,27 @@ body {
     grid-area: a;
   }
   > .addCart {
-    font-size: 1.2rem;
-    font-weight: bold;
-    width: 7rem;
-    height: 50px;
-    background-color: #ffcc00;
-    color: rgb(14, 13, 13);
-    border-radius: 20px;
-    border: 2px solid black;
-    line-height: 50px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    grid-area: f;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    grid-area: g;
+    > .cartImg {
+      width: 50px;
+      height: 50px;
+    }
   }
 
   > .price {
-    -webkit-text-stroke: 1px black;
     font-size: 1.5rem;
     font-weight: bold;
     text-align: center;
-    color: rgb(228, 228, 45);
+    color: black;
   }
-  > .addCart {
-    cursor: pointer;
-    grid-area: g;
-    background-color: #4dd5ac;
-    &:hover {
-      background-color: #278b6d;
-    }
-  }
+
   > .link {
     border-radius: 10px;
     padding: 10px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     grid-area: d;
     color: #f3eeee;

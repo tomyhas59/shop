@@ -6,7 +6,7 @@
   display: flex;
   flex-wrap: wrap;
   padding: 20px;
-  gap: 20px;
+  gap: 10px;
 }
 
 .cartItem {
@@ -16,10 +16,10 @@
   border: 1px solid;
   border-radius: 10px;
   text-align: center;
-  width: 300px;
+  width: 200px;
   img {
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
   }
   > .cartItemAmount {
     background-color: coral;

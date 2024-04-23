@@ -40,7 +40,7 @@ const MainPage: React.FC = () => {
           (product) =>
             product.createdAt && (
               <div key={product.id}>
-                <Image
+                <img
                   src={product.imageUrl}
                   alt={product.title}
                   className="bannerImg"

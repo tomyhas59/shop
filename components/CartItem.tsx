@@ -20,6 +20,7 @@ const CartItem = (
   const queryClient = getClient();
 
   const [newAmount, setNewAmount] = useState(amount);
+
   const { mutate: updateCartAmount } = useMutation(
     ({ id, amount }: { id: string; amount: number }) =>
       graphqlFetcher<any>(UPDATE_CART, { id, amount })
@@ -76,7 +77,7 @@ const CartItem = (
     }
   };
 
-  const handledeleteItem = () => {
+  const handledeleteCart = () => {
     deleteCart(id);
   };
 
@@ -128,7 +129,7 @@ const CartItem = (
       <button
         type="button"
         className="cartItemDelete"
-        onClick={handledeleteItem}
+        onClick={handledeleteCart}
       >
         X
       </button>
