@@ -3,16 +3,21 @@ import { QueryClient } from "react-query";
 
 type AnyOBJ = { [key: string]: any };
 
+const isProduction = process.env.NODE_ENV === "production";
+const BASE_URL = isProduction
+  ? "https://nosy-hedgehog-tomyhas59.koyeb.app/graphql" // Production server URL
+  : "http://localhost:8000/graphql"; // Development server URL
+
 export const getClient = (() => {
   let client: QueryClient | null = null;
   return () => {
     if (!client)
       client = new QueryClient({
-        //캐시 및 요청 시간 단축
+        // Cache and shorten request time
         defaultOptions: {
           queries: {
             cacheTime: 1000 * 60 * 60 * 24,
-            staleTime: 1000 * 60, //160초 이상 업데이트 안 되면 데이터 가져옴
+            staleTime: 1000 * 60, // Refresh data if not updated for more than 160 seconds
             refetchOnMount: false,
             refetchOnReconnect: false,
             refetchOnWindowFocus: false,
@@ -22,43 +27,6 @@ export const getClient = (() => {
     return client;
   };
 })();
-
-const BASE_URL = "https://nosy-hedgehog-tomyhas59.koyeb.app/graphql"; //서버 url
-
-/* export const restFetcher = async ({
-  method,
-  path,
-  body,
-  params,
-}: {
-  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
-  path: string;
-  params?: AnyOBJ;
-  body?: AnyOBJ;
-}) => {
-  try {
-    let url = `${BASE_URL}${path}`;
-    const fetchOptions: RequestInit = {
-      method,
-      headers: {
-        "Content-Type": "application/json",
-        "Acess-Control-Aloow-Origin": BASE_URL,
-      },
-    };
-
-    if (params) {
-      const searchParams = new URLSearchParams(params);
-      url += "?" + searchParams.toString();
-    }
-    if (body) fetchOptions.body = JSON.stringify(body);
-
-    const res = await fetch(url, fetchOptions);
-    const json = await res.json();
-    return json;
-  } catch (err) {
-    console.error(err);
-  }
-}; */
 
 export const graphqlFetcher = <T>(query: RequestDocument, variables = {}) =>
   request<T>(BASE_URL, query, variables);
