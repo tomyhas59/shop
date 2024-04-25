@@ -146,15 +146,12 @@ const AdminItem = ({
       <button className="updateButton" onClick={startEdit}>
         수정
       </button>
-      <Image className="image" src={imageUrl} alt={title} />
+      <img className="image" src={imageUrl} alt={title} />
       <p className="title">{title}</p>
       <Link className="link" href={`/products/${id}`}>
         상세 보기
       </Link>
       <span className="price">{formatedPrice}원</span>
-      <button className="addCart" onClick={() => addCart(id)}>
-        담기
-      </button>
       {!createdAt && <div className="Xmark">삭제된 상품</div>}
     </li>
   );
