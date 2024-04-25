@@ -23,9 +23,9 @@ export const getClient = (() => {
   };
 })();
 
-const BASE_URL = "http://localhost:8000/graphql";
+const BASE_URL = "https://chilly-hedwig-tomyhas59.koyeb.app/graphql";
 
-export const restFetcher = async ({
+/* export const restFetcher = async ({
   method,
   path,
   body,
@@ -58,7 +58,7 @@ export const restFetcher = async ({
   } catch (err) {
     console.error(err);
   }
-};
+}; */
 
 export const graphqlFetcher = <T>(query: RequestDocument, variables = {}) =>
   request<T>(BASE_URL, query, variables);
