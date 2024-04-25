@@ -23,7 +23,7 @@ export const getClient = (() => {
   };
 })();
 
-const BASE_URL = "https://nosy-hedgehog-tomyhas59.koyeb.app/graphql";
+const BASE_URL = "https://nosy-hedgehog-tomyhas59.koyeb.app/graphql"; //서버 url
 
 /* export const restFetcher = async ({
   method,
