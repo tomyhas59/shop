@@ -51,14 +51,17 @@
 }
 
 .newBox {
-  width: 200px;
+  z-index: 999;
+  background-color: rgb(137, 103, 103);
+  width: 180px;
+  margin: 0 auto;
   position: fixed;
   display: flex;
   flex-direction: column;
-  top: 20%;
+  top: 127px;
   left: 0;
   overflow-y: auto;
-  max-height: calc(100% - 20%);
+  height: 80%;
 }
 
 .estimate {
@@ -71,6 +74,7 @@
     border-radius: 20px;
     text-align: center;
     line-height: 5px;
+    background-color: #fff;
     margin: 5px;
   }
 
