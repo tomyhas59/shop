@@ -60,6 +60,7 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
   };
 
   const handleCartData = () => {
+    if (!user) return alert("로그인이 필요합니다");
     if (uid) {
       if (!addedCart) {
         addCart({ uid, id });

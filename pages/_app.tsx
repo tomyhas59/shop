@@ -1,5 +1,5 @@
 // src/components/App.tsx
-import React from "react";
+import React, { useEffect } from "react";
 import { RecoilRoot } from "recoil";
 import { QueryClientProvider } from "react-query";
 import { getClient } from "@/queryClient";
@@ -8,6 +8,8 @@ import Head from "next/head";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "../scss/index.scss";
+import auth from "@/firebaseConfig";
+import { signOut } from "firebase/auth";
 
 interface PropTypes {
   Component: React.FC;
@@ -15,7 +17,24 @@ interface PropTypes {
 
 const App: React.FC<PropTypes> = ({ Component }) => {
   const queryClient = getClient();
+  useEffect(() => {
+    const handleBeforeUnload = async () => {
+      const user = auth.currentUser;
+      if (user) {
+        try {
+          await signOut(auth);
+        } catch (error) {
+          console.error("Logout failed:", error);
+        }
+      }
+    };
 
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
   return (
     <>
       <Head>
