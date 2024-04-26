@@ -3,11 +3,12 @@ import { QueryClient } from "react-query";
 
 type AnyOBJ = { [key: string]: any };
 
-const isProduction = process.env.NEXT_PUBLICK_NODE_ENV === "production";
+const isProduction = process.env.NODE_ENV === "production";
 const BASE_URL = isProduction
   ? "https://nosy-hedgehog-tomyhas59.koyeb.app/graphql" // Production server URL
   : "http://localhost:8000/graphql"; // Development server URL
 
+console.log(process.env.NODE_ENV);
 export const getClient = (() => {
   let client: QueryClient | null = null;
   return () => {
