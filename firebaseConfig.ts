@@ -5,12 +5,12 @@ import dotenv from "dotenv";
 // Load environment variables from .env file
 dotenv.config();
 const firebaseConfig = {
-  apiKey: "AIzaSyDinyxzaGHoRovZpYflhCbKAZLmavmfUlc",
-  authDomain: process.env.fb_authDomain,
-  projectId: process.env.fb_projectId,
-  storageBucket: process.env.fb_storageBucket,
-  messagingSenderId: process.env.fb_messagingSenderId,
-  appId: process.env.fb_appId,
+  apiKey: process.env.NEXT_PUBLIC_fb_apiKey,
+  authDomain: process.env.NEXT_PUBLIC_fb_authDomain,
+  projectId: process.env.NEXT_PUBLIC_fb_projectId,
+  storageBucket: process.env.NEXT_PUBLIC_fb_storageBucket,
+  messagingSenderId: process.env.NEXT_PUBLIC_fb_messagingSenderId,
+  appId: process.env.NEXT_PUBLIC_fb_appId,
 };
 
 const app = initializeApp(firebaseConfig);
