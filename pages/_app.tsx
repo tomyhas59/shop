@@ -40,6 +40,7 @@ const App: React.FC<PropTypes> = ({ Component }) => {
       <Head>
         <meta charSet="utf-8" />
         <title>shop</title>
+        <link rel="icon" href="/TMSIcon.ico" />
       </Head>
       <UserProvider>
         <RecoilRoot>
