@@ -38,8 +38,6 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
     refetch();
   }, [refetch]);
 
-  //addCart and deleteCart---------------------------------------------------
-
   const { mutate: addCart } = useMutation(
     ({ uid, id }: { uid: string; id: string }) =>
       graphqlFetcher(ADD_CART, { uid, id })
