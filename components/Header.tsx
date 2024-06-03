@@ -16,7 +16,7 @@ const Header = () => {
       await signOut(auth);
       router.push("/");
     } catch (error) {
-      console.error("Error signing out:", error);
+      console.error(error);
     }
   };
 
@@ -37,7 +37,7 @@ const Header = () => {
       <Link href={"/"}>
         <Image className="logoImg" src={mainLogo} alt="mainLogo" />
       </Link>
-      <ul className="headerSign">
+      <ul className="signWrapper">
         {user ? (
           <>
             <li className="signButton" onClick={handleLogout}>

@@ -3,19 +3,8 @@
 @import "payment";
 @import "signUp";
 
-.signInPage,
-.emptyCart,
-.paymentPage,
-.adminPage,
-.userInfoPage,
-.signUpPage,
-.userPage,
-.productsPage,
-.productDetailPage,
-.cartPage,
-.mainPage {
-  width: 1024px;
-  margin: 200px auto;
+body {
+  overflow-x: hidden;
 }
 
 .mainPage {
@@ -31,7 +20,8 @@ li {
 }
 
 .contentWrapper {
-  width: 100%;
+  width: 1024px;
+  margin: 200px auto;
   flex: 1;
 }
 
@@ -68,16 +58,6 @@ li {
   }
 }
 
-.headerSign {
-  position: absolute;
-  top: 0px;
-  right: 5%;
-  font-size: 10px;
-  display: flex;
-  > li {
-    margin: 0 5px 0 5px;
-  }
-}
 .footer {
   border-top: 1px solid silver;
   width: 100%;
@@ -151,4 +131,14 @@ li {
 .slick-next {
   right: 10px;
   z-index: 1;
+}
+
+@media (max-width: 480px) {
+  .contentWrapper {
+    width: 100%;
+  }
+  .bannerImg {
+    max-width: 70%;
+    height: 300px;
+  }
 }
