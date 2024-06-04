@@ -2,21 +2,25 @@
   position: absolute;
   top: 0px;
   right: 5%;
-  font-size: 10px;
   display: flex;
 }
 
 .signButton {
   background-color: rgb(137, 103, 103);
   text-decoration: none;
+  font-size: 15px;
   color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 4px;
-  margin-left: 10px;
+
   cursor: pointer;
   &:hover {
     background-color: rgb(214, 138, 138);
+  }
+  @media (max-width: 480px) {
+    font-size: 8px;
+    padding: 5px 10px;
   }
 }
 

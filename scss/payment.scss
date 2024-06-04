@@ -17,6 +17,9 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translate(-50%, -50%);
+    @media (max-width: 480px) {
+      font-size: 1rem;
+    }
   }
 
   &::before {
@@ -47,6 +50,9 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 }
 
 .modal button:hover {
@@ -69,6 +75,9 @@
     }
     > span {
       color: red;
+    }
+    @media (max-width: 480px) {
+      transform: scale(0.5);
     }
   }
 }

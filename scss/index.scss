@@ -89,7 +89,6 @@ li {
 @media screen and (max-width: 1024px) {
   .header {
     font-size: 1.5rem;
-
     line-height: 2rem;
   }
 
@@ -140,9 +139,5 @@ li {
   .bannerImg {
     max-width: 70%;
     height: 300px;
-  }
-  .header .signButton {
-    margin-left: -20px;
-    transform: scale(0.7);
   }
 }
