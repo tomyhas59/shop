@@ -13,9 +13,10 @@ import { signOut } from "firebase/auth";
 
 interface PropTypes {
   Component: React.FC;
+  pageProps: any /**SSR */;
 }
 
-const App: React.FC<PropTypes> = ({ Component }) => {
+const App: React.FC<PropTypes> = ({ Component, pageProps }) => {
   const queryClient = getClient();
   useEffect(() => {
     const handleBeforeUnload = async () => {
@@ -49,7 +50,7 @@ const App: React.FC<PropTypes> = ({ Component }) => {
             <Header />
             <QueryClientProvider client={queryClient}>
               <div className="contentWrapper">
-                <Component />
+                <Component {...pageProps} />
               </div>
             </QueryClientProvider>
             <Footer />

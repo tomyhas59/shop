@@ -5,8 +5,13 @@ import "slick-carousel/slick/slick-theme.css";
 import { useQuery } from "react-query";
 import { GET_ALLPRODUCTS, Product, Products } from "@/graphql/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
+import { GetServerSideProps } from "next";
 
-const MainPage: React.FC = () => {
+interface MainPageProps {
+  initialProducts: Product[];
+}
+
+const MainPage: React.FC<MainPageProps> = ({ initialProducts = [] }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -17,19 +22,17 @@ const MainPage: React.FC = () => {
     autoplaySpeed: 3000,
   };
 
-  const { data } = useQuery<Products>(QueryKeys.PRODUCTS, () =>
-    graphqlFetcher<Products>(GET_ALLPRODUCTS)
-  );
-
   const [randomProducts, setRandomProducts] = useState<Product[]>([]);
 
+  console.log(initialProducts);
+
   useEffect(() => {
-    if (data && data.allProducts) {
-      const shuffledProducts = data.allProducts.sort(() => 0.5 - Math.random());
-      const selectedProducts = shuffledProducts.slice(0, 3);
-      setRandomProducts(selectedProducts);
-    }
-  }, [data]);
+    const shuffledProducts = [...initialProducts].sort(
+      () => 0.5 - Math.random()
+    );
+    const selectedProducts = shuffledProducts.slice(0, 3);
+    setRandomProducts(selectedProducts);
+  }, [initialProducts]);
 
   return (
     <div className="mainPage">
@@ -51,6 +54,27 @@ const MainPage: React.FC = () => {
       </Slider>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  try {
+    const data = await graphqlFetcher<Products>(GET_ALLPRODUCTS);
+    const initialProducts = data.allProducts || [];
+    console.log(initialProducts);
+
+    return {
+      props: {
+        initialProducts,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {
+        initialProducts: [],
+      },
+    };
+  }
 };
 
 export default MainPage;
