@@ -3,7 +3,7 @@ import { QueryClient } from "react-query";
 
 const isProduction = process.env.NODE_ENV === "production";
 const BASE_URL = isProduction
-  ? "https://nosy-hedgehog-tomyhas59.koyeb.app/graphql" // Production server URL
+  ? "https://port-0-shop-server-rccln2llvsdixmg.sel5.cloudtype.app/graphql" // Production server URL
   : "http://localhost:7000/graphql"; // Development server URL
 
 console.log(process.env.NODE_ENV);
