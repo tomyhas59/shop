@@ -30,7 +30,7 @@ li {
   position: fixed;
   width: 100%;
   height: 140px;
-  font-size: 2rem;
+  font-size: 12px;
   background-color: #ffffff;
   text-align: center;
 }
@@ -41,7 +41,6 @@ li {
 }
 
 .headerList {
-  font-size: 1.2rem;
   padding: 10px;
   display: flex;
   background-color: rgb(137, 103, 103);
@@ -97,19 +96,25 @@ li {
   }
 }
 
-.bannerImg {
-  max-width: 100%;
-  border-radius: 10px;
-  height: 500px;
-  display: block;
-  margin: 0 auto;
-}
-
 .bannerTitle {
   font-weight: bold;
   font-size: 50px;
   color: #ff5733;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.bannerSlider {
+  width: 800px;
+  margin: 0 auto;
+}
+
+.bannerImg {
+  max-width: 100%;
+  border-radius: 10px;
+  width: 400px;
+  height: 400px;
+  display: block;
+  margin: 0 auto;
 }
 
 .bannerProductTitle {

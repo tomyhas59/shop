@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { GET_ALLPRODUCTS, Product, Products } from "@/graphql/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 
 interface MainPageProps {
   initialProducts: Product[];
@@ -37,16 +38,18 @@ const MainPage: React.FC<MainPageProps> = ({ initialProducts = [] }) => {
   return (
     <div className="mainPage">
       <h1 className="bannerTitle">오늘의 추천 상품!</h1>
-      <Slider {...settings}>
+      <Slider {...settings} className="bannerSlider">
         {randomProducts.map(
           (product) =>
             product.createdAt && (
               <div key={product.id}>
-                <img
-                  src={product.imageUrl}
-                  alt={product.title}
-                  className="bannerImg"
-                />
+                <Link href={`/products/${product.id}`}>
+                  <img
+                    src={product.imageUrl}
+                    alt={product.title}
+                    className="bannerImg"
+                  />
+                </Link>
                 <div className="bannerProductTitle">{product.title}</div>
               </div>
             )

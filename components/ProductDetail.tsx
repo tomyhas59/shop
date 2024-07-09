@@ -49,7 +49,7 @@ const ProductDetail = ({
     if (uid) {
       addCart({ uid, id });
       setAddedCart(true);
-    }
+    } else alert("로그인이 필요합니다");
   };
 
   useEffect(() => {
