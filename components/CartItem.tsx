@@ -103,13 +103,21 @@ const CartItem = (
       </div>
       <ItemData imageUrl={imageUrl} price={price} title={title} />
       <div className="cartItemAmount">
-        수량:
+        <span>수량:</span>
         <input
           type="number"
           className="amountInput"
           value={newAmount}
           onChange={handleInputChange}
         />
+        <div className="amountButton">
+          <button type="button" onClick={handleIncrementAmount}>
+            ▲
+          </button>
+          <button type="button" onClick={handleDecreaseAmount}>
+            ▼
+          </button>
+        </div>
         <button
           type="button"
           className="changeAmount"
@@ -117,14 +125,6 @@ const CartItem = (
         >
           변경
         </button>
-        <span className="amountButton">
-          <button type="button" onClick={handleDecreaseAmount}>
-            ▼
-          </button>
-          <button type="button" onClick={handleIncrementAmount}>
-            ▲
-          </button>
-        </span>
       </div>
       <button
         type="button"

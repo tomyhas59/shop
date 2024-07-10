@@ -85,17 +85,6 @@ li {
   resize: vertical;
 }
 
-@media screen and (max-width: 1024px) {
-  .header {
-    font-size: 1.5rem;
-    line-height: 2rem;
-  }
-
-  .footer {
-    font-size: 1.5rem;
-  }
-}
-
 .bannerTitle {
   font-weight: bold;
   font-size: 50px;
@@ -141,6 +130,11 @@ li {
   .contentWrapper {
     width: 100%;
   }
+
+  .bannerSlider {
+    width: 300px;
+  }
+
   .bannerImg {
     max-width: 70%;
     height: 300px;
