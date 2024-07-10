@@ -66,7 +66,7 @@
   }
 
   @media (max-width: 480px) {
-    width: 110px;
+    font-size: 0.75rem;
     img {
       width: 100px;
       height: 100px;
@@ -74,7 +74,11 @@
     .cartItemAmount {
       font-size: 0.75rem;
       .amountInput {
+        font-size: 0.75rem;
         width: 25px;
+      }
+      button {
+        font-size: 0.75rem;
       }
     }
   }
@@ -83,25 +87,14 @@
 .cartItemTitle {
   font-size: 1.5rem;
   font-weight: bold;
-}
-
-.newBox {
-  width: 180px;
-  margin: 0 auto;
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  top: 180px;
-  left: 0;
-  overflow-y: auto;
-  height: 80%;
   @media (max-width: 480px) {
-    top: 50px;
-    right: -200px;
+    font-size: 0.75rem;
   }
 }
 
 .estimate {
+  position: fixed;
+  bottom: 5%;
   display: flex;
   flex-wrap: wrap;
   overflow-y: auto;
@@ -109,16 +102,43 @@
   .estimateData {
     border: 1px solid;
     border-radius: 20px;
+    font-size: 0.8rem;
     text-align: center;
     line-height: 5px;
     background-color: #fff;
-    margin: 5px;
+    margin: 1px;
   }
 
   img {
-    width: 100px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
+  }
+}
+
+@media (max-width: 480px) {
+  .estimate {
+    position: fixed;
+    bottom: 5%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    width: 50%;
+    .estimateData {
+      border: 1px solid;
+      border-radius: 20px;
+      font-size: 0.5rem;
+      text-align: center;
+      line-height: 5px;
+      background-color: #fff;
+      margin: 1px;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
   }
 }
 

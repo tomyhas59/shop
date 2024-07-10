@@ -7,15 +7,17 @@ import {
   useEffect,
   useState,
   useCallback,
-  CSSProperties,
 } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { checkedCartState } from "@/recolis/cart";
 import Estimate from "@/pages/cart/Estimate";
 import { useRouter } from "next/router";
 import { formatPrice } from "@/pages/products";
 import { useMutation } from "react-query";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
+import { useUser } from "@/context/UserProvider";
+import { EXECUTE_PAY } from "@/graphql/payment";
+import PaymentModal from "./ModalPortal";
 
 const CartList = ({
   cartItems,
@@ -34,7 +36,7 @@ const CartList = ({
   const handleSubmit = () => {
     if (checkedItems.length < 1) {
       alert("구매할 상품을 선택하세요");
-    } else router.push("/payment");
+    } else showModal();
     // 새로운 경로로 이동하고 페이지 다시 로드
     // router.replace('/another-page');
 
@@ -148,6 +150,45 @@ const CartList = ({
     }
   }, [enabledItem]);
 
+  //결제--------------------------------------------
+  const { user } = useUser();
+  const uid = user?.uid;
+  const [modalShown, toggleModal] = useState(false);
+
+  const { mutate: executePay } = useMutation(
+    ({ uid, ids }: { uid: string; ids: string[] }) =>
+      graphqlFetcher(EXECUTE_PAY, { uid, ids })
+  );
+
+  const showModal = () => {
+    toggleModal(true);
+  };
+
+  const proceed = () => {
+    const ids = checkedItems.map((item) => item.id);
+    console.log(ids);
+    if (uid) {
+      executePay(
+        { uid, ids },
+        {
+          onSuccess: () => {
+            setCheckedCartData([]);
+            alert("결제가 완료되었습니다");
+            router.replace("/products");
+          },
+          onError: () => {
+            alert("삭제된 상품이 포함되어 결제를 진행할 수 없습니다");
+            router.replace("/cart");
+          },
+        }
+      );
+    }
+  };
+
+  const cancel = () => {
+    toggleModal(false);
+  };
+
   return (
     <div>
       <form ref={formRef} onChange={handleCheckboxChanged}>
@@ -177,9 +218,7 @@ const CartList = ({
           ))}
         </div>
       </form>
-      <div className="newBox">
-        <Estimate />
-      </div>
+      <Estimate />
       <div className="buyWrapper">
         <p>총예상결제액</p>
         <p className="totalEstimate">{formattedTotalPrice}원</p>
@@ -187,6 +226,12 @@ const CartList = ({
         <button className="buy" onClick={handleSubmit}>
           구매하기
         </button>
+        <PaymentModal
+          show={modalShown}
+          cancel={cancel}
+          proceed={proceed}
+          totalEstimate={formattedTotalPrice || "0"}
+        />
       </div>
     </div>
   );

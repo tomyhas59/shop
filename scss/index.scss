@@ -1,6 +1,5 @@
 @import "products";
 @import "cart";
-@import "payment";
 @import "signUp";
 
 body {
@@ -139,4 +138,67 @@ li {
     max-width: 70%;
     height: 300px;
   }
+}
+
+//modal
+
+.modal {
+  z-index: 999999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .modalInner {
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    font-size: 2rem;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translate(-50%, -50%);
+    @media (max-width: 480px) {
+      font-size: 1rem;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.modal > p {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.modal button {
+  background-color: #007bff;
+  width: 150px;
+  margin-left: 10px;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+}
+
+.modal button:hover {
+  background-color: #0056b3;
 }
