@@ -14,7 +14,6 @@ interface MainPageProps {
 
 const MainPage: React.FC<MainPageProps> = ({ initialProducts = [] }) => {
   const settings = {
-    dots: true,
     infinite: true,
     speed: 300,
     slidesToShow: 1,

@@ -37,58 +37,66 @@ const SignUpPage = () => {
 
   return (
     <div className="signUpPage">
-      <h1>회원가입</h1>
-      <form onSubmit={handleSubmit} className="inputForm">
-        <label>
-          이메일:
+      <h1 className="title">회원가입</h1>
+      <form onSubmit={handleSubmit} className="signform">
+        <div className="formGroup">
+          <label htmlFor="email" className="formLabel">
+            이메일
+          </label>
           <input
-            className="inputField"
-            name="email"
-            placeholder="이메일"
+            id="email"
+            className="formInput"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="이메일을 입력하세요"
             required
           />
-        </label>
-        <label>
-          닉네임:
+        </div>
+        <div className="formGroup">
+          <label htmlFor="nickname" className="formLabel">
+            닉네임
+          </label>
           <input
-            className="inputField"
-            name="nickname"
-            placeholder="닉네임"
+            id="nickname"
+            className="formInput"
             type="text"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
+            placeholder="닉네임을 입력하세요"
             required
           />
-        </label>
-        <label>
-          비밀번호:
+        </div>
+        <div className="formGroup">
+          <label htmlFor="password" className="formLabel">
+            비밀번호
+          </label>
           <input
-            className="inputField"
-            name="password"
-            placeholder="비밀번호"
+            id="password"
+            className="formInput"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호를 입력하세요"
             required
           />
-        </label>
-        <label>
-          비밀번호 확인:
+        </div>
+        <div className="formGroup">
+          <label htmlFor="passwordConfirm" className="formLabel">
+            비밀번호 확인
+          </label>
           <input
-            className="inputField"
-            name="passwordConfirm"
-            placeholder="비밀번호 확인"
+            id="passwordConfirm"
+            className="formInput"
             type="password"
             value={passwordConfirm}
             onChange={(e) => setPasswordConfirm(e.target.value)}
+            placeholder="비밀번호를 확인하세요"
             required
           />
-        </label>
-        <button className="signButton" type="submit">
-          확인
+        </div>
+        <button className="submitButton" type="submit">
+          가입하기
         </button>
       </form>
     </div>

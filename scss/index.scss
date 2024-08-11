@@ -20,40 +20,70 @@ li {
 
 .contentWrapper {
   width: 1024px;
-  margin: 200px auto;
+  margin: 10px auto;
   flex: 1;
 }
-
+//header
 .header {
-  z-index: 999;
-  position: fixed;
-  width: 100%;
-  height: 140px;
-  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
   background-color: #ffffff;
-  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .logoImg {
-  width: 100px;
-  height: 100px;
+  height: 50px;
+  width: auto;
+  cursor: pointer;
 }
 
-.headerList {
-  padding: 10px;
+.nav {
   display: flex;
-  background-color: rgb(137, 103, 103);
-  justify-content: space-around;
-  li {
-    > a {
-      color: #fff;
-      text-decoration: none;
-      cursor: pointer;
-      &:hover {
-        color: black;
-      }
-    }
-  }
+  align-items: center;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+}
+
+.navItem a,
+.navButton {
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+  display: block;
+}
+
+.navItem a:hover,
+.navButton:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
+}
+
+.navButton {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.navButton:hover {
+  background-color: #f0f0f0;
 }
 
 .footer {
@@ -201,4 +231,56 @@ li {
 
 .modal button:hover {
   background-color: #0056b3;
+}
+
+.userInfoPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 600px;
+  margin: auto;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.userInfoPage h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.userDetails {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userEmail,
+.userNickname {
+  font-size: 1rem;
+  margin: 10px 0;
+}
+
+.userEmail strong,
+.userNickname strong {
+  color: #007bff;
+}
+
+.userInfoPage p {
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .userDetails {
+    flex-direction: column;
+    align-items: center;
+  }
 }

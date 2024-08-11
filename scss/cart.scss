@@ -1,4 +1,11 @@
+.cartListContainer {
+  form {
+    width: 1025px;
+  }
+}
+
 .cartList {
+  width: 1024px;
   display: flex;
   flex-wrap: wrap;
   padding: 20px;

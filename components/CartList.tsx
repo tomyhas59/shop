@@ -190,7 +190,7 @@ const CartList = ({
   };
 
   return (
-    <div>
+    <div className="cartListContainer">
       <form ref={formRef} onChange={handleCheckboxChanged}>
         <div className="allButton">
           <label className="customSelectAll">

@@ -64,7 +64,6 @@ const ProductDetail = ({
   return (
     <div>
       <div className="productDetail">
-        {/*     <p className="createdAt">{date.toLocaleDateString()}</p> */}
         <p className="title">{title}</p>
         <img className="image" src={imageUrl} alt={title} />
         <p className="description">{description}</p>

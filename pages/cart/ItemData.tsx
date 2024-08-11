@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { formatPrice } from "../products";
 import { Product } from "@/graphql/products";

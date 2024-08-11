@@ -25,7 +25,7 @@ const ProductListPage = () => {
     if (!intersecting || !hasNextPage || !isSuccess || isFetchingNextPage)
       return;
     fetchNextPage();
-  }, [intersecting]);
+  }, [fetchNextPage, hasNextPage, intersecting, isFetchingNextPage, isSuccess]);
 
   return (
     <div>

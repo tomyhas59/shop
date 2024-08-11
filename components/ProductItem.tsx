@@ -87,11 +87,11 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
       </Link>
       <span className="price">{formatedPrice}원</span>
       <button className="addCart" onClick={handleCartData}>
-        {addedCart ? (
-          <Image className="cartImg" src={pullcartImg} alt="pullCart" />
-        ) : (
-          <Image className="cartImg" src={emptyCartImg} alt="emtyCart" />
-        )}
+        <Image
+          className="cartImg"
+          src={addedCart ? pullcartImg : emptyCartImg}
+          alt={addedCart ? "pullCart" : "emptyCart"}
+        />
       </button>
     </li>
   );
