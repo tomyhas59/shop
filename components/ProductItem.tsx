@@ -20,9 +20,7 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
     [QueryKeys.CART, uid],
     () => {
       if (uid) return graphqlFetcher<{ cart: Cart[] }>(GET_CART, { uid });
-      else {
-        return Promise.resolve({ cart: [] });
-      }
+      return Promise.resolve({ cart: [] });
     },
     {
       staleTime: 0,
@@ -47,7 +45,7 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
     (id: string) => graphqlFetcher(DELETE_CART, { id }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(QueryKeys.CART); // 데이터 전체 다시 가져옴
+        queryClient.invalidateQueries(QueryKeys.CART); // Refresh cart data
       },
     }
   );
@@ -76,21 +74,21 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
     setAddedCart(isAddedToCart);
   }, [data, isAddedToCart]);
 
-  const formatedPrice = formatPrice(price);
+  const formattedPrice = formatPrice(price);
 
   return (
-    <li className="productItem">
+    <li className="product-item">
       <img className="image" src={imageUrl} alt={title} />
       <p className="title">{title}</p>
       <Link className="link" href={`/products/${id}`}>
         상세 보기
       </Link>
-      <span className="price">{formatedPrice}원</span>
-      <button className="addCart" onClick={handleCartData}>
+      <span className="price">{formattedPrice}원</span>
+      <button className="add-to-cart" onClick={handleCartData}>
         <Image
-          className="cartImg"
+          className="cart-icon"
           src={addedCart ? pullcartImg : emptyCartImg}
-          alt={addedCart ? "pullCart" : "emptyCart"}
+          alt={addedCart ? "Added to cart" : "Add to cart"}
         />
       </button>
     </li>

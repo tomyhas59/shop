@@ -1,10 +1,10 @@
-.cartListContainer {
+.cart-list-container {
   form {
     width: 1025px;
   }
 }
 
-.cartList {
+.cart-list {
   width: 1024px;
   display: flex;
   flex-wrap: wrap;
@@ -12,7 +12,7 @@
   gap: 10px;
 }
 
-.cartItem {
+.cart-item {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
     width: 200px;
     height: 200px;
   }
-  .cartItemAmount {
+  .cart-item-amount {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,17 +33,17 @@
     font-size: 1.5rem;
     padding: 10px;
     border-radius: 0 0 10px 10px;
-    .amountInput {
+    .amount-input {
       background-color: transparent;
       border: none;
       text-align: right;
       font-size: 1.5rem;
       width: 50px;
     }
-    .amountInput::-webkit-inner-spin-button {
+    .amount-input::-webkit-inner-spin-button {
       display: none;
     }
-    .amountButton {
+    .amount-button {
       display: flex;
       flex-direction: column;
     }
@@ -57,7 +57,7 @@
       }
     }
   }
-  > .cartItemDelete {
+  > .cart-item-delete {
     position: absolute;
     right: 0;
     background-color: rgb(161, 18, 18);
@@ -78,9 +78,9 @@
       width: 100px;
       height: 100px;
     }
-    .cartItemAmount {
+    .cart-item-amount {
       font-size: 0.75rem;
-      .amountInput {
+      .amount-input {
         font-size: 0.75rem;
         width: 25px;
       }
@@ -91,7 +91,7 @@
   }
 }
 
-.cartItemTitle {
+.cart-item-title {
   font-size: 1.5rem;
   font-weight: bold;
   @media (max-width: 480px) {
@@ -106,7 +106,7 @@
   flex-wrap: wrap;
   overflow-y: auto;
 
-  .estimateData {
+  .estimate-data {
     border: 1px solid;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -131,7 +131,7 @@
     flex-wrap: wrap;
     overflow-y: auto;
     width: 50%;
-    .estimateData {
+    .estimate-data {
       border: 1px solid;
       border-radius: 20px;
       font-size: 0.5rem;
@@ -149,7 +149,7 @@
   }
 }
 
-.buyWrapper {
+.buy-wrapper {
   opacity: 0.7;
   position: fixed;
   padding: 10px;
@@ -159,7 +159,7 @@
   right: 5%;
   bottom: 5%;
   background-color: rgb(236, 236, 11);
-  .totalEstimate {
+  .total-estimate {
     text-align: right;
   }
   .buy {
@@ -180,12 +180,12 @@
   }
 }
 
-.allButton {
+.all-button {
   text-align: left;
 }
 
-.customSelectAll,
-.deleteAll {
+.custom-select-all,
+.delete-all {
   display: inline-block;
   font-size: 1rem;
   margin-left: 20px;
@@ -199,19 +199,19 @@
   }
 }
 
-.customSelectAll {
+.custom-select-all {
   background-color: blue;
   &:hover {
     background-color: rgb(52, 52, 134);
   }
 }
 
-.selectAll,
-.cartItemCheckbox {
+.select-all,
+.cart-item-checkbox {
   display: none;
 }
 
-.customCheckbox {
+.custom-checkbox {
   position: relative;
   display: inline-block;
   width: 50px;
@@ -226,7 +226,7 @@
   }
 }
 
-.customCheckbox::after {
+.custom-checkbox::after {
   content: "\2713";
   position: absolute;
   top: 50%;
@@ -241,11 +241,11 @@
   }
 }
 
-.cartItemCheckbox:checked + .customCheckbox::after {
+.cart-item-checkbox:checked + .custom-checkbox::after {
   opacity: 1;
 }
 
-.cartItemCheckbox:disabled + .customCheckbox {
+.cart-item-checkbox:disabled + .custom-checkbox {
   background-color: #ccc;
   cursor: not-allowed;
 }

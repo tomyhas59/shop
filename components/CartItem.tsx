@@ -87,30 +87,30 @@ const CartItem = (
   };
 
   return (
-    <li className="cartItem">
+    <li className="cart-item">
       <div>
         <input
           type="checkbox"
           id={`checkbox-${id}`}
-          className="cartItemCheckbox"
+          className="cart-item-checkbox"
           name="selectItem"
           ref={ref}
           data-id={id}
           disabled={!createdAt}
           onChange={handleCheckboxChange}
         />
-        <label htmlFor={`checkbox-${id}`} className="customCheckbox"></label>
+        <label htmlFor={`checkbox-${id}`} className="custom-checkbox"></label>
       </div>
       <ItemData imageUrl={imageUrl} price={price} title={title} />
-      <div className="cartItemAmount">
+      <div className="cart-item-amount">
         <span>수량:</span>
         <input
           type="number"
-          className="amountInput"
+          className="amount-input"
           value={newAmount}
           onChange={handleInputChange}
         />
-        <div className="amountButton">
+        <div className="amount-button">
           <button type="button" onClick={handleIncrementAmount}>
             ▲
           </button>
@@ -120,7 +120,7 @@ const CartItem = (
         </div>
         <button
           type="button"
-          className="changeAmount"
+          className="change-amount"
           onClick={handleChangeAmount}
         >
           변경
@@ -128,12 +128,12 @@ const CartItem = (
       </div>
       <button
         type="button"
-        className="cartItemDelete"
+        className="cart-item-delete"
         onClick={handledeleteCart}
       >
         X
       </button>
-      {!createdAt && <div className="Xmark">삭제된 상품</div>}
+      {!createdAt && <div className="xmark">삭제된 상품</div>}
     </li>
   );
 };

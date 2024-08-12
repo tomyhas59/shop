@@ -5,15 +5,15 @@ const UserInfoPage: React.FC = () => {
   const { user } = useUser();
 
   return (
-    <div className="userInfoPage">
+    <div className="user-info-page">
       <h1>User Information</h1>
       {user ? (
-        <div className="userDetails">
-          <div className="userInfo">
-            <p className="userEmail">
+        <div className="user-details">
+          <div className="user-info">
+            <p className="user-email">
               <strong>Email:</strong> {user.email}
             </p>
-            <p className="userNickname">
+            <p className="user-nickname">
               <strong>Nickname:</strong> {user.displayName}
             </p>
           </div>

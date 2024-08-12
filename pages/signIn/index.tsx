@@ -34,9 +34,9 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="signInPage">
+    <div className="sign-in-page">
       <h1>로그인</h1>
-      <form onSubmit={handleSignIn} className="signform">
+      <form onSubmit={handleSignIn} className="sign-form">
         <input
           type="email"
           value={email}
@@ -53,7 +53,7 @@ const SignInPage = () => {
           required
           onKeyDown={enterSignIn}
         />
-        <button type="submit" className="signButton">
+        <button type="submit" className="sign-button">
           로그인
         </button>
       </form>

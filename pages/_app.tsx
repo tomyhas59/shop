@@ -46,10 +46,10 @@ const App: React.FC<PropTypes> = ({ Component, pageProps }) => {
       <UserProvider>
         <RecoilRoot>
           <div id="modal"></div>
-          <div className="layoutWrapper">
+          <div className="layout-wrapper">
             <Header />
             <QueryClientProvider client={queryClient}>
-              <div className="contentWrapper">
+              <div className="content-wrapper">
                 <Component {...pageProps} />
               </div>
             </QueryClientProvider>

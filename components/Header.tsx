@@ -27,14 +27,14 @@ const Header = () => {
   return (
     <header className="header">
       <Link href="/" passHref>
-        <Image className="logoImg" src={mainLogo} alt="mainLogo" />
+        <Image className="logo-img" src={mainLogo} alt="mainLogo" />
       </Link>
       <nav className="nav">
-        <ul className="navList">
-          <li className="navItem">
+        <ul className="nav-list">
+          <li className="nav-item">
             <Link href="/products">상품 목록</Link>
           </li>
-          <li className="navItem">
+          <li className="nav-item">
             <a
               onClick={() =>
                 user ? navigateTo("/cart") : alert("로그인이 필요합니다")
@@ -46,27 +46,27 @@ const Header = () => {
           {user ? (
             <>
               {user.displayName === "admin" && (
-                <li className="navItem">
+                <li className="nav-item">
                   <Link href="/admin">상품 관리</Link>
                 </li>
               )}
-              <li className="navItem">
-                <button className="navButton" onClick={handleLogout}>
+              <li className="nav-item">
+                <button className="nav-button" onClick={handleLogout}>
                   로그아웃
                 </button>
               </li>
-              <li className="navItem">
+              <li className="nav-item">
                 <Link href="/userInfo">내 정보</Link>
               </li>
             </>
           ) : (
             <>
-              <li className="navItem">
+              <li className="nav-item">
                 <Link href="/signIn">로그인</Link>
               </li>
-              <li className="navItem">
+              <li className="nav-item">
                 <button
-                  className="navButton"
+                  className="nav-button"
                   onClick={() => navigateTo("/signUp")}
                 >
                   회원가입

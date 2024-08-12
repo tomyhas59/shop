@@ -80,14 +80,13 @@ const AdminItem = ({
     formData.price = Number(formData.price);
     updateProduct(formData as MutableProduct);
   };
-
   if (isEditing)
     return (
       <form onSubmit={handleUpdateProduct}>
         <label>
           상품명:
           <input
-            className="inputField"
+            className="input-field"
             name="title"
             placeholder="title"
             type="text"
@@ -98,17 +97,17 @@ const AdminItem = ({
         <label>
           이미지URL:
           <input
-            className="inputField"
+            className="input-field"
             name="imageUrl"
             type="text"
             required
             defaultValue={imageUrl}
-          ></input>
+          />
         </label>
         <label>
           가격:
           <input
-            className="inputField"
+            className="input-field"
             placeholder="Price"
             name="price"
             required
@@ -120,30 +119,31 @@ const AdminItem = ({
         <label>
           상세:
           <textarea
-            className="textareaField"
+            className="textarea-field"
             name="description"
             placeholder="Description"
             defaultValue={description}
           />
         </label>
-        <button type="submit" className="submitButton">
+        <button type="submit" className="submit-button">
           저장
         </button>
         <button
           type="button"
-          className="cancelButton"
+          className="submit-button"
           onClick={() => doneEdit()}
         >
           취소
         </button>
       </form>
     );
+
   return (
-    <li className="productItem">
-      <button className="deleteButton" onClick={handleDeleteProduct}>
+    <li className="product-item">
+      <button className="delete-button" onClick={handleDeleteProduct}>
         삭제
       </button>
-      <button className="updateButton" onClick={startEdit}>
+      <button className="update-button" onClick={startEdit}>
         수정
       </button>
       <img className="image" src={imageUrl} alt={title} />
@@ -152,7 +152,7 @@ const AdminItem = ({
         상세 보기
       </Link>
       <span className="price">{formatedPrice}원</span>
-      {!createdAt && <div className="Xmark">삭제된 상품</div>}
+      {!createdAt && <div className="xmark">삭제된 상품</div>}
     </li>
   );
 };

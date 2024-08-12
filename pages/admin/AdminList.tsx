@@ -17,7 +17,7 @@ const AdminList = ({
 }) => {
   if (list)
     return (
-      <ul className="productList">
+      <ul className="product-list">
         {list.map((page) =>
           page.products.map((product, i) => (
             <AdminItem

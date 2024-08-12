@@ -63,12 +63,12 @@ const ProductDetail = ({
 
   return (
     <div>
-      <div className="productDetail">
+      <div className="product-detail">
         <p className="title">{title}</p>
         <img className="image" src={imageUrl} alt={title} />
         <p className="description">{description}</p>
         <span className="price">{formatedPrice}원</span>
-        <button className="addCart" onClick={handleAddToCart}>
+        <button className="add-cart" onClick={handleAddToCart}>
           {addedCart ? "담기 완료" : "담기"}
         </button>
       </div>

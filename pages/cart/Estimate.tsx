@@ -16,7 +16,7 @@ const Estimate: React.FC<EstimateProps> = ({ style }) => {
         ({ amount, product: { imageUrl, title, price }, id }) => {
           const formattedPrice = formatPrice(price * amount);
           return (
-            <li className="estimateData" key={id}>
+            <li className="estimate-data" key={id}>
               <ItemData imageUrl={imageUrl} title={title} price={price} />
               <p>수량: {amount}</p>
               <p>금액: {formattedPrice}원</p>

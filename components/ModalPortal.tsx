@@ -21,7 +21,7 @@ const PaymentModal = ({
   return show ? (
     <ModalPortal>
       <div className="modal">
-        <div className="modalInner">
+        <div className="modal-inner">
           <p>
             총 <span style={{ color: "red" }}>{totalEstimate}</span>원입니다
           </p>

@@ -3,13 +3,13 @@ body {
   padding: 0;
 }
 
-.productsTitle {
+.products-title {
   line-height: 100px;
   text-align: center;
   font-size: 5rem;
 }
 
-.productList {
+.product-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 30px;
@@ -17,7 +17,7 @@ body {
   margin-top: 50px;
 }
 
-.productItem {
+.product-item {
   position: relative;
   display: grid;
   grid-template-columns: repeat(2, 50%);
@@ -48,12 +48,12 @@ body {
     transition: transform 0.3s ease;
     grid-area: a;
   }
-  > .addCart {
+  > .add-to-cart {
     cursor: pointer;
     border: none;
     background-color: white;
     grid-area: g;
-    > .cartImg {
+    > .cart-icon {
       width: 50px;
       height: 50px;
     }
@@ -80,8 +80,8 @@ body {
       color: #ffcc00;
     }
   }
-  > .deleteButton,
-  .updateButton {
+  > .delete-button,
+  .update-button {
     position: absolute;
     top: 0;
     right: 0;
@@ -97,7 +97,7 @@ body {
     }
   }
 
-  .updateButton {
+  .update-button {
     left: 0;
     background-color: yellowgreen;
     border-radius: 20px 0 0 0;
@@ -107,7 +107,7 @@ body {
   }
 }
 
-.productDetail {
+.product-detail {
   width: 800px;
   margin: 0 auto;
   display: grid;
@@ -146,7 +146,7 @@ body {
     grid-area: c;
   }
 
-  > .addCart {
+  > .add-cart {
     width: 50%;
     margin: 0 auto;
     font-size: 2rem;
@@ -161,7 +161,7 @@ body {
   }
 }
 
-.Xmark {
+.xmark {
   color: red;
   position: absolute;
   font-size: 4rem;
@@ -170,8 +170,8 @@ body {
   top: 30%;
 }
 
-.submitButton,
-.cancelButton {
+.submit-button,
+.cancel-button {
   background-color: #4caf50;
   color: white;
   padding: 10px 20px;
@@ -181,19 +181,19 @@ body {
   cursor: pointer;
 }
 
-.submitButton:hover {
+.submit-button:hover {
   background-color: #45a049;
 }
 
 @media (max-width: 480px) {
-  .productDetail {
+  .product-detail {
     width: 300px;
     display: flex;
     flex-direction: column;
     > .image {
       width: 300px;
     }
-    > .addCart {
+    > .add-cart {
       width: 300px;
     }
   }

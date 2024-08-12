@@ -10,9 +10,9 @@ const ItemData = ({
   const formattedPrice = formatPrice(price);
   return (
     <div>
-      <p className="cartItemTitle">{title}</p>
-      <img className="cartImage" src={imageUrl} alt={title} />
-      <p className="cartItemPrice">{formattedPrice}원</p>
+      <p className="cart-item-title">{title}</p>
+      <img className="cart-image" src={imageUrl} alt={title} />
+      <p className="cart-item-price">{formattedPrice}원</p>
     </div>
   );
 };

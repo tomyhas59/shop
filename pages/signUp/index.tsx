@@ -36,16 +36,16 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="signUpPage">
+    <div className="sign-up-page">
       <h1 className="title">회원가입</h1>
-      <form onSubmit={handleSubmit} className="signform">
-        <div className="formGroup">
-          <label htmlFor="email" className="formLabel">
+      <form onSubmit={handleSubmit} className="sign-form">
+        <div className="form-group">
+          <label htmlFor="email" className="form-label">
             이메일
           </label>
           <input
             id="email"
-            className="formInput"
+            className="form-input"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -53,13 +53,13 @@ const SignUpPage = () => {
             required
           />
         </div>
-        <div className="formGroup">
-          <label htmlFor="nickname" className="formLabel">
+        <div className="form-group">
+          <label htmlFor="nickname" className="form-label">
             닉네임
           </label>
           <input
             id="nickname"
-            className="formInput"
+            className="form-input"
             type="text"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
@@ -67,13 +67,13 @@ const SignUpPage = () => {
             required
           />
         </div>
-        <div className="formGroup">
-          <label htmlFor="password" className="formLabel">
+        <div className="form-group">
+          <label htmlFor="password" className="form-label">
             비밀번호
           </label>
           <input
             id="password"
-            className="formInput"
+            className="form-input"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -81,13 +81,13 @@ const SignUpPage = () => {
             required
           />
         </div>
-        <div className="formGroup">
-          <label htmlFor="passwordConfirm" className="formLabel">
+        <div className="form-group">
+          <label htmlFor="passwordConfirm" className="form-label">
             비밀번호 확인
           </label>
           <input
-            id="passwordConfirm"
-            className="formInput"
+            id="password-confirm"
+            className="form-input"
             type="password"
             value={passwordConfirm}
             onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -95,7 +95,7 @@ const SignUpPage = () => {
             required
           />
         </div>
-        <button className="submitButton" type="submit">
+        <button className="submit-button" type="submit">
           가입하기
         </button>
       </form>

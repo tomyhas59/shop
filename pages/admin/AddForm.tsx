@@ -43,12 +43,12 @@ const AddForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="inputForm">
+    <form onSubmit={handleSubmit} className="input-form">
       <label>
         상품명:
         <input
           ref={titleRef}
-          className="inputField"
+          className="input-field"
           name="title"
           placeholder="title"
           type="text"
@@ -59,7 +59,7 @@ const AddForm = () => {
         이미지URL:
         <input
           ref={imageUrlRef}
-          className="inputField"
+          className="input-field"
           name="imageUrl"
           type="text"
           required
@@ -69,7 +69,7 @@ const AddForm = () => {
         가격:
         <input
           ref={priceRef}
-          className="inputField"
+          className="input-field"
           placeholder="Price"
           name="price"
           required
@@ -81,12 +81,12 @@ const AddForm = () => {
         상세:
         <textarea
           ref={descriptionRef}
-          className="textareaField"
+          className="textarea-field"
           name="description"
           placeholder="Description"
         />
       </label>
-      <button type="submit" className="submitButton">
+      <button type="submit" className="submit-button">
         등록
       </button>
     </form>

@@ -65,7 +65,7 @@ const CartList = ({
     const allItemsSelected = selectedCount === enabledItem.length;
 
     const selectAllCheckbox =
-      document.querySelector<HTMLInputElement>(".selectAll");
+      document.querySelector<HTMLInputElement>(".select-all");
 
     if (selectAllCheckbox) {
       selectAllCheckbox.checked = allItemsSelected;
@@ -88,7 +88,7 @@ const CartList = ({
     if (!formRef.current) return;
     const targetInput = e.target as HTMLInputElement;
 
-    if (targetInput && targetInput.classList.contains("selectAll")) {
+    if (targetInput && targetInput.classList.contains("select-all")) {
       setItemsCheckedFromAll(targetInput);
     } else {
       setAllCheckedFromItems();
@@ -139,7 +139,7 @@ const CartList = ({
 
   useEffect(() => {
     const selectAllCheckbox =
-      document.querySelector<HTMLInputElement>(".selectAll");
+      document.querySelector<HTMLInputElement>(".select-all");
 
     if (selectAllCheckbox) {
       if (enabledItem.length === 0) {
@@ -190,24 +190,24 @@ const CartList = ({
   };
 
   return (
-    <div className="cartListContainer">
+    <div className="cart-list-container">
       <form ref={formRef} onChange={handleCheckboxChanged}>
-        <div className="allButton">
-          <label className="customSelectAll">
+        <div className="all-button">
+          <label className="custom-select-all">
             <input
-              id="allCheckBox"
+              id="select-all"
               type="checkbox"
-              className="selectAll"
+              className="select-all"
               name="selectAll"
             />
             전체 선택
-            <label htmlFor="allCheckBox"></label>
+            <label htmlFor="select-all"></label>
           </label>
-          <button className="deleteAll" onClick={handleDeleteAllItem}>
+          <button className="delete-all" onClick={handleDeleteAllItem}>
             전체 삭제
           </button>
         </div>
-        <div className="cartList">
+        <div className="cart-list">
           {cartItems.map((cartItem, i) => (
             <CartItem
               {...cartItem}
@@ -219,9 +219,9 @@ const CartList = ({
         </div>
       </form>
       <Estimate />
-      <div className="buyWrapper">
+      <div className="buy-wrapper">
         <p>총예상결제액</p>
-        <p className="totalEstimate">{formattedTotalPrice}원</p>
+        <p className="total-estimate">{formattedTotalPrice}원</p>
 
         <button className="buy" onClick={handleSubmit}>
           구매하기

@@ -45,10 +45,10 @@ const CartPage = () => {
   };
 
   if (!cartItems.length)
-    return <div className="emptyCart">장바구니가 비었습니다</div>;
+    return <div className="empty-cart">장바구니가 비었습니다</div>;
 
   return (
-    <div className="cartPage">
+    <div className="cart-page">
       <CartList cartItems={cartItems} onCheckboxChange={handleCheckboxChange} />
     </div>
   );

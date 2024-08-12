@@ -35,9 +35,9 @@ const MainPage: React.FC<MainPageProps> = ({ initialProducts = [] }) => {
   }, [initialProducts]);
 
   return (
-    <div className="mainPage">
-      <h1 className="bannerTitle">오늘의 추천 상품!</h1>
-      <Slider {...settings} className="bannerSlider">
+    <div className="main-page">
+      <h1 className="banner-title">오늘의 추천 상품!</h1>
+      <Slider {...settings} className="banner-slider">
         {randomProducts.map(
           (product) =>
             product.createdAt && (
@@ -46,10 +46,10 @@ const MainPage: React.FC<MainPageProps> = ({ initialProducts = [] }) => {
                   <img
                     src={product.imageUrl}
                     alt={product.title}
-                    className="bannerImg"
+                    className="banner-img"
                   />
                 </Link>
-                <div className="bannerProductTitle">{product.title}</div>
+                <div className="banner-product-title">{product.title}</div>
               </div>
             )
         )}

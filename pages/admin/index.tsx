@@ -47,9 +47,9 @@ data: {
 
   return (
     <div>
-      <div className="adminPage">
+      <div className="admin-page">
         <AddForm />
-        <div className="productsTitle">어드민</div>
+        <div className="products-title">어드민</div>
         <AdminList
           list={data?.pages || []}
           editingIndex={editingIndex}
