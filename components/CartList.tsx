@@ -10,7 +10,6 @@ import {
 } from "react";
 import { useRecoilState } from "recoil";
 import { checkedCartState } from "@/recolis/cart";
-import Estimate from "@/pages/cart/Estimate";
 import { useRouter } from "next/router";
 import { formatPrice } from "@/pages/products";
 import { useMutation } from "react-query";
@@ -32,6 +31,10 @@ const CartList = ({
   const formRef = useRef<HTMLFormElement>(null);
   const checkboxRefs = cartItems.map(() => createRef<HTMLInputElement>());
   const [formData, setFormData] = useState<FormData>();
+  const [itemCheckedStates, setItemCheckedStates] = useState<{
+    [key: string]: boolean;
+  }>(cartItems.reduce((acc, item) => ({ ...acc, [item.id]: false }), {}));
+  const [selectAllChecked, setSelectAllChecked] = useState(false);
 
   const handleSubmit = () => {
     if (checkedItems.length < 1) {
@@ -82,6 +85,13 @@ const CartList = ({
       .forEach((inputElem) => {
         inputElem.current!.checked = allChecked;
       });
+    setItemCheckedStates((prevStates) =>
+      Object.keys(prevStates).reduce((acc, key) => {
+        acc[key] = allChecked;
+        return acc;
+      }, {} as { [key: string]: boolean })
+    );
+    setSelectAllChecked(allChecked);
   };
 
   const handleCheckboxChanged = (e: SyntheticEvent) => {
@@ -214,15 +224,22 @@ const CartList = ({
               key={cartItem.id}
               ref={checkboxRefs[i]}
               onCheckboxChange={onCheckboxChange}
+              isChecked={itemCheckedStates[cartItem.id] || false}
+              setIsChecked={(checked: boolean) =>
+                setItemCheckedStates((prev) => ({
+                  ...prev,
+                  [cartItem.id]: checked,
+                }))
+              }
             />
           ))}
         </div>
       </form>
-      <Estimate />
       <div className="buy-wrapper">
-        <p>총예상결제액</p>
-        <p className="total-estimate">{formattedTotalPrice}원</p>
-
+        <p>총 금액</p>
+        <p className="total-estimate">
+          {formattedTotalPrice ? `${formattedTotalPrice}원` : null}
+        </p>
         <button className="buy" onClick={handleSubmit}>
           구매하기
         </button>

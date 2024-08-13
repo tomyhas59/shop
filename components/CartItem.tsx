@@ -1,8 +1,14 @@
 import { Cart, DELETE_CART, UPDATE_CART } from "@/graphql/cart";
-import ItemData from "@/pages/cart/ItemData";
+import { formatPrice } from "@/pages/products";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 import { checkedCartState } from "@/recolis/cart";
-import { ForwardedRef, forwardRef, useState } from "react";
+import {
+  Dispatch,
+  ForwardedRef,
+  forwardRef,
+  SetStateAction,
+  useState,
+} from "react";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 
@@ -12,8 +18,12 @@ const CartItem = (
     product: { title, imageUrl, price, createdAt },
     amount,
     onCheckboxChange,
+    isChecked,
+    setIsChecked,
   }: Cart & {
     onCheckboxChange: (itemId: string, isChecked: boolean) => void;
+    isChecked: boolean;
+    setIsChecked: (checked: boolean) => void;
   },
   ref: ForwardedRef<HTMLInputElement>
 ) => {
@@ -68,27 +78,23 @@ const CartItem = (
     }
   };
 
-  const handleChangeAmount = () => {
-    if (newAmount > 1) {
-      const updatedItems = checkedItems.map((item) =>
-        item.id === id ? { ...item, amount: newAmount } : item
-      );
-      setCheckedItems(updatedItems);
-    }
-  };
-
   const handledeleteCart = () => {
     deleteCart(id);
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
+    setIsChecked(isChecked);
     onCheckboxChange(id, isChecked);
   };
 
+  const checkedItem = checkedItems.find((item) => item.id === id);
+  const checkedItemAmount = checkedItem ? checkedItem.amount : 0;
+  const formattedPrice = formatPrice(price);
+  const formattedTotalPrice = formatPrice(price * checkedItemAmount);
   return (
-    <li className="cart-item">
-      <div>
+    <li className="cart-item-container">
+      <div className="cart-item-box">
         <input
           type="checkbox"
           id={`checkbox-${id}`}
@@ -99,40 +105,41 @@ const CartItem = (
           disabled={!createdAt}
           onChange={handleCheckboxChange}
         />
-        <label htmlFor={`checkbox-${id}`} className="custom-checkbox"></label>
+        <label htmlFor={`checkbox-${id}`} className="cart-item">
+          <p className="cart-item-title">{title}</p>
+          <img className="cart-image" src={imageUrl} alt={title} />
+          <p className="cart-item-price">{formattedPrice}원</p>
+        </label>
       </div>
-      <ItemData imageUrl={imageUrl} price={price} title={title} />
-      <div className="cart-item-amount">
-        <span>수량:</span>
-        <input
-          type="number"
-          className="amount-input"
-          value={newAmount}
-          onChange={handleInputChange}
-        />
-        <div className="amount-button">
-          <button type="button" onClick={handleIncrementAmount}>
-            ▲
-          </button>
-          <button type="button" onClick={handleDecreaseAmount}>
-            ▼
-          </button>
+      <div className="cart-item-options">
+        <div className="cart-item-amount">
+          <span>수량:</span>
+          <input
+            type="number"
+            className="amount-input"
+            value={newAmount}
+            onChange={handleInputChange}
+          />
+          <div className="amount-button">
+            <button type="button" onClick={handleIncrementAmount}>
+              +
+            </button>
+            <button type="button" onClick={handleDecreaseAmount}>
+              -
+            </button>
+          </div>
         </div>
         <button
           type="button"
-          className="change-amount"
-          onClick={handleChangeAmount}
+          className="cart-item-delete"
+          onClick={handledeleteCart}
         >
-          변경
+          X
         </button>
       </div>
-      <button
-        type="button"
-        className="cart-item-delete"
-        onClick={handledeleteCart}
-      >
-        X
-      </button>
+      {isChecked && (
+        <div className="cart-item-total">합계: {formattedTotalPrice}원</div>
+      )}
       {!createdAt && <div className="xmark">삭제된 상품</div>}
     </li>
   );
