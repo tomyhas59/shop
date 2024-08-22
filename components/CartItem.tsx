@@ -2,13 +2,7 @@ import { Cart, DELETE_CART, UPDATE_CART } from "@/graphql/cart";
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 import { checkedCartState } from "@/recolis/cart";
-import {
-  Dispatch,
-  ForwardedRef,
-  forwardRef,
-  SetStateAction,
-  useState,
-} from "react";
+import { ForwardedRef, forwardRef, useState } from "react";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
 
