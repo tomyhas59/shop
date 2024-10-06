@@ -152,13 +152,15 @@
 }
 
 .amount-button {
+  display: inline;
   margin-top: 12px;
 }
 
 .amount-button button {
   background-color: #056bf9;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
+  border-radius:5px;
 }
 
 .amount-button button:hover {
