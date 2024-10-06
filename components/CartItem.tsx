@@ -114,15 +114,7 @@ const CartItem = (
             value={newAmount}
             onChange={handleInputChange}
           />
-          <div className="amount-button">
-            <button type="button" onClick={handleIncrementAmount}>
-              +
-            </button>
-            <button type="button" onClick={handleDecreaseAmount}>
-              -
-            </button>
-          </div>
-        </div>
+         </div>
         <button
           type="button"
           className="cart-item-delete"
@@ -132,7 +124,17 @@ const CartItem = (
         </button>
       </div>
       {isChecked && (
+      <>
+       <div className="amount-button">
+            <button type="button" onClick={handleIncrementAmount}>
+              +
+            </button>
+            <button type="button" onClick={handleDecreaseAmount}>
+              -
+            </button>
+          </div>
         <div className="cart-item-total">합계: {formattedTotalPrice}원</div>
+        </>
       )}
       {!createdAt && <div className="xmark">삭제된 상품</div>}
     </li>
