@@ -124,17 +124,17 @@ const CartItem = (
         </button>
       </div>
       {isChecked && (
-      <>
-       <div className="amount-button">
+   
+        <div className="cart-item-total">합계: {formattedTotalPrice}원  
+          <div className="amount-button">
             <button type="button" onClick={handleIncrementAmount}>
               +
             </button>
             <button type="button" onClick={handleDecreaseAmount}>
               -
             </button>
-          </div>
-        <div className="cart-item-total">합계: {formattedTotalPrice}원</div>
-        </>
+          </div></div>
+       
       )}
       {!createdAt && <div className="xmark">삭제된 상품</div>}
     </li>
