@@ -70,13 +70,13 @@ const ProductDetail = ({
       productId,
       content,
       rating,
-      userId,
+      uid,
     }: {
       productId: string;
       content: string;
       rating: number;
-      userId: string;
-    }) => graphqlFetcher(ADD_REVIEW, { productId, content, rating, userId })
+      uid: string;
+    }) => graphqlFetcher(ADD_REVIEW, { productId, content, rating, uid })
   );
 
   const [reviewContent, setReviewContent] = useState("");
@@ -98,7 +98,7 @@ const ProductDetail = ({
         productId: id,
         content: reviewContent,
         rating: reviewRating,
-        userId: uid,
+        uid: uid,
       });
 
       setReviewContent("");

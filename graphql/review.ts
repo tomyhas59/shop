@@ -4,7 +4,7 @@ export type Review = {
   id: string;
   content: string;
   rating: number;
-  userId: string;
+  uid: string;
   createdAt: string;
 };
 
@@ -14,7 +14,7 @@ export const GET_REVIEWS = gql`
       id
       content
       rating
-      userId
+      uid
       createdAt
     }
   }
@@ -25,13 +25,13 @@ export const ADD_REVIEW = gql`
     $productId: ID!
     $content: String!
     $rating: Int!
-    $userId: ID!
+    $uid: ID!
   ) {
     addReview(
       productId: $productId
       content: $content
       rating: $rating
-      userId: $userId
+      uid: $uid
     ) {
       id
       content
