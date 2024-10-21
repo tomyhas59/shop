@@ -4,8 +4,11 @@ export type Review = {
   id: string;
   content: string;
   rating: number;
-  uid: string;
+  userId: string;
   createdAt: string;
+  user: {
+    nickname: string;
+  };
 };
 
 export const GET_REVIEWS = gql`
