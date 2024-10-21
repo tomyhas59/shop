@@ -37,10 +37,6 @@ const ProductDetail = ({
     }
   );
 
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
-
   const cartIds = data?.cart ? data.cart.map((item) => item.product.id) : [];
   const isAddedToCart = cartIds.includes(id);
   const [addedCart, setAddedCart] = useState(isAddedToCart);
@@ -59,11 +55,27 @@ const ProductDetail = ({
   const formatedPrice = formatPrice(price);
 
   // 리뷰 관련
-  const { data: reviewsData, refetch: refetchReviews } = useQuery<{
+  const {
+    data: reviewsData,
+    refetch: refetchReviews,
+    error,
+  } = useQuery<{
     reviews: Review[];
-  }>([QueryKeys.REVIEWS, id], () =>
-    graphqlFetcher<{ reviews: Review[] }>(GET_REVIEWS, { productId: id })
+  }>([QueryKeys.REVIEWS, id, uid], () =>
+    graphqlFetcher<{ reviews: Review[] }>(GET_REVIEWS, {
+      productId: id,
+      userId: uid,
+    })
   );
+
+  useEffect(() => {
+    if (reviewsData) {
+      console.log("받은 리뷰 데이터:", reviewsData.reviews);
+    }
+    if (error) {
+      console.error("리뷰 데이터를 가져오는 중 오류 발생:", error);
+    }
+  }, [error, reviewsData]);
 
   const { mutate: addReview } = useMutation(
     ({
@@ -94,7 +106,7 @@ const ProductDetail = ({
     }
 
     try {
-      await addReview({
+      addReview({
         productId: id,
         content: reviewContent,
         rating: reviewRating,
@@ -110,11 +122,16 @@ const ProductDetail = ({
     }
   };
 
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
   return (
     <div>
       <div className="product-detail">
         <p className="title">{title}</p>
         <img className="image" src={imageUrl} alt={title} />
+
         <p className="description">{description}</p>
         <span className="price">{formatedPrice}원</span>
         <button className="add-cart" onClick={handleAddToCart}>

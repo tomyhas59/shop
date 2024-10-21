@@ -8,7 +8,6 @@ const useIntersection = (targetRef: RefObject<HTMLElement>) => {
     if (!observerRef.current) {
       observerRef.current = new IntersectionObserver((entries) => {
         setIntersecting(entries.some((entry) => entry.isIntersecting));
-        console.log(entries);
       });
     }
     return observerRef.current;

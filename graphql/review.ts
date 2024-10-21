@@ -9,13 +9,16 @@ export type Review = {
 };
 
 export const GET_REVIEWS = gql`
-  query GET_REVIEWS($productId: ID!) {
-    reviews(productId: $productId) {
+  query GET_REVIEWS($productId: ID!, $userId: ID!) {
+    reviews(productId: $productId, userId: $userId) {
       id
       content
       rating
       uid
       createdAt
+      user {
+        nickname
+      }
     }
   }
 `;
