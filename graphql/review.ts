@@ -17,7 +17,7 @@ export const GET_REVIEWS = gql`
       id
       content
       rating
-      userId
+      user
       createdAt
     }
   }
@@ -28,18 +28,19 @@ export const ADD_REVIEW = gql`
     $productId: ID!
     $content: String!
     $rating: Int!
-    $uid: ID!
+    $userId: ID!
   ) {
     addReview(
       productId: $productId
       content: $content
       rating: $rating
-      uid: $uid
+      userId: $userId
     ) {
       id
       content
       rating
       createdAt
+      user
     }
   }
 `;
