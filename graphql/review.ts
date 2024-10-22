@@ -17,11 +17,8 @@ export const GET_REVIEWS = gql`
       id
       content
       rating
-      uid
+      userId
       createdAt
-      user {
-        nickname
-      }
     }
   }
 `;
