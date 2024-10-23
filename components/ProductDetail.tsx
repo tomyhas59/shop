@@ -181,25 +181,27 @@ const ProductDetail = ({
         </button>
       </div>
       <div className="reviews">
-        <h2>리뷰 목록</h2>
-        {reviews.length > 0 ? (
-          reviews.map((review, i) => (
-            <div key={i} className="review-item">
-              <p>{review.user?.nickname}</p>
-              <p>{review.content}</p>
-              <p>평점: {review.rating}</p>
-              <p>작성일: {formatDate(new Date(Number(review.createdAt)))}</p>
-              {/* 삭제 버튼 추가 */}
-              <button onClick={() => handledeleteReview(review.id)}>
+        {reviews?.map((review, i) => (
+          <div key={i} className="review-item">
+            <div className="review-header">
+              <p className="nickname">{review.user?.nickname}</p>
+              <p className="date">
+                {formatDate(new Date(Number(review.createdAt)))}
+              </p>
+            </div>
+            <p className="content">{review.content}</p>
+            <p className="rating">평점: {review.rating}</p>
+            {uid === review.uid && (
+              <button
+                className="delete-button"
+                onClick={() => handledeleteReview(review.id)}
+              >
                 삭제
               </button>
-            </div>
-          ))
-        ) : (
-          <p>리뷰가 없습니다.</p>
-        )}
+            )}
+          </div>
+        ))}
       </div>
-
       <form onSubmit={handleReviewSubmit} className="review-form">
         <h2>리뷰 작성</h2>
         <textarea
@@ -208,22 +210,26 @@ const ProductDetail = ({
           placeholder="리뷰 내용을 입력하세요."
           required
         />
-        <select
-          value={reviewRating}
-          onChange={(e) => setReviewRating(Number(e.target.value))}
-          required
-        >
-          <option value={0} disabled>
-            평점을 선택하세요.
-          </option>
-          {[1, 2, 3, 4, 5].map((rating) => (
-            <option key={rating} value={rating}>
-              {rating}
-            </option>
-          ))}
-        </select>
         <button type="submit">리뷰 추가</button>
       </form>
+      <div className="rating-options">
+        {[1, 2, 3, 4, 5].map((rating) => (
+          <label key={rating}>
+            <input
+              type="checkbox"
+              checked={reviewRating === rating}
+              onChange={() => {
+                if (reviewRating === rating) {
+                  setReviewRating(0);
+                } else {
+                  setReviewRating(rating);
+                }
+              }}
+            />
+            {rating} 점
+          </label>
+        ))}
+      </div>
     </div>
   );
 };
