@@ -7,13 +7,15 @@ import {
   useEffect,
   useState,
   useCallback,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import { useRecoilState } from "recoil";
 import { checkedCartState } from "@/recolis/cart";
 import { useRouter } from "next/router";
 import { formatPrice } from "@/pages/products";
 import { useMutation } from "react-query";
-import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
+import { graphqlFetcher } from "@/queryClient";
 import { useUser } from "@/context/UserProvider";
 import { EXECUTE_PAY } from "@/graphql/payment";
 import PaymentModal from "./ModalPortal";
@@ -21,12 +23,13 @@ import PaymentModal from "./ModalPortal";
 const CartList = ({
   cartItems,
   onCheckboxChange,
+  setCartItems,
 }: {
   cartItems: Cart[];
   onCheckboxChange: (itemId: string, isChecked: boolean) => void;
+  setCartItems: Dispatch<SetStateAction<Cart[]>>;
 }) => {
   const router = useRouter();
-  const queryClient = getClient();
   const [checkedItems, setCheckedCartData] = useRecoilState(checkedCartState);
   const formRef = useRef<HTMLFormElement>(null);
   const checkboxRefs = cartItems.map(() => createRef<HTMLInputElement>());
@@ -109,21 +112,16 @@ const CartList = ({
   };
 
   //전체 카트 삭제
-  const { mutate: deleteAllCart } = useMutation(
-    () => graphqlFetcher(DELETE_ALL_CART),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(QueryKeys.CART); //데이터 전체 다시 가져옴
-      },
-    }
+  const { mutate: deleteAllCart } = useMutation(() =>
+    graphqlFetcher(DELETE_ALL_CART)
   );
 
   const handleDeleteAllItem = (e: SyntheticEvent) => {
+    e.preventDefault();
     const confirmed = window.confirm("정말 삭제하시겠습니까?");
     if (confirmed) {
       deleteAllCart();
-    } else {
-      e.preventDefault();
+      setCartItems([]);
     }
   };
 

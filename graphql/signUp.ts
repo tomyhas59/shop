@@ -1,6 +1,6 @@
 import { gql } from "graphql-tag";
 
-export type SignUp = {
+export type User = {
   email: string;
   nickname: string;
   password: string;

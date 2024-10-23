@@ -1,7 +1,7 @@
 import React, { SyntheticEvent, useState } from "react";
 import { useMutation } from "react-query";
 import { graphqlFetcher } from "@/queryClient";
-import { SIGN_UP, SignUp } from "@/graphql/signUp";
+import { SIGN_UP, User } from "@/graphql/signUp";
 import { useRouter } from "next/router";
 
 const SignUpPage = () => {
@@ -12,7 +12,7 @@ const SignUpPage = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
 
   const { mutate: signUp } = useMutation(
-    ({ email, nickname, password }: SignUp) =>
+    ({ email, nickname, password }: User) =>
       graphqlFetcher<any>(SIGN_UP, { email, nickname, password }),
     {
       onError: (error: any) => {

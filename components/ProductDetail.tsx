@@ -1,11 +1,18 @@
 import { useUser } from "@/context/UserProvider";
 import { ADD_CART, Cart, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
-import { ADD_REVIEW, GET_REVIEWS, Review } from "@/graphql/review";
+import {
+  ADD_REVIEW,
+  GET_REVIEWS,
+  Review,
+  DELETE_REVIEW,
+} from "@/graphql/review"; // DELETE_REVIEW 임포트
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
+import { reviewsState } from "@/recolis/review";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
+import { useRecoilState } from "recoil";
 
 const ProductDetail = ({
   createdAt,
@@ -55,41 +62,66 @@ const ProductDetail = ({
   const formatedPrice = formatPrice(price);
 
   // 리뷰 관련
+  const [reviews, setReviews] = useRecoilState<Review[]>(reviewsState);
+
   const {
     data: reviewsData,
     refetch: refetchReviews,
     error,
   } = useQuery<{
     reviews: Review[];
-  }>([QueryKeys.REVIEWS, id, uid], () =>
-    graphqlFetcher<{ reviews: Review[] }>(GET_REVIEWS, {
-      productId: id,
-      userId: uid,
-    })
+  }>(
+    [QueryKeys.PRODUCT, id],
+    () => graphqlFetcher<{ reviews: Review[] }>(GET_REVIEWS, { productId: id }),
+    {
+      onSuccess: (data) => {
+        setReviews(data.reviews);
+      },
+    }
   );
 
   useEffect(() => {
-    if (reviewsData) {
-      console.log("받은 리뷰 데이터:", reviewsData.reviews);
+    if (reviews) {
+      console.log("받은 리뷰 데이터:", reviews);
     }
     if (error) {
       console.error("리뷰 데이터를 가져오는 중 오류 발생:", error);
     }
-  }, [error, reviewsData]);
+  }, [error, reviews]);
 
-  const { mutate: addReview } = useMutation(
-    ({
-      productId,
-      content,
-      rating,
-      userId,
-    }: {
-      productId: string;
-      content: string;
-      rating: number;
-      userId: string;
-    }) => graphqlFetcher(ADD_REVIEW, { productId, content, rating, userId })
+  const { mutate: addReview } = useMutation<
+    Review,
+    unknown,
+    { productId: string; content: string; rating: number; uid: string }
+  >(
+    ({ productId, content, rating, uid }) =>
+      graphqlFetcher(ADD_REVIEW, { productId, content, rating, uid }),
+    {
+      onSuccess: (data) => {
+        const newReview = data.addReview || data;
+        console.log(newReview.content);
+        setReviews((prevReviews) => [...prevReviews, newReview]);
+      },
+    }
   );
+
+  const { mutate: deleteReview } = useMutation(
+    (reviewId: string) => graphqlFetcher(DELETE_REVIEW, { reviewId }),
+    {
+      onSuccess: () => {
+        // 삭제 후 리뷰를 다시 가져오거나 로컬 상태에서 삭제
+        refetchReviews();
+      },
+      onError: (error) => {
+        console.error("리뷰 삭제 중 오류 발생:", error);
+        alert("리뷰 삭제에 실패했습니다.");
+      },
+    }
+  );
+
+  const handledeleteReview = (reviewId: string) => {
+    deleteReview(reviewId);
+  };
 
   const [reviewContent, setReviewContent] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
@@ -100,8 +132,8 @@ const ProductDetail = ({
       alert("로그인이 필요합니다");
       return;
     }
-    if (!reviewContent || !reviewRating) {
-      alert("모든 필드를 입력하세요.");
+    if (!reviewContent) {
+      alert("리뷰를 작성하세요.");
       return;
     }
 
@@ -110,7 +142,7 @@ const ProductDetail = ({
         productId: id,
         content: reviewContent,
         rating: reviewRating,
-        userId: uid,
+        uid,
       });
 
       setReviewContent("");
@@ -126,12 +158,22 @@ const ProductDetail = ({
     refetch();
   }, [refetch]);
 
+  const formatDate = (date: {
+    getFullYear: () => any;
+    getMonth: () => number;
+    getDate: () => any;
+  }) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <div>
       <div className="product-detail">
         <p className="title">{title}</p>
         <img className="image" src={imageUrl} alt={title} />
-
         <p className="description">{description}</p>
         <span className="price">{formatedPrice}원</span>
         <button className="add-cart" onClick={handleAddToCart}>
@@ -140,12 +182,17 @@ const ProductDetail = ({
       </div>
       <div className="reviews">
         <h2>리뷰 목록</h2>
-        {reviewsData?.reviews && reviewsData.reviews.length > 0 ? (
-          reviewsData.reviews.map((review) => (
-            <div key={review.id} className="review-item">
+        {reviews.length > 0 ? (
+          reviews.map((review, i) => (
+            <div key={i} className="review-item">
+              <p>{review.user?.nickname}</p>
               <p>{review.content}</p>
               <p>평점: {review.rating}</p>
-              <p>작성일: {new Date(review.createdAt).toLocaleDateString()}</p>
+              <p>작성일: {formatDate(new Date(Number(review.createdAt)))}</p>
+              {/* 삭제 버튼 추가 */}
+              <button onClick={() => handledeleteReview(review.id)}>
+                삭제
+              </button>
             </div>
           ))
         ) : (

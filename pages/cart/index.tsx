@@ -49,7 +49,11 @@ const CartPage = () => {
 
   return (
     <div className="cart-page">
-      <CartList cartItems={cartItems} onCheckboxChange={handleCheckboxChange} />
+      <CartList
+        cartItems={cartItems}
+        setCartItems={setCartItems}
+        onCheckboxChange={handleCheckboxChange}
+      />
     </div>
   );
 };
