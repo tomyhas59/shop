@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <Link href="/" passHref>
+      <Link href="/">
         <Image className="logo-img" src={mainLogo} alt="mainLogo" />
       </Link>
       <nav className="nav">

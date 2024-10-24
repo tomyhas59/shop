@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@apollo/client": "^3.9.11",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@types/uuid": "^9.0.8",
     "dotenv": "^16.4.5",
     "firebase": "^10.11.0",

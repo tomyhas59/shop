@@ -13,6 +13,8 @@ import { reviewsState } from "@/recolis/review";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import { useRecoilState } from "recoil";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 const ProductDetail = ({
   createdAt,
@@ -63,6 +65,12 @@ const ProductDetail = ({
 
   // 리뷰 관련
   const [reviews, setReviews] = useRecoilState<Review[]>(reviewsState);
+  const [reviewRating, setReviewRating] = useState(0);
+  const [reviewContent, setReviewContent] = useState("");
+
+  const handleRating = (rating: number) => {
+    setReviewRating(rating);
+  };
 
   const {
     data: reviewsData,
@@ -100,7 +108,7 @@ const ProductDetail = ({
       onSuccess: (data) => {
         const newReview = data.addReview || data;
         console.log(newReview.content);
-        setReviews((prevReviews) => [...prevReviews, newReview]);
+        setReviews((prevReviews) => [newReview, ...prevReviews]);
       },
     }
   );
@@ -122,9 +130,6 @@ const ProductDetail = ({
   const handledeleteReview = (reviewId: string) => {
     deleteReview(reviewId);
   };
-
-  const [reviewContent, setReviewContent] = useState("");
-  const [reviewRating, setReviewRating] = useState(0);
 
   const handleReviewSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -156,7 +161,8 @@ const ProductDetail = ({
 
   useEffect(() => {
     refetch();
-  }, [refetch]);
+    refetchReviews();
+  }, [refetch, refetchReviews]);
 
   const formatDate = (date: {
     getFullYear: () => any;
@@ -181,24 +187,36 @@ const ProductDetail = ({
         </button>
       </div>
       <div className="reviews">
+        <h2>
+          리뷰 <span>{reviews.length}</span>
+        </h2>
         {reviews?.map((review, i) => (
           <div key={i} className="review-item">
             <div className="review-header">
-              <p className="nickname">{review.user?.nickname}</p>
-              <p className="date">
-                {formatDate(new Date(Number(review.createdAt)))}
-              </p>
+              <div className="nickname-wrapper">
+                <p className="nickname">{review.user?.nickname}</p>
+                {review.rating > 0 &&
+                  Array.from({ length: review.rating }).map((_, index) => (
+                    <FontAwesomeIcon
+                      key={index}
+                      icon={faStar}
+                      style={{ color: "gold", marginLeft: "-5px" }}
+                    />
+                  ))}
+                <p className="date">
+                  {formatDate(new Date(Number(review.createdAt)))}
+                </p>
+              </div>
+              {(uid === review.user.uid || user?.displayName === "admin") && (
+                <button
+                  className="review-delete-button"
+                  onClick={() => handledeleteReview(review.id)}
+                >
+                  삭제
+                </button>
+              )}
             </div>
-            <p className="content">{review.content}</p>
-            <p className="rating">평점: {review.rating}</p>
-            {uid === review.uid && (
-              <button
-                className="delete-button"
-                onClick={() => handledeleteReview(review.id)}
-              >
-                삭제
-              </button>
-            )}
+            <p className="review-content">{review.content}</p>
           </div>
         ))}
       </div>
@@ -210,26 +228,22 @@ const ProductDetail = ({
           placeholder="리뷰 내용을 입력하세요."
           required
         />
-        <button type="submit">리뷰 추가</button>
-      </form>
-      <div className="rating-options">
-        {[1, 2, 3, 4, 5].map((rating) => (
-          <label key={rating}>
-            <input
-              type="checkbox"
-              checked={reviewRating === rating}
-              onChange={() => {
-                if (reviewRating === rating) {
-                  setReviewRating(0);
-                } else {
-                  setReviewRating(rating);
-                }
+        <div className="rating-wrapper">
+          {[1, 2, 3, 4, 5].map((rating) => (
+            <FontAwesomeIcon
+              key={rating}
+              icon={faStar}
+              onClick={() => handleRating(rating)}
+              style={{
+                cursor: "pointer",
+                color: reviewRating >= rating ? "gold" : "gray",
+                fontSize: "24px",
               }}
             />
-            {rating} 점
-          </label>
-        ))}
-      </div>
+          ))}
+          <button type="submit">리뷰 추가</button>
+        </div>
+      </form>
     </div>
   );
 };

@@ -27,11 +27,13 @@ const MainPage: React.FC<MainPageProps> = ({ initialProducts = [] }) => {
   console.log(initialProducts);
 
   useEffect(() => {
-    const shuffledProducts = [...initialProducts].sort(
-      () => 0.5 - Math.random()
-    );
-    const selectedProducts = shuffledProducts.slice(0, 3);
-    setRandomProducts(selectedProducts);
+    if (initialProducts.length > 0) {
+      const shuffledProducts = [...initialProducts].sort(
+        () => 0.5 - Math.random()
+      );
+      const selectedProducts = shuffledProducts.slice(0, 3);
+      setRandomProducts(selectedProducts);
+    }
   }, [initialProducts]);
 
   return (
