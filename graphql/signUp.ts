@@ -1,9 +1,10 @@
 import { gql } from "graphql-tag";
 
 export type User = {
-  uid: string;
+  uid?: string;
   email: string;
   nickname: string;
+  password: string;
 };
 
 export const GET_USER = gql`
