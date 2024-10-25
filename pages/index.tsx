@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useQuery } from "react-query";
 import { GET_ALLPRODUCTS, Product, Products } from "@/graphql/products";
-import { QueryKeys, graphqlFetcher } from "@/queryClient";
+import { graphqlFetcher } from "@/queryClient";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 
@@ -23,8 +22,6 @@ const MainPage: React.FC<MainPageProps> = ({ initialProducts = [] }) => {
   };
 
   const [randomProducts, setRandomProducts] = useState<Product[]>([]);
-
-  console.log(initialProducts);
 
   useEffect(() => {
     if (initialProducts.length > 0) {
