@@ -36,4 +36,5 @@ export const QueryKeys = {
   CART: "CART",
   SIGN_UP: "SIHN_UP",
   REVIEWS: "REVIEWS",
+  ORDERS: "ORDERS",
 };

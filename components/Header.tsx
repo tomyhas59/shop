@@ -34,15 +34,7 @@ const Header = () => {
           <li className="nav-item">
             <Link href="/products">상품 목록</Link>
           </li>
-          <li className="nav-item">
-            <a
-              onClick={() =>
-                user ? navigateTo("/cart") : alert("로그인이 필요합니다")
-              }
-            >
-              장바구니
-            </a>
-          </li>
+
           {user ? (
             <>
               {user.displayName === "admin" && (
@@ -50,6 +42,12 @@ const Header = () => {
                   <Link href="/admin">상품 관리</Link>
                 </li>
               )}
+              <li className="nav-item">
+                <a onClick={() => navigateTo("/cart")}>장바구니</a>
+              </li>
+              <li className="nav-item">
+                <a onClick={() => navigateTo("/orders")}>주문 내역</a>
+              </li>
               <li className="nav-item">
                 <button className="nav-button" onClick={handleLogout}>
                   로그아웃

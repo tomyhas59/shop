@@ -38,9 +38,9 @@ const MainPage: React.FC<MainPageProps> = ({ initialProducts = [] }) => {
       <h1 className="banner-title">오늘의 추천 상품!</h1>
       <Slider {...settings} className="banner-slider">
         {randomProducts.map(
-          (product) =>
+          (product, i) =>
             product.createdAt && (
-              <div key={product.id}>
+              <div key={i}>
                 <Link href={`/products/${product.id}`}>
                   <img
                     src={product.imageUrl}

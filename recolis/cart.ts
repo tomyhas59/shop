@@ -5,3 +5,8 @@ export const checkedCartState = atom<Cart[]>({
   key: "checkedCartState",
   default: [],
 });
+
+export const checkedOrdersState = atom<Cart[]>({
+  key: "checkedOrdersState",
+  default: [],
+});
