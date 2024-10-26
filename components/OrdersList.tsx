@@ -131,43 +131,46 @@ const OrdersList = ({
     }
   }, [enabledItem]);
 
+  console.log(ordersItems);
   return (
-    <div className="order-list-container">
-      <form ref={formRef} onChange={handleCheckboxChanged}>
-        <div className="all-button">
-          <label className="custom-select-all">
-            <input
-              id="select-all"
-              type="checkbox"
-              className="select-all"
-              name="selectAll"
-            />
-            전체 선택
-            <label htmlFor="select-all"></label>
-          </label>
-          <button className="delete-all" onClick={handleDeleteAllItem}>
-            전체 삭제
-          </button>
-        </div>
-        <div className="order-list">
-          {ordersItems.map((ordersItem, i) => (
-            <OrdersItem
-              {...ordersItem}
-              key={ordersItem.id}
-              ref={checkboxRefs[i]}
-              onCheckboxChange={onCheckboxChange}
-              isChecked={itemCheckedStates[ordersItem.id] || false}
-              setIsChecked={(checked: boolean) =>
-                setItemCheckedStates((prev) => ({
-                  ...prev,
-                  [ordersItem.id]: checked,
-                }))
-              }
-            />
-          ))}
-        </div>
-      </form>
-    </div>
+    <form
+      ref={formRef}
+      onChange={handleCheckboxChanged}
+      className="order-list-container"
+    >
+      <div className="all-button">
+        <label className="custom-select-all">
+          <input
+            id="select-all"
+            type="checkbox"
+            className="select-all"
+            name="selectAll"
+          />
+          전체 선택
+          <label htmlFor="select-all"></label>
+        </label>
+        <button className="delete-all" onClick={handleDeleteAllItem}>
+          전체 삭제
+        </button>
+      </div>
+      <div className="order-list">
+        {ordersItems.map((ordersItem, i) => (
+          <OrdersItem
+            {...ordersItem}
+            key={ordersItem.id}
+            ref={checkboxRefs[i]}
+            onCheckboxChange={onCheckboxChange}
+            isChecked={itemCheckedStates[ordersItem.id] || false}
+            setIsChecked={(checked: boolean) =>
+              setItemCheckedStates((prev) => ({
+                ...prev,
+                [ordersItem.id]: checked,
+              }))
+            }
+          />
+        ))}
+      </div>
+    </form>
   );
 };
 

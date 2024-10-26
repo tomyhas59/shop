@@ -49,7 +49,7 @@ const OrdersPage = () => {
     return <div className="empty-cart">주문 내역이 없습니다.</div>;
 
   return (
-    <div className="cart-page">
+    <div className="orders-page">
       <OrdersList
         ordersItems={ordersItems}
         setOrdersItems={setOrdersItems}

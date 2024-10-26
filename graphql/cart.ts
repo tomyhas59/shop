@@ -5,6 +5,7 @@ export type Cart = {
   id: string;
   amount: number;
   product: Product;
+  createdAt?: string;
 };
 
 export const GET_CART = gql`

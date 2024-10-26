@@ -1,14 +1,14 @@
 import { Cart } from "@/graphql/cart";
 import { DELETE_ORDERS } from "@/graphql/payment";
-
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
-import { ForwardedRef, forwardRef, useState } from "react";
+import { ForwardedRef, forwardRef } from "react";
 import { useMutation } from "react-query";
 
 const OrdersItem = (
   {
     id,
-    product: { title, imageUrl, price, createdAt },
+    createdAt,
+    product: { title, imageUrl },
     onCheckboxChange,
     setIsChecked,
   }: Cart & {
@@ -29,7 +29,7 @@ const OrdersItem = (
     }
   );
 
-  const handledeleteCart = () => {
+  const handleDeleteCart = () => {
     deleteOrders(id);
   };
 
@@ -39,34 +39,39 @@ const OrdersItem = (
     onCheckboxChange(id, isChecked);
   };
 
+  const formatDate = (timestamp: number) => {
+    const date = new Date(timestamp);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   return (
-    <li className="orders-item-container">
-      <div className="orders-item-box">
+    <li className="order-item-container">
+      <div className="order-item-box">
         <input
           type="checkbox"
           id={`checkbox-${id}`}
-          className="orders-item-checkbox"
+          className="order-item-checkbox"
           name="selectItem"
           ref={ref}
           data-id={id}
           disabled={!createdAt}
           onChange={handleCheckboxChange}
         />
-        <label htmlFor={`checkbox-${id}`} className="orders-item">
-          <p className="orders-item-title">{title}</p>
-          <img className="orders-image" src={imageUrl} alt={title} />
+        <label htmlFor={`checkbox-${id}`} className="order-item">
+          <img className="order-image" src={imageUrl} alt={title} />
+          <p className="order-item-title">{title}</p>
         </label>
       </div>
-      <div className="orders-item-options">
-        <p>주문 날짜: {createdAt}</p>
-        <button
-          type="button"
-          className="orders-item-delete"
-          onClick={handledeleteCart}
-        >
-          X
-        </button>
-      </div>
+      <button
+        type="button"
+        className="order-item-delete"
+        onClick={handleDeleteCart}
+      >
+        X
+      </button>
     </li>
   );
 };

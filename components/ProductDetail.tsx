@@ -17,7 +17,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 const ProductDetail = ({
-  createdAt,
   description,
   imageUrl,
   price,
@@ -175,6 +174,7 @@ const ProductDetail = ({
     return `${year}-${month}-${day}`;
   };
 
+  console.log(reviews);
   return (
     <div>
       <div className="product-detail">

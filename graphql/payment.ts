@@ -11,6 +11,7 @@ export const GET_ORDERS = gql`
     orders(uid: $uid) {
       id
       amount
+      createdAt
       product {
         id
         imageUrl
