@@ -7,6 +7,9 @@ body {
   line-height: 100px;
   text-align: center;
   font-size: 5rem;
+  @media (max-width: 480px) {
+    font-size: 2rem;
+  }
 }
 
 .product-list {
