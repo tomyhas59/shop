@@ -322,10 +322,17 @@ body {
     display: flex;
     flex-direction: column;
     > .image {
-      width: 300px;
+      width: 80%;
     }
     > .add-cart {
-      width: 300px;
+      width: 150px;
     }
+  }
+  .review-form button {
+    font-size: 10px;
+    padding: 5px;
+  }
+  .rating-wrapper {
+    gap: 5px;
   }
 }
