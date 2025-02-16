@@ -34,7 +34,7 @@ const AdminPage = () => {
 
   /* 
 data: {
-  {pageParams : [undefind...]},
+  {pageParams : [undefined...]},
   {pages: [
     {products:[{...}]},
     {products:[{...}]}

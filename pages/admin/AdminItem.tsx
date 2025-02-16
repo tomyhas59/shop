@@ -8,7 +8,6 @@ import {
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 import arrToObj from "@/util/arrToObj";
-import Image from "next/image";
 import Link from "next/link";
 import { SyntheticEvent } from "react";
 import { useMutation } from "react-query";
@@ -34,7 +33,7 @@ const AdminItem = ({
     graphqlFetcher(ADD_CART, { id })
   );
 
-  const formatedPrice = formatPrice(price);
+  const formattedPrice = formatPrice(price);
 
   //상품 삭제-------------------------------------------
   const { mutate: deleteProduct } = useMutation(
@@ -151,8 +150,8 @@ const AdminItem = ({
       <Link className="link" href={`/products/${id}`}>
         상세 보기
       </Link>
-      <span className="price">{formatedPrice}원</span>
-      {!createdAt && <div className="xmark">삭제된 상품</div>}
+      <span className="price">{formattedPrice}원</span>
+      {!createdAt && <div className="xMark">삭제된 상품</div>}
     </li>
   );
 };

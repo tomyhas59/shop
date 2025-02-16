@@ -7,7 +7,7 @@ import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import pullcartImg from "@/public/pullCart.png";
+import pullCartImg from "@/public/pullCart.png";
 import emptyCartImg from "@/public/emptyCart.png";
 import Image from "next/image";
 
@@ -87,7 +87,7 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
       <button className="add-to-cart" onClick={handleCartData}>
         <Image
           className="cart-icon"
-          src={addedCart ? pullcartImg : emptyCartImg}
+          src={addedCart ? pullCartImg : emptyCartImg}
           alt={addedCart ? "Added to cart" : "Add to cart"}
         />
       </button>

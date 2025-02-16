@@ -60,7 +60,7 @@ const ProductDetail = ({
     setAddedCart(isAddedToCart);
   }, [data, isAddedToCart]);
 
-  const formatedPrice = formatPrice(price);
+  const formattedPrice = formatPrice(price);
 
   // 리뷰 관련
   const [reviews, setReviews] = useRecoilState<Review[]>(reviewsState);
@@ -126,7 +126,7 @@ const ProductDetail = ({
     }
   );
 
-  const handledeleteReview = (reviewId: string) => {
+  const handleDeleteReview = (reviewId: string) => {
     deleteReview(reviewId);
   };
 
@@ -181,7 +181,7 @@ const ProductDetail = ({
         <p className="title">{title}</p>
         <img className="image" src={imageUrl} alt={title} />
         <p className="description">{description}</p>
-        <span className="price">{formatedPrice}원</span>
+        <span className="price">{formattedPrice}원</span>
         <button className="add-cart" onClick={handleAddToCart}>
           {addedCart ? "담기 완료" : "담기"}
         </button>
@@ -210,7 +210,7 @@ const ProductDetail = ({
               {(uid === review.user.uid || user?.displayName === "admin") && (
                 <button
                   className="review-delete-button"
-                  onClick={() => handledeleteReview(review.id)}
+                  onClick={() => handleDeleteReview(review.id)}
                 >
                   삭제
                 </button>

@@ -136,7 +136,7 @@ const CartItem = (
           </div>
         </div>
       )}
-      {!createdAt && <div className="xmark">삭제된 상품</div>}
+      {!createdAt && <div className="xMark">삭제된 상품</div>}
     </li>
   );
 };
