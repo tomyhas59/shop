@@ -12,9 +12,9 @@ const Footer = () => {
         </Link>
       </div>
       <div className="footer-info">
-        <div className="footer-list">이메일: yh9035926@naver.com</div>
-        <div className="footer-list">전화번호: 010-1234-1234</div>
-        <div className="footer-list">© 2024 MyShop. All rights reserved.</div>
+        <div className="footer-item">이메일: yh9035926@naver.com</div>
+        <div className="footer-item">전화번호: 010-1234-1234</div>
+        <div className="footer-item">© 2024 MyShop. All rights reserved.</div>
       </div>
     </div>
   );

@@ -8,7 +8,6 @@ import {
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 import arrToObj from "@/util/arrToObj";
-import Link from "next/link";
 import { SyntheticEvent } from "react";
 import { useMutation } from "react-query";
 
@@ -81,7 +80,7 @@ const AdminItem = ({
   };
   if (isEditing)
     return (
-      <form onSubmit={handleUpdateProduct}>
+      <form onSubmit={handleUpdateProduct} className="admin-product-form">
         <label>
           상품명:
           <input
@@ -124,32 +123,35 @@ const AdminItem = ({
             defaultValue={description}
           />
         </label>
-        <button type="submit" className="submit-button">
-          저장
-        </button>
-        <button
-          type="button"
-          className="submit-button"
-          onClick={() => doneEdit()}
-        >
-          취소
-        </button>
+        <div className="button-wrapper">
+          <button type="submit" className="submit-button">
+            저장
+          </button>
+          <button
+            type="button"
+            className="submit-button"
+            onClick={() => doneEdit()}
+          >
+            취소
+          </button>
+        </div>
       </form>
     );
 
   return (
     <li className="product-item">
-      <button className="delete-button" onClick={handleDeleteProduct}>
-        삭제
-      </button>
-      <button className="update-button" onClick={startEdit}>
-        수정
-      </button>
+      {createdAt && (
+        <>
+          <button className="delete-button" onClick={handleDeleteProduct}>
+            삭제
+          </button>
+          <button className="update-button" onClick={startEdit}>
+            수정
+          </button>
+        </>
+      )}
       <img className="image" src={imageUrl} alt={title} />
       <p className="title">{title}</p>
-      <Link className="link" href={`/products/${id}`}>
-        상세 보기
-      </Link>
       <span className="price">{formattedPrice}원</span>
       {!createdAt && <div className="xMark">삭제된 상품</div>}
     </li>

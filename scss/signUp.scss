@@ -50,7 +50,7 @@
   outline: none;
 }
 
-.submit-button {
+.sign-button {
   background-color: rgb(137, 103, 103);
   color: #fff;
   border: none;
@@ -63,11 +63,11 @@
   box-sizing: border-box;
 }
 
-.submit-button:hover {
+.sign-button:hover {
   background-color: rgb(112, 83, 83);
 }
 
-.submit-button:disabled {
+.sign-button:disabled {
   background-color: #bdc3c7;
   cursor: not-allowed;
 }

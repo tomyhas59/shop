@@ -10,11 +10,13 @@ import { useMutation, useQuery } from "react-query";
 import pullCartImg from "@/public/pullCart.png";
 import emptyCartImg from "@/public/emptyCart.png";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 const ProductItem = ({ imageUrl, price, title, id }: Product) => {
   const { user } = useUser();
   const uid = user?.uid;
   const queryClient = getClient();
+  const router = useRouter();
 
   const { data, refetch } = useQuery<{ cart: Cart[] }>(
     [QueryKeys.CART, uid],
@@ -55,7 +57,8 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
     return cartItem?.id;
   };
 
-  const handleCartData = () => {
+  const handleCartData = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     if (!user) return alert("로그인이 필요합니다");
     if (uid) {
       if (!addedCart) {
@@ -76,13 +79,14 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
 
   const formattedPrice = formatPrice(price);
 
+  const goToProductDetail = () => {
+    router.push(`/products/${id}`);
+  };
+
   return (
-    <li className="product-item">
+    <li className="product-item" onClick={goToProductDetail}>
       <img className="image" src={imageUrl} alt={title} />
       <p className="title">{title}</p>
-      <Link className="link" href={`/products/${id}`}>
-        상세 보기
-      </Link>
       <span className="price">{formattedPrice}원</span>
       <button className="add-to-cart" onClick={handleCartData}>
         <Image

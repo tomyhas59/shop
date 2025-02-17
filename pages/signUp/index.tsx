@@ -95,7 +95,7 @@ const SignUpPage = () => {
             required
           />
         </div>
-        <button className="submit-button" type="submit">
+        <button className="sign-button" type="submit">
           가입하기
         </button>
       </form>

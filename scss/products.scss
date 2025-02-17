@@ -1,39 +1,46 @@
-body {
-  margin: 0;
-  padding: 0;
+//product-page
+.products-page {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-
 .products-title {
-  line-height: 100px;
   text-align: center;
-  font-size: 5rem;
-  @media (max-width: 480px) {
-    font-size: 2rem;
-  }
+  font-size: 2rem;
 }
 
 .product-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 30px;
-  text-align: center;
-  margin-top: 50px;
+  width: 1024px;
+  margin: 0 auto;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 30px;
+  gap: 10px;
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    padding: 0;
+    gap: 5px;
+  }
 }
 
 .product-item {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(2, 50%);
   place-items: center;
   border: 1px solid silver;
   border-radius: 20px;
-  text-decoration: none;
-  color: #278b6d;
   grid-template-areas:
     "a a"
-    "b d"
-    "f g";
-
+    "b b"
+    "c d";
+  cursor: pointer;
+  &:hover {
+    border-color: #888686;
+  }
   > .title {
     grid-area: b;
     font-size: 1.1rem;
@@ -42,53 +49,57 @@ body {
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
+    }
   }
   > .image {
-    margin-top: 20px;
+    margin-top: 10px;
     width: 200px;
     height: 200px;
     border-radius: 20px;
     transition: transform 0.3s ease;
     grid-area: a;
+
+    @media (max-width: 480px) {
+      width: 100px;
+      height: 100px;
+    }
   }
   > .add-to-cart {
     cursor: pointer;
     border: none;
     background-color: white;
-    grid-area: g;
+    grid-area: d;
     > .cart-icon {
       width: 50px;
       height: 50px;
+      @media (max-width: 480px) {
+        width: 30px;
+        height: 30px;
+      }
     }
   }
 
   > .price {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: bold;
     text-align: center;
     color: black;
-    grid-area: f;
-  }
-
-  > .link {
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    grid-area: d;
-    color: #f3eeee;
-    text-decoration: none;
-    background-color: #875959;
-    &:hover {
-      color: #ffcc00;
+    grid-area: c;
+    @media (max-width: 480px) {
+      font-size: 0.8rem;
     }
   }
+
+  //admin-------------------
   > .delete-button,
   .update-button {
     position: absolute;
     top: 0;
     right: 0;
     width: 70px;
+    border: none;
     background-color: red;
     border-radius: 0 20px 0 0;
     font-size: 1.3rem;
@@ -97,6 +108,10 @@ body {
     &:hover {
       background-color: rgb(98, 18, 34);
       color: #efcece;
+    }
+    @media (max-width: 480px) {
+      font-size: 0.7rem;
+      width: 40px;
     }
   }
 
@@ -110,6 +125,49 @@ body {
   }
 }
 
+.admin-product-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 700px;
+  gap: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #e3f0f9;
+  > button {
+    align-self: center;
+    width: fit-content;
+  }
+  @media (max-width: 480px) {
+    * {
+      font-size: 0.7rem;
+    }
+    padding: 5px;
+  }
+}
+
+.button-wrapper {
+  display: flex;
+  align-self: center;
+}
+
+.submit-button,
+.cancel-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  margin: 1px;
+  width: fit-content;
+  cursor: pointer;
+  @media (max-width: 480px) {
+    padding: 5px 10px;
+  }
+}
+
+//product-detail
 .product-detail {
   width: 800px;
   margin: 0 auto;
@@ -164,28 +222,17 @@ body {
   }
 }
 
-.xmark {
+.xMark {
   color: red;
   position: absolute;
-  font-size: 4rem;
+  font-size: 2rem;
   opacity: 0.5;
   width: 200px;
   top: 30%;
-}
-
-.submit-button,
-.cancel-button {
-  background-color: #4caf50;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  margin: 1px;
-  cursor: pointer;
-}
-
-.submit-button:hover {
-  background-color: #45a049;
+  @media (max-width: 480px) {
+    left: 10%;
+    font-size: 1.5rem;
+  }
 }
 
 .reviews {
