@@ -7,6 +7,7 @@ export type Product = {
   title: string;
   description: string;
   createdAt: string;
+  reviewsCount: number;
 };
 
 export type Products = {
@@ -38,6 +39,7 @@ const GET_PRODUCTS = gql`
       title
       description
       createdAt
+      reviewsCount
     }
   }
 `;

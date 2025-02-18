@@ -39,11 +39,12 @@
     "c d";
   cursor: pointer;
   &:hover {
-    border-color: #888686;
+    box-shadow: inset 0 0 10px rgba(0, 0, 255, 0.8),
+      0 0 15px rgba(0, 0, 255, 0.6);
   }
+
   > .title {
     grid-area: b;
-    font-size: 1.1rem;
     font-weight: bold;
     background-color: #f2f2f2;
     padding: 10px;
@@ -54,15 +55,13 @@
     }
   }
   > .image {
-    margin-top: 10px;
-    width: 200px;
+    width: 100%;
     height: 200px;
-    border-radius: 20px;
+    border-radius: 20px 20px 0 0;
     transition: transform 0.3s ease;
     grid-area: a;
 
     @media (max-width: 480px) {
-      width: 100px;
       height: 100px;
     }
   }
@@ -82,7 +81,6 @@
   }
 
   > .price {
-    font-size: 1.1rem;
     font-weight: bold;
     text-align: center;
     color: black;
@@ -91,37 +89,44 @@
       font-size: 0.8rem;
     }
   }
-
-  //admin-------------------
-  > .delete-button,
-  .update-button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 70px;
-    border: none;
-    background-color: red;
-    border-radius: 0 20px 0 0;
-    font-size: 1.3rem;
-    color: #fff;
-    cursor: pointer;
-    &:hover {
-      background-color: rgb(98, 18, 34);
-      color: #efcece;
-    }
+  > .reviewsCount {
+    color: #888686;
+    margin-bottom: 5px;
     @media (max-width: 480px) {
-      font-size: 0.7rem;
-      width: 40px;
+      font-size: 0.8rem;
     }
   }
+}
 
-  .update-button {
-    left: 0;
-    background-color: yellowgreen;
-    border-radius: 20px 0 0 0;
-    &:hover {
-      background-color: rgb(85, 118, 18);
-    }
+//admin-------------------
+.delete-button,
+.update-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 70px;
+  border: none;
+  background-color: red;
+  border-radius: 0 20px 0 0;
+  font-size: 1.3rem;
+  color: #fff;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(98, 18, 34);
+    color: #efcece;
+  }
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+    width: 40px;
+  }
+}
+
+.update-button {
+  left: 0;
+  background-color: yellowgreen;
+  border-radius: 20px 0 0 0;
+  &:hover {
+    background-color: rgb(85, 118, 18);
   }
 }
 

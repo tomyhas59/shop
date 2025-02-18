@@ -1,10 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 import { useUser } from "@/context/UserProvider";
 import { ADD_CART, Cart, DELETE_CART, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import pullCartImg from "@/public/pullCart.png";
@@ -12,7 +10,7 @@ import emptyCartImg from "@/public/emptyCart.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
-const ProductItem = ({ imageUrl, price, title, id }: Product) => {
+const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
   const { user } = useUser();
   const uid = user?.uid;
   const queryClient = getClient();
@@ -83,6 +81,58 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
     router.push(`/products/${id}`);
   };
 
+  // 3D Tilt(기울기) Effect
+  useEffect(() => {
+    const boxes = document.querySelectorAll(
+      ".product-item"
+    ) as NodeListOf<HTMLElement>;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const box = e.currentTarget as HTMLElement;
+      const { width, height, left, top } = box.getBoundingClientRect();
+      const mouseX = e.clientX - left;
+      const mouseY = e.clientY - top;
+
+      const rotateX = (mouseY / height - 0.5) * 20;
+      const rotateY = (mouseX / width - 0.5) * 20;
+
+      box.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const box = e.currentTarget as HTMLElement;
+      const { width, height, left, top } = box.getBoundingClientRect();
+      const touchX = e.touches[0].clientX - left;
+      const touchY = e.touches[0].clientY - top;
+
+      const rotateX = (touchY / height - 0.5) * 20;
+      const rotateY = (touchX / width - 0.5) * 20;
+
+      box.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    };
+
+    const handleMouseLeave = (e: MouseEvent | TouchEvent) => {
+      const box = e.currentTarget as HTMLElement;
+      box.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+    };
+
+    boxes.forEach((box) => {
+      box.addEventListener("mousemove", handleMouseMove);
+      box.addEventListener("touchmove", handleTouchMove);
+      box.addEventListener("mouseleave", handleMouseLeave);
+      box.addEventListener("touchend", handleMouseLeave);
+    });
+
+    return () => {
+      boxes.forEach((box) => {
+        box.removeEventListener("mousemove", handleMouseMove);
+        box.removeEventListener("touchmove", handleTouchMove);
+        box.removeEventListener("mouseleave", handleMouseLeave);
+        box.removeEventListener("touchend", handleMouseLeave);
+      });
+    };
+  }, []);
+
   return (
     <li className="product-item" onClick={goToProductDetail}>
       <img className="image" src={imageUrl} alt={title} />
@@ -95,6 +145,7 @@ const ProductItem = ({ imageUrl, price, title, id }: Product) => {
           alt={addedCart ? "Added to cart" : "Add to cart"}
         />
       </button>
+      <div className="reviewsCount">리뷰({reviewsCount})</div>
     </li>
   );
 };

@@ -8,10 +8,10 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 
 interface MainPageProps {
-  initialProducts: Product[];
+  selectedProducts: Product[];
 }
 
-const MainPage: React.FC<MainPageProps> = ({ initialProducts = [] }) => {
+const MainPage: React.FC<MainPageProps> = ({ selectedProducts = [] }) => {
   const settings = {
     infinite: true,
     speed: 300,
@@ -21,23 +21,11 @@ const MainPage: React.FC<MainPageProps> = ({ initialProducts = [] }) => {
     autoplaySpeed: 3000,
   };
 
-  const [randomProducts, setRandomProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    if (initialProducts.length > 0) {
-      const shuffledProducts = [...initialProducts].sort(
-        () => 0.5 - Math.random()
-      );
-      const selectedProducts = shuffledProducts.slice(0, 3);
-      setRandomProducts(selectedProducts);
-    }
-  }, [initialProducts]);
-
   return (
     <div className="main-page">
       <h1 className="banner-title">오늘의 추천 상품!</h1>
       <Slider {...settings} className="banner-slider">
-        {randomProducts.map(
+        {selectedProducts.map(
           (product, i) =>
             product.createdAt && (
               <div key={i}>
@@ -61,18 +49,22 @@ export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const data = await graphqlFetcher<Products>(GET_ALLPRODUCTS);
     const initialProducts = data.allProducts || [];
-    console.log(initialProducts);
+    const realProducts = initialProducts.filter(
+      (product) => product.createdAt !== null
+    );
+    const shuffledProducts = [...realProducts].sort(() => 0.5 - Math.random());
+    const selectedProducts = shuffledProducts.slice(0, 3);
 
     return {
       props: {
-        initialProducts,
+        selectedProducts,
       },
     };
   } catch (error) {
     console.error(error);
     return {
       props: {
-        initialProducts: [],
+        selectedProducts: [],
       },
     };
   }
