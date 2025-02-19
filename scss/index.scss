@@ -3,15 +3,21 @@
 @import "signUp";
 @import "orders";
 
-body {
+* {
   padding: 0;
   margin: 0;
-  * {
-    li {
-      list-style: none;
-    }
-  }
+  box-sizing: border-box;
 }
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
 //layout
 .layout-wrapper {
   display: flex;
@@ -21,6 +27,9 @@ body {
 
 .content-wrapper {
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: start;
 }
 // header
 .header {
@@ -28,12 +37,11 @@ body {
   align-items: center;
   justify-content: space-around;
   padding: 10px 20px;
-  height: 40px;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
   @media (max-width: 480px) {
     padding: 10px;
-    justify-content: center;
   }
 }
 
@@ -234,7 +242,6 @@ body {
   align-items: center;
   padding: 20px;
   max-width: 600px;
-  margin: auto;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

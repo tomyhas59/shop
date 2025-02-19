@@ -35,7 +35,7 @@ const SignInPage = () => {
 
   return (
     <div className="sign-in-page">
-      <h1>로그인</h1>
+      <h1 className="sign-title">로그인</h1>
       <form onSubmit={handleSignIn} className="sign-form">
         <input
           type="email"

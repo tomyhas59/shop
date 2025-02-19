@@ -150,9 +150,9 @@ const AdminItem = ({
           </button>
         </>
       )}
-      <img className="image" src={imageUrl} alt={title} />
-      <p className="title">{title}</p>
-      <span className="price">{formattedPrice}원</span>
+      <img className="product-image" src={imageUrl} alt={title} />
+      <p className="product-title">{title}</p>
+      <span className="product-price">{formattedPrice}원</span>
       {!createdAt && <div className="xMark">삭제된 상품</div>}
     </li>
   );

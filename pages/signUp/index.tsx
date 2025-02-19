@@ -37,7 +37,7 @@ const SignUpPage = () => {
 
   return (
     <div className="sign-up-page">
-      <h1 className="title">회원가입</h1>
+      <h1 className="sign-title">회원가입</h1>
       <form onSubmit={handleSubmit} className="sign-form">
         <div className="form-group">
           <label htmlFor="email" className="form-label">

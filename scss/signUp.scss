@@ -1,12 +1,12 @@
 .sign-up-page {
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: Arial, sans-serif;
 }
 
-.title {
+.sign-title {
   font-size: 32px;
   font-weight: bold;
   color: rgb(137, 103, 103);
@@ -74,18 +74,11 @@
 
 /* Sign In Page */
 .sign-in-page {
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: Arial, sans-serif;
-}
-
-.sign-in-page h1 {
-  font-size: 32px;
-  font-weight: bold;
-  color: rgb(137, 103, 103);
-  margin-bottom: 20px;
 }
 
 input {

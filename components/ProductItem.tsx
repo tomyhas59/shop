@@ -93,51 +93,35 @@ const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
       const mouseX = e.clientX - left;
       const mouseY = e.clientY - top;
 
-      const rotateX = (mouseY / height - 0.5) * 20;
-      const rotateY = (mouseX / width - 0.5) * 20;
+      const rotateX = (mouseY / height - 0.5) * 30;
+      const rotateY = (mouseX / width - 0.5) * 30;
 
       box.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      const box = e.currentTarget as HTMLElement;
-      const { width, height, left, top } = box.getBoundingClientRect();
-      const touchX = e.touches[0].clientX - left;
-      const touchY = e.touches[0].clientY - top;
-
-      const rotateX = (touchY / height - 0.5) * 20;
-      const rotateY = (touchX / width - 0.5) * 20;
-
-      box.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    };
-
-    const handleMouseLeave = (e: MouseEvent | TouchEvent) => {
+    const handleMouseLeave = (e: MouseEvent) => {
       const box = e.currentTarget as HTMLElement;
       box.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
     };
 
     boxes.forEach((box) => {
       box.addEventListener("mousemove", handleMouseMove);
-      box.addEventListener("touchmove", handleTouchMove);
       box.addEventListener("mouseleave", handleMouseLeave);
-      box.addEventListener("touchend", handleMouseLeave);
     });
 
     return () => {
       boxes.forEach((box) => {
         box.removeEventListener("mousemove", handleMouseMove);
-        box.removeEventListener("touchmove", handleTouchMove);
         box.removeEventListener("mouseleave", handleMouseLeave);
-        box.removeEventListener("touchend", handleMouseLeave);
       });
     };
   }, []);
 
   return (
     <li className="product-item" onClick={goToProductDetail}>
-      <img className="image" src={imageUrl} alt={title} />
-      <p className="title">{title}</p>
-      <span className="price">{formattedPrice}원</span>
+      <img className="product-image" src={imageUrl} alt={title} />
+      <p className="product-title">{title}</p>
+      <span className="product-price">{formattedPrice}원</span>
       <button className="add-to-cart" onClick={handleCartData}>
         <Image
           className="cart-icon"
