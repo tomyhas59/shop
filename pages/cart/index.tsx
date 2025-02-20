@@ -2,14 +2,21 @@ import CartList from "@/components/CartList";
 import auth from "@/firebaseConfig";
 import { Cart, GET_CART } from "@/graphql/cart";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
+import { checkedCartState } from "@/recolis/cart";
 import { User, onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { useSetRecoilState } from "recoil";
 
 const CartPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [cartItems, setCartItems] = useState<Cart[]>([]);
   const uid = user?.uid;
+  const setCheckedItems = useSetRecoilState(checkedCartState);
+
+  useEffect(() => {
+    setCheckedItems([]); // 페이지 이동 시 체크 상태 초기화
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -49,6 +56,7 @@ const CartPage = () => {
 
   return (
     <div className="cart-page">
+      <h1 className="cart-title">장바구니</h1>
       <CartList
         cartItems={cartItems}
         setCartItems={setCartItems}

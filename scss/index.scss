@@ -30,6 +30,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: start;
+  background-color: #f2f2f2;
 }
 // header
 .header {
@@ -85,7 +86,7 @@ a {
       color: #007bff;
     }
     @media (max-width: 480px) {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       padding: 5px;
     }
   }
@@ -126,7 +127,12 @@ a {
 
 //main
 .main-page {
-  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .banner-title {
@@ -160,6 +166,7 @@ a {
 
 .banner-product-title {
   font-weight: bold;
+  text-align: center;
 }
 
 .slick-prev:before,

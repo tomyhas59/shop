@@ -30,7 +30,7 @@ const ProductListPage = () => {
   return (
     <div>
       <div className="products-page">
-        <div className="products-title">상품 목록</div>
+        <h1 className="products-title">상품 목록</h1>
         <ProductList list={data?.pages || []} />
         <div ref={fetchMoreRef} />
       </div>

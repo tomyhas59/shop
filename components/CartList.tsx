@@ -203,7 +203,11 @@ const CartList = ({
 
   return (
     <div className="cart-list-container">
-      <form ref={formRef} onChange={handleCheckboxChanged}>
+      <form
+        ref={formRef}
+        onChange={handleCheckboxChanged}
+        className="cart-list-form-container"
+      >
         <div className="all-button">
           <label className="custom-select-all">
             <input
@@ -211,6 +215,7 @@ const CartList = ({
               type="checkbox"
               className="select-all"
               name="selectAll"
+              style={{ display: "none" }}
             />
             전체 선택
             <label htmlFor="select-all"></label>
@@ -237,11 +242,11 @@ const CartList = ({
           ))}
         </div>
       </form>
-      <div className="buy-wrapper">
-        <p>총 금액</p>
-        <p className="total-estimate">
+      <div className="total-cost-wrapper">
+        <h3>총 금액</h3>
+        <div className="total-estimate">
           {formattedTotalPrice ? `${formattedTotalPrice}원` : null}
-        </p>
+        </div>
         <button className="buy" onClick={handleSubmit}>
           구매하기
         </button>

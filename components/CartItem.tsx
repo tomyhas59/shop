@@ -44,7 +44,7 @@ const CartItem = (
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
     if (!isNaN(value) && value > 0) {
-      setNewAmount(value);
+      setNewAmount(value > 99 ? value % 10 : value);
       updateCartAmount({ id, amount: value });
     }
   };
@@ -86,8 +86,16 @@ const CartItem = (
   const checkedItemAmount = checkedItem ? checkedItem.amount : 0;
   const formattedPrice = formatPrice(price);
   const formattedTotalPrice = formatPrice(price * checkedItemAmount);
+
   return (
-    <li className="cart-item-container">
+    <li className="cart-item-container" data-checked={isChecked}>
+      <button
+        type="button"
+        className="cart-item-delete"
+        onClick={handleDeleteCart}
+      >
+        X
+      </button>
       <div className="cart-item-box">
         <input
           type="checkbox"
@@ -98,10 +106,11 @@ const CartItem = (
           data-id={id}
           disabled={!createdAt}
           onChange={handleCheckboxChange}
+          style={{ display: "none" }}
         />
         <label htmlFor={`checkbox-${id}`} className="cart-item">
+          <img className="cart-item-image" src={imageUrl} alt={title} />
           <p className="cart-item-title">{title}</p>
-          <img className="cart-image" src={imageUrl} alt={title} />
           <p className="cart-item-price">{formattedPrice}원</p>
         </label>
       </div>
@@ -113,29 +122,24 @@ const CartItem = (
             className="amount-input"
             value={newAmount}
             onChange={handleInputChange}
+            max={99}
           />
         </div>
-        <button
-          type="button"
-          className="cart-item-delete"
-          onClick={handleDeleteCart}
-        >
-          X
-        </button>
-      </div>
-      {isChecked && (
-        <div className="cart-item-total">
-          합계: {formattedTotalPrice}원
-          <div className="amount-button">
-            <button type="button" onClick={handleIncrementAmount}>
-              +
-            </button>
-            <button type="button" onClick={handleDecreaseAmount}>
-              -
-            </button>
+        {isChecked && (
+          <div className="cart-item-total">
+            <div className="amount-button-wrapper">
+              <button type="button" onClick={handleIncrementAmount}>
+                +
+              </button>
+              <button type="button" onClick={handleDecreaseAmount}>
+                -
+              </button>
+            </div>
+            <p>합계</p>
+            <p>{formattedTotalPrice}원</p>
           </div>
-        </div>
-      )}
+        )}
+      </div>
       {!createdAt && <div className="xMark">삭제된 상품</div>}
     </li>
   );

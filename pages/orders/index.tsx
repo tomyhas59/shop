@@ -3,9 +3,11 @@ import auth from "@/firebaseConfig";
 import { Cart } from "@/graphql/cart";
 import { GET_ORDERS } from "@/graphql/payment";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
+import { checkedCartState } from "@/recolis/cart";
 import { User, onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { useSetRecoilState } from "recoil";
 
 const OrdersPage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -50,6 +52,7 @@ const OrdersPage = () => {
 
   return (
     <div className="orders-page">
+      <h1 className="orders-title">주문 내역</h1>
       <OrdersList
         ordersItems={ordersItems}
         setOrdersItems={setOrdersItems}
