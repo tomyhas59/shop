@@ -29,7 +29,7 @@ a {
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: flex-start;
   background-color: #f2f2f2;
 }
 // header
@@ -132,7 +132,7 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 50px;
 }
 
 .banner-title {
@@ -145,10 +145,10 @@ a {
 }
 
 .banner-slider {
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: space-between;
   align-items: center;
-  width: 500px;
+  width: 600px;
   margin: 0 auto;
   @media (max-width: 480px) {
     width: 250px;
@@ -164,11 +164,9 @@ a {
   }
 }
 
-.banner-product-title {
-  font-weight: bold;
-  text-align: center;
+.slick-list {
+  width: 500px;
 }
-
 .slick-prev:before,
 .slick-next:before {
   color: black !important;
@@ -180,7 +178,13 @@ a {
 
 .slick-prev,
 .slick-next {
+  position: relative !important;
   z-index: 1;
+}
+
+.banner-product-title {
+  font-weight: bold;
+  text-align: center;
 }
 
 // modal
@@ -198,17 +202,21 @@ a {
   }
   .modal-inner {
     position: absolute;
+    display: grid;
+    place-items: center;
     text-align: center;
     top: 50%;
     left: 50%;
     background-color: white;
     font-size: 2rem;
-    padding: 50px;
+    padding: 40px;
     border-radius: 8px;
+    gap: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translate(-50%, -50%);
     @media (max-width: 480px) {
-      font-size: 1rem;
+      font-size: 0.8rem;
+      padding: 30px;
     }
   }
 
@@ -221,26 +229,27 @@ a {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
   }
-}
 
-.modal .modal button {
-  background-color: #007bff;
-  width: 150px;
-  margin-left: 10px;
-  color: white;
-  border: none;
-  font-size: 1.5rem;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  @media (max-width: 480px) {
-    font-size: 1rem;
+  button {
+    background-color: #007bff;
+    margin-left: 10px;
+    width: 120px;
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    &:hover {
+      background-color: #0056b3;
+    }
+    @media (max-width: 480px) {
+      width: 60px;
+      padding: 5px 10px;
+      font-size: 0.8rem;
+    }
   }
-}
-
-.modal button:hover {
-  background-color: #0056b3;
 }
 
 .user-info-page {
@@ -287,7 +296,7 @@ a {
   color: #555;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 480px) {
   .user-details {
     flex-direction: column;
     align-items: center;
