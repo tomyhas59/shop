@@ -1,4 +1,5 @@
 import CartList from "@/components/CartList";
+import Payment from "@/components/Payment";
 import auth from "@/firebaseConfig";
 import { Cart, GET_CART } from "@/graphql/cart";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
@@ -62,6 +63,7 @@ const CartPage = () => {
         setCartItems={setCartItems}
         onCheckboxChange={handleCheckboxChange}
       />
+      <Payment cartItems={cartItems} setCartItems={setCartItems} />
     </div>
   );
 };

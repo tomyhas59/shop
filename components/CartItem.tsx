@@ -50,7 +50,7 @@ const CartItem = (
   };
   const handleIncrementAmount = () => {
     const newAmountValue = newAmount + 1;
-    setNewAmount(newAmountValue);
+    setNewAmount(newAmountValue > 99 ? newAmount : newAmountValue);
     updateCartAmount({ id, amount: newAmountValue });
 
     const updatedItems = checkedItems.map((item) =>
@@ -113,34 +113,37 @@ const CartItem = (
           <p className="cart-item-title">{title}</p>
           <p className="cart-item-price">{formattedPrice}원</p>
         </label>
-      </div>
-      <div className="cart-item-options">
-        <div className="cart-item-amount">
-          <span>수량:</span>
-          <input
-            type="number"
-            className="amount-input"
-            value={newAmount}
-            onChange={handleInputChange}
-            max={99}
-          />
-        </div>
-        {isChecked && (
-          <div className="cart-item-total">
-            <div className="amount-button-wrapper">
-              <button type="button" onClick={handleIncrementAmount}>
-                +
-              </button>
-              <button type="button" onClick={handleDecreaseAmount}>
-                -
-              </button>
-            </div>
-            <p>합계</p>
-            <p>{formattedTotalPrice}원</p>
+
+        <div className="cart-item-options">
+          <div className="cart-item-amount">
+            <span>수량:</span>
+            <input
+              type="number"
+              className="amount-input"
+              value={newAmount}
+              onChange={handleInputChange}
+              max={99}
+            />
+            {isChecked && (
+              <div className="amount-button-wrapper">
+                <button type="button" onClick={handleIncrementAmount}>
+                  +
+                </button>
+                <button type="button" onClick={handleDecreaseAmount}>
+                  -
+                </button>
+              </div>
+            )}
           </div>
-        )}
+          {isChecked && (
+            <div className="cart-item-total">
+              <p>합계</p>
+              <p>{formattedTotalPrice}원</p>
+            </div>
+          )}
+        </div>
+        {!createdAt && <div className="xMark">삭제된 상품</div>}
       </div>
-      {!createdAt && <div className="xMark">삭제된 상품</div>}
     </li>
   );
 };
