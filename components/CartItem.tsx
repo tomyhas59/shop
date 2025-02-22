@@ -136,7 +136,7 @@ const CartItem = (
             )}
           </div>
           {isChecked && (
-            <div className="cart-item-total">
+            <div className="cart-item-total-cost">
               <p>합계</p>
               <p>{formattedTotalPrice}원</p>
             </div>
