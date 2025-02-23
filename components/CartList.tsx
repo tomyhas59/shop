@@ -135,7 +135,7 @@ const CartList = ({
         onChange={handleCheckboxChanged}
         className="cart-list-form-container"
       >
-        <div className="all-button">
+        <div className="all-button-wrapper">
           <label className="custom-select-all">
             <input
               id="select-all"

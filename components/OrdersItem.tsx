@@ -49,22 +49,22 @@ const OrdersItem = (
 
   return (
     <li className="order-item-container">
-      <div className="order-item-box">
-        <input
-          type="checkbox"
-          id={`checkbox-${id}`}
-          className="order-item-checkbox"
-          name="selectItem"
-          ref={ref}
-          data-id={id}
-          disabled={!createdAt}
-          onChange={handleCheckboxChange}
-        />
-        <label htmlFor={`checkbox-${id}`} className="order-item">
-          <img className="order-image" src={imageUrl} alt={title} />
-          <p className="order-item-title">{title}</p>
-        </label>
-      </div>
+      <input
+        type="checkbox"
+        id={`checkbox-${id}`}
+        className="order-item-checkbox"
+        name="selectItem"
+        ref={ref}
+        data-id={id}
+        disabled={!createdAt}
+        onChange={handleCheckboxChange}
+      />
+      <label htmlFor={`checkbox-${id}`} className="order-item">
+        <img className="order-image" src={imageUrl} alt={title} />
+        <p className="order-item-title">{title}</p>
+        <p>{formatDate(Number(createdAt))}</p>
+      </label>
+
       <button
         type="button"
         className="order-item-delete"

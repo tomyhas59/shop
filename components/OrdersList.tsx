@@ -138,13 +138,14 @@ const OrdersList = ({
       onChange={handleCheckboxChanged}
       className="order-list-container"
     >
-      <div className="all-button">
+      <div className="all-button-wrapper">
         <label className="custom-select-all">
           <input
             id="select-all"
             type="checkbox"
             className="select-all"
             name="selectAll"
+            style={{ display: "none" }}
           />
           전체 선택
           <label htmlFor="select-all"></label>

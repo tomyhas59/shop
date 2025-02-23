@@ -109,11 +109,9 @@ const CartItem = (
       />
       <label htmlFor={`checkbox-${id}`} className="cart-item">
         <img className="cart-item-image" src={imageUrl} alt={title} />
-        <p className="cart-item-title">{title}</p>
-        <p className="cart-item-price">{formattedPrice}원</p>
-      </label>
-      <div className="cart-item-options">
-        <div>
+        <div className="cart-item-title">{title}</div>
+        <div className="cart-item-price">{formattedPrice}원</div>
+        <div className="cart-item-amount">
           <input
             type="number"
             className="amount-input"
@@ -121,9 +119,10 @@ const CartItem = (
             onChange={handleInputChange}
             max={99}
           />
-          개
+          <span>개</span>
         </div>
-      </div>
+      </label>
+
       {isChecked && (
         <div className="cart-item-amount-wrapper">
           <div className="amount-button-wrapper">
