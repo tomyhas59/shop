@@ -96,54 +96,51 @@ const CartItem = (
       >
         X
       </button>
-      <div className="cart-item-box">
-        <input
-          type="checkbox"
-          id={`checkbox-${id}`}
-          className="cart-item-checkbox"
-          name="selectItem"
-          ref={ref}
-          data-id={id}
-          disabled={!createdAt}
-          onChange={handleCheckboxChange}
-          style={{ display: "none" }}
-        />
-        <label htmlFor={`checkbox-${id}`} className="cart-item">
-          <img className="cart-item-image" src={imageUrl} alt={title} />
-          <p className="cart-item-title">{title}</p>
-          <p className="cart-item-price">{formattedPrice}원</p>
-        </label>
-
-        <div className="cart-item-options">
-          <div className="cart-item-amount">
-            <span>수량:</span>
-            <input
-              type="number"
-              className="amount-input"
-              value={newAmount}
-              onChange={handleInputChange}
-              max={99}
-            />
-            {isChecked && (
-              <div className="amount-button-wrapper">
-                <button type="button" onClick={handleIncrementAmount}>
-                  +
-                </button>
-                <button type="button" onClick={handleDecreaseAmount}>
-                  -
-                </button>
-              </div>
-            )}
-          </div>
-          {isChecked && (
-            <div className="cart-item-total-cost">
-              <p>합계</p>
-              <p>{formattedTotalPrice}원</p>
-            </div>
-          )}
+      <input
+        type="checkbox"
+        id={`checkbox-${id}`}
+        className="cart-item-checkbox"
+        name="selectItem"
+        ref={ref}
+        data-id={id}
+        disabled={!createdAt}
+        onChange={handleCheckboxChange}
+        style={{ display: "none" }}
+      />
+      <label htmlFor={`checkbox-${id}`} className="cart-item">
+        <img className="cart-item-image" src={imageUrl} alt={title} />
+        <p className="cart-item-title">{title}</p>
+        <p className="cart-item-price">{formattedPrice}원</p>
+      </label>
+      <div className="cart-item-options">
+        <div>
+          <input
+            type="number"
+            className="amount-input"
+            value={newAmount}
+            onChange={handleInputChange}
+            max={99}
+          />
+          개
         </div>
-        {!createdAt && <div className="xMark">삭제된 상품</div>}
       </div>
+      {isChecked && (
+        <div className="cart-item-amount-wrapper">
+          <div className="amount-button-wrapper">
+            <button type="button" onClick={handleDecreaseAmount}>
+              -
+            </button>
+            <button type="button" onClick={handleIncrementAmount}>
+              +
+            </button>
+          </div>
+          <div className="cart-item-total-cost">
+            <p>합계</p>
+            <p>{formattedTotalPrice}원</p>
+          </div>
+        </div>
+      )}
+      {!createdAt && <div className="xMark">삭제된 상품</div>}
     </li>
   );
 };
