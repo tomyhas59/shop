@@ -14,7 +14,7 @@ import { checkedOrdersState } from "@/recolis/cart";
 import { useMutation } from "react-query";
 import { graphqlFetcher } from "@/queryClient";
 import OrdersItem from "./OrdersItem";
-import { DELETE_ALL_ORDERS } from "@/graphql/payment";
+import { DELETE_ALL_ORDERS, DELETE_SELECTED_ORDERS } from "@/graphql/payment";
 
 const OrdersList = ({
   ordersItems,
@@ -98,6 +98,35 @@ const OrdersList = ({
     }
   };
 
+  //선택된 주문내역 삭제
+
+  const { mutate: deleteSelectedOrders } = useMutation((ids: string[]) =>
+    graphqlFetcher(DELETE_SELECTED_ORDERS, { ids })
+  );
+
+  const handleDeleteSelectedItems = (e: SyntheticEvent) => {
+    e.preventDefault();
+
+    const selectedIds = Object.keys(itemCheckedStates).filter(
+      (id) => itemCheckedStates[id]
+    );
+
+    if (selectedIds.length === 0) {
+      alert("삭제할 아이템을 선택해주세요.");
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `선택된 ${selectedIds.length}개의 항목을 삭제하시겠습니까?`
+    );
+
+    if (confirmed) {
+      deleteSelectedOrders(selectedIds);
+      setOrdersItems((prevItems) =>
+        prevItems.filter((item) => !selectedIds.includes(item.id))
+      );
+    }
+  };
   //recoil checked 업데이트
   useEffect(() => {
     checkedItems.forEach((item) => {
@@ -150,6 +179,9 @@ const OrdersList = ({
           전체 선택
           <label htmlFor="select-all"></label>
         </label>
+        <button className="delete-selected" onClick={handleDeleteSelectedItems}>
+          선택된 항목 삭제
+        </button>
         <button className="delete-all" onClick={handleDeleteAllItem}>
           전체 삭제
         </button>

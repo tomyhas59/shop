@@ -1,4 +1,4 @@
-import { Cart, DELETE_ALL_CART } from "@/graphql/cart";
+import { Cart, DELETE_ALL_CART, DELETE_SELECTED_CART } from "@/graphql/cart";
 import CartItem from "./CartItem";
 import {
   createRef,
@@ -94,6 +94,35 @@ const CartList = ({
       setCartItems([]);
     }
   };
+  //선택된 카트 삭제
+
+  const { mutate: deleteSelectedCart } = useMutation((ids: string[]) =>
+    graphqlFetcher(DELETE_SELECTED_CART, { ids })
+  );
+
+  const handleDeleteSelectedItems = (e: SyntheticEvent) => {
+    e.preventDefault();
+
+    const selectedIds = Object.keys(itemCheckedStates).filter(
+      (id) => itemCheckedStates[id]
+    );
+
+    if (selectedIds.length === 0) {
+      alert("삭제할 아이템을 선택해주세요.");
+      return;
+    }
+
+    const confirmed = window.confirm(
+      `선택된 ${selectedIds.length}개의 항목을 삭제하시겠습니까?`
+    );
+
+    if (confirmed) {
+      deleteSelectedCart(selectedIds);
+      setCartItems((prevItems) =>
+        prevItems.filter((item) => !selectedIds.includes(item.id))
+      );
+    }
+  };
 
   //recoil checked 업데이트
   useEffect(() => {
@@ -147,6 +176,13 @@ const CartList = ({
             전체 선택
             <label htmlFor="select-all"></label>
           </label>
+
+          <button
+            className="delete-selected"
+            onClick={handleDeleteSelectedItems}
+          >
+            선택된 항목 삭제
+          </button>
           <button className="delete-all" onClick={handleDeleteAllItem}>
             전체 삭제
           </button>

@@ -1,5 +1,5 @@
 import { Cart } from "@/graphql/cart";
-import { DELETE_ORDERS } from "@/graphql/payment";
+import { DELETE_ORDER } from "@/graphql/payment";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 import { ForwardedRef, forwardRef } from "react";
 import { useMutation } from "react-query";
@@ -21,7 +21,7 @@ const OrdersItem = (
   const queryClient = getClient();
 
   const { mutate: deleteOrders } = useMutation(
-    (id: string) => graphqlFetcher(DELETE_ORDERS, { id }),
+    (id: string) => graphqlFetcher(DELETE_ORDER, { id }),
     {
       onSuccess: () => {
         queryClient.invalidateQueries(QueryKeys.ORDERS); // 데이터 전체 다시 가져옴

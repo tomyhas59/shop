@@ -3,7 +3,7 @@ import auth from "@/firebaseConfig";
 import { Cart } from "@/graphql/cart";
 import { GET_ORDERS } from "@/graphql/payment";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
-import { checkedCartState } from "@/recolis/cart";
+import { checkedOrdersState } from "@/recolis/cart";
 import { User, onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
@@ -13,6 +13,11 @@ const OrdersPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [ordersItems, setOrdersItems] = useState<Cart[]>([]);
   const uid = user?.uid;
+  const setCheckedItems = useSetRecoilState(checkedOrdersState);
+
+  useEffect(() => {
+    setCheckedItems([]); // 페이지 이동 시 체크 상태 초기화
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

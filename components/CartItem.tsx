@@ -39,6 +39,10 @@ const CartItem = (
     }
   );
 
+  const handleDeleteCart = () => {
+    deleteCart(id);
+  };
+
   const [checkedItems, setCheckedItems] = useRecoilState(checkedCartState);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,10 +74,6 @@ const CartItem = (
       );
       setCheckedItems(updatedItems);
     }
-  };
-
-  const handleDeleteCart = () => {
-    deleteCart(id);
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {

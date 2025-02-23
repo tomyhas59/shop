@@ -63,5 +63,11 @@ export const DELETE_ALL_CART = gql`
   }
 `;
 
+export const DELETE_SELECTED_CART = gql`
+  mutation DELETE_SELECTED_CART($ids: [ID!]!) {
+    deleteSelectedCart(ids: $ids)
+  }
+`;
+
 //client: graphql
 //server: resolver, schema 연결

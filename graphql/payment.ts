@@ -24,14 +24,20 @@ export const GET_ORDERS = gql`
   }
 `;
 
-export const DELETE_ORDERS = gql`
+export const DELETE_ORDER = gql`
   mutation DELETE_ORDERS($id: ID!) {
-    deleteOrders(ordersId: $id)
+    deleteOrder(orderId: $id)
   }
 `;
 
 export const DELETE_ALL_ORDERS = gql`
   mutation DELETE_ORDERS {
     deleteAllOrders
+  }
+`;
+
+export const DELETE_SELECTED_ORDERS = gql`
+  mutation DELETE_SELECTED_ORDERS($ids: [ID!]!) {
+    deleteSelectedOrders(ids: $ids)
   }
 `;

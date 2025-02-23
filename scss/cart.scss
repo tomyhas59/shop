@@ -44,10 +44,22 @@
   width: 100%;
 }
 
+.delete-selected {
+  background-color: #30a536;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #1d6a26;
+  }
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 5px;
+  }
+}
 .delete-all {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #ff6f61;
   color: #fff;
   border: none;
@@ -65,9 +77,6 @@
 
 .custom-select-all {
   color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border: none;
   background-color: #6298e4;
   padding: 10px 20px;
