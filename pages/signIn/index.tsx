@@ -2,16 +2,19 @@ import React, { SyntheticEvent, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/router";
 import auth from "@/firebaseConfig";
+import { useSetRecoilState } from "recoil";
+import { loadingState } from "@/recolis/loading";
 
 const SignInPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const setLoading = useSetRecoilState(loadingState);
 
   const handleSignIn = async (e: SyntheticEvent) => {
     e.preventDefault();
-
+    setLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -24,6 +27,8 @@ const SignInPage = () => {
     } catch (error: any) {
       console.log(error);
       setError("아이디 또는 비밀번호가 다릅니다");
+    } finally {
+      setLoading(false);
     }
   };
 

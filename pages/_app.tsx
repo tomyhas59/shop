@@ -1,4 +1,3 @@
-// src/components/App.tsx
 import React, { useEffect } from "react";
 import { RecoilRoot } from "recoil";
 import { QueryClientProvider } from "react-query";
@@ -10,6 +9,7 @@ import Footer from "@/components/Footer";
 import "../scss/index.scss";
 import auth from "@/firebaseConfig";
 import { signOut } from "firebase/auth";
+import Content from "@/components/Content";
 
 interface PropTypes {
   Component: React.FC;
@@ -36,6 +36,7 @@ const App: React.FC<PropTypes> = ({ Component, pageProps }) => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
+
   return (
     <>
       <Head>
@@ -49,9 +50,9 @@ const App: React.FC<PropTypes> = ({ Component, pageProps }) => {
           <div className="layout-wrapper">
             <Header />
             <QueryClientProvider client={queryClient}>
-              <div className="content-wrapper">
+              <Content>
                 <Component {...pageProps} />
-              </div>
+              </Content>
             </QueryClientProvider>
             <Footer />
           </div>

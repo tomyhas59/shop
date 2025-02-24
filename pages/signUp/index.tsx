@@ -3,6 +3,8 @@ import { useMutation } from "react-query";
 import { graphqlFetcher } from "@/queryClient";
 import { SIGN_UP, User } from "@/graphql/signUp";
 import { useRouter } from "next/router";
+import { useSetRecoilState } from "recoil";
+import { loadingState } from "@/recolis/loading";
 
 const SignUpPage = () => {
   const router = useRouter();
@@ -10,6 +12,7 @@ const SignUpPage = () => {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const setLoading = useSetRecoilState(loadingState);
 
   const { mutate: signUp } = useMutation(
     ({ email, nickname, password }: User) =>
@@ -27,12 +30,19 @@ const SignUpPage = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    if (password !== passwordConfirm) {
-      alert("비밀번호가 일치하지 않습니다");
-      return;
-    }
+    setLoading(true);
+    try {
+      if (password !== passwordConfirm) {
+        alert("비밀번호가 일치하지 않습니다");
+        return;
+      }
 
-    signUp({ email, nickname, password });
+      signUp({ email, nickname, password });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
