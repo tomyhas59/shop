@@ -3,19 +3,17 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useUser } from "@/context/UserProvider";
-import { QueryObserverResult, useMutation } from "react-query";
-import { graphqlFetcher } from "@/queryClient";
+import { useMutation } from "react-query";
+import { getClient, graphqlFetcher, QueryKeys } from "@/queryClient";
 
 type ReviewItemProps = {
   reviews?: Review[];
-  refetchReviews: () => Promise<
-    QueryObserverResult<{ reviews: Review[] }, unknown>
-  >;
 };
 
-const ReviewItem: React.FC<ReviewItemProps> = ({ reviews, refetchReviews }) => {
+const ReviewItem: React.FC<ReviewItemProps> = ({ reviews }) => {
   const { user } = useUser();
   const uid = user?.uid;
+  const queryClient = getClient();
 
   const formatDate = (date: {
     getFullYear: () => any;
@@ -32,8 +30,8 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ reviews, refetchReviews }) => {
     (reviewId: string) => graphqlFetcher(DELETE_REVIEW, { reviewId }),
     {
       onSuccess: () => {
-        // 삭제 후 리뷰를 다시 가져오거나 로컬 상태에서 삭제
-        refetchReviews();
+        queryClient.invalidateQueries(QueryKeys.REVIEWS); //data refresh로 ui update
+        queryClient.invalidateQueries([QueryKeys.PRODUCTS, "products"]);
       },
       onError: (error) => {
         console.error("리뷰 삭제 중 오류 발생:", error);

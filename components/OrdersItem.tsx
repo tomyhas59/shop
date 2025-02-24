@@ -20,7 +20,7 @@ const OrdersItem = (
 ) => {
   const queryClient = getClient();
 
-  const { mutate: deleteOrders } = useMutation(
+  const { mutate: deleteOrder } = useMutation(
     (id: string) => graphqlFetcher(DELETE_ORDER, { id }),
     {
       onSuccess: () => {
@@ -29,8 +29,8 @@ const OrdersItem = (
     }
   );
 
-  const handleDeleteCart = () => {
-    deleteOrders(id);
+  const handleDeleteOrder = () => {
+    deleteOrder(id);
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +68,7 @@ const OrdersItem = (
       <button
         type="button"
         className="order-item-delete"
-        onClick={handleDeleteCart}
+        onClick={handleDeleteOrder}
       >
         X
       </button>

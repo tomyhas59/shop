@@ -16,6 +16,7 @@ const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
   const queryClient = getClient();
   const router = useRouter();
 
+  //카드 담을 때 ui 반영
   const { data, refetch } = useQuery<{ cart: Cart[] }>(
     [QueryKeys.CART, uid],
     () => {
@@ -41,13 +42,8 @@ const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
       graphqlFetcher(ADD_CART, { uid, id })
   );
 
-  const { mutate: deleteCart } = useMutation(
-    (id: string) => graphqlFetcher(DELETE_CART, { id }),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(QueryKeys.CART); // Refresh cart data
-      },
-    }
+  const { mutate: deleteCart } = useMutation((id: string) =>
+    graphqlFetcher(DELETE_CART, { id })
   );
 
   const findCartIdByProductId = (productId: string) => {

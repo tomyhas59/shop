@@ -2,31 +2,23 @@ import { useUser } from "@/context/UserProvider";
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { loadingState } from "@/recolis/loading";
-import { QueryObserverResult, useMutation } from "react-query";
+import { useMutation } from "react-query";
 import { ADD_REVIEW, Review } from "@/graphql/review";
-import { graphqlFetcher } from "@/queryClient";
-import { reviewsState } from "@/recolis/review";
+import { getClient, graphqlFetcher, QueryKeys } from "@/queryClient";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 type ReviewFormProps = {
   productId: string;
-  refetchReviews: () => Promise<
-    QueryObserverResult<{ reviews: Review[] }, unknown>
-  >;
 };
 
-const ReviewForm: React.FC<ReviewFormProps> = ({
-  productId,
-  refetchReviews,
-}) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   const { user } = useUser();
   const uid = user?.uid;
   const setLoading = useSetRecoilState(loadingState);
   const [reviewRating, setReviewRating] = useState(0);
   const [reviewContent, setReviewContent] = useState("");
-  const setReviews = useSetRecoilState<Review[]>(reviewsState);
-
+  const queryClient = getClient();
   const handleRating = (rating: number) => {
     setReviewRating(rating);
   };
@@ -39,10 +31,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
     ({ productId, content, rating, uid }) =>
       graphqlFetcher(ADD_REVIEW, { productId, content, rating, uid }),
     {
-      onSuccess: (data) => {
-        const newReview = data.addReview || data;
-        console.log(newReview.content);
-        setReviews((prevReviews) => [newReview, ...prevReviews]);
+      onSuccess: () => {
+        queryClient.invalidateQueries(QueryKeys.REVIEWS);
+        queryClient.invalidateQueries([QueryKeys.PRODUCTS, "products"]);
       },
     }
   );
@@ -70,7 +61,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
 
       setReviewContent("");
       setReviewRating(0);
-      refetchReviews();
     } catch (error) {
       console.error("리뷰 제출 중 오류 발생:", error);
       alert("리뷰 제출에 실패했습니다. 다시 시도해 주세요.");

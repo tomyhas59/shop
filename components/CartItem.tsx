@@ -34,7 +34,7 @@ const CartItem = (
     (id: string) => graphqlFetcher(DELETE_CART, { id }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(QueryKeys.CART); // 데이터 전체 다시 가져옴
+        queryClient.invalidateQueries(QueryKeys.CART); //data refresh로 ui update
       },
     }
   );
