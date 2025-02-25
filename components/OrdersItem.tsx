@@ -1,5 +1,6 @@
 import { Cart } from "@/graphql/cart";
 import { DELETE_ORDER } from "@/graphql/payment";
+import { formatPrice } from "@/pages/products";
 import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
 import { ForwardedRef, forwardRef } from "react";
 import { useMutation } from "react-query";
@@ -8,7 +9,8 @@ const OrdersItem = (
   {
     id,
     createdAt,
-    product: { title, imageUrl },
+    amount,
+    product: { title, imageUrl, price },
     onCheckboxChange,
     setIsChecked,
   }: Cart & {
@@ -47,6 +49,8 @@ const OrdersItem = (
     return `${year}-${month}-${day}`;
   };
 
+  const formattedTotalPrice = formatPrice(price * amount);
+
   return (
     <li className="order-item-container">
       <input
@@ -62,7 +66,10 @@ const OrdersItem = (
       <label htmlFor={`checkbox-${id}`} className="order-item">
         <img className="order-image" src={imageUrl} alt={title} />
         <p className="order-item-title">{title}</p>
-        <p>{formatDate(Number(createdAt))}</p>
+        <p>{amount}개</p>
+        <p>개당 {formatPrice(price)}원</p>
+        <p>합계 {formattedTotalPrice}원</p>
+        <p>주문 날짜 {formatDate(Number(createdAt))}</p>
       </label>
 
       <button

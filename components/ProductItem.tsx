@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
   const { user } = useUser();
   const uid = user?.uid;
-  const queryClient = getClient();
   const router = useRouter();
 
   //카드 담을 때 ui 반영

@@ -31,7 +31,6 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ reviews }) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(QueryKeys.REVIEWS); //data refresh로 ui update
-        queryClient.invalidateQueries([QueryKeys.PRODUCTS, "products"]);
       },
       onError: (error) => {
         console.error("리뷰 삭제 중 오류 발생:", error);

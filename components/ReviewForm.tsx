@@ -33,7 +33,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(QueryKeys.REVIEWS);
-        queryClient.invalidateQueries([QueryKeys.PRODUCTS, "products"]);
       },
     }
   );

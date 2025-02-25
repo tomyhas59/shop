@@ -160,7 +160,6 @@ const OrdersList = ({
     }
   }, [enabledItem]);
 
-  console.log(ordersItems);
   return (
     <form
       ref={formRef}
