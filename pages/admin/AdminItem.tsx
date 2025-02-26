@@ -139,7 +139,10 @@ const AdminItem = ({
     );
 
   return (
-    <li className="product-item">
+    <li
+      className="product-item"
+      style={{ gridTemplateAreas: '"a a" "b b" "c c"' }}
+    >
       {createdAt && (
         <>
           <button className="delete-button" onClick={handleDeleteProduct}>

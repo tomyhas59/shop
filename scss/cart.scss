@@ -1,9 +1,9 @@
-//cart-page
 .cart-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 .cart-title {
   width: 100%;
@@ -119,7 +119,7 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
   @media (max-width: 480px) {
-    width: 130px;
+    width: 140px;
     padding: 5px;
   }
 }
