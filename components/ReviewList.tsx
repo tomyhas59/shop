@@ -23,8 +23,8 @@ const ReviewList = ({ productId }: { productId: string }) => {
 
   return (
     <div className="review-list-container">
-      <h2>
-        리뷰<span>{reviewsData?.reviews.length}</span>
+      <h2 className="review-title">
+        리뷰 <span className="review-count">{reviewsData?.reviews.length}</span>
       </h2>
       <ReviewItem reviews={reviewsData?.reviews} />
       <ReviewForm productId={productId} />

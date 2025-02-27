@@ -1,5 +1,5 @@
 import { useUser } from "@/context/UserProvider";
-import { ADD_CART, Cart, GET_CART } from "@/graphql/cart";
+import { ADD_CART, Cart, DELETE_CART, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
@@ -22,6 +22,10 @@ const ProductDetail = ({
       graphqlFetcher(ADD_CART, { uid, id })
   );
 
+  const { mutate: deleteCart } = useMutation((id: string) =>
+    graphqlFetcher(DELETE_CART, { id })
+  );
+
   const { data, refetch } = useQuery<{ cart: Cart[] }>(
     [QueryKeys.CART, uid],
     () => {
@@ -40,11 +44,26 @@ const ProductDetail = ({
   const isAddedToCart = cartIds.includes(id);
   const [addedCart, setAddedCart] = useState(isAddedToCart);
 
-  const handleAddToCart = () => {
+  const findCartIdByProductId = (productId: string) => {
+    const cartItem = data?.cart.find((item) => item.product.id === productId);
+    return cartItem?.id;
+  };
+
+  const handleCartData = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (!user) return alert("로그인이 필요합니다");
     if (uid) {
-      addCart({ uid, id });
-      setAddedCart(true);
-    } else alert("로그인이 필요합니다");
+      if (!addedCart) {
+        addCart({ uid, id });
+        setAddedCart(true);
+      } else {
+        const cartId = findCartIdByProductId(id);
+        if (cartId) {
+          deleteCart(cartId);
+        }
+      }
+      setAddedCart(!addedCart);
+    }
   };
 
   useEffect(() => {
@@ -60,14 +79,22 @@ const ProductDetail = ({
   return (
     <div>
       <div className="product-detail">
-        <p className="title">{title}</p>
-        <img className="image" src={imageUrl} alt={title} />
-        <p className="description">{description}</p>
-        <span className="price">{formattedPrice}원</span>
-        <button className="add-cart" onClick={handleAddToCart}>
-          {addedCart ? "담기 완료" : "담기"}
-        </button>
+        <div className="image-container">
+          <img className="image" src={imageUrl} alt={title} />
+        </div>
+        <div className="info">
+          <h2 className="title">{title}</h2>
+          <p className="description">{description}</p>
+          <span className="price">{formattedPrice}원</span>
+          <button
+            className={`add-cart ${addedCart ? "added" : ""}`}
+            onClick={handleCartData}
+          >
+            {addedCart ? "담기 완료" : "담기"}
+          </button>
+        </div>
       </div>
+
       <ReviewList productId={id} />
     </div>
   );

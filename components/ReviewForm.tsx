@@ -43,11 +43,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
 
     if (!uid) {
       alert("로그인이 필요합니다");
-      return;
+      return setLoading(false);
     }
     if (!reviewContent) {
       alert("리뷰를 작성하세요.");
-      return;
+      return setLoading(false);
     }
 
     try {
@@ -68,14 +68,20 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
     }
   };
 
+  const reviewPlaceholder = user
+    ? "리뷰 내용을 입력해주세요."
+    : "로그인 후 입력 가능합니다.";
+
   return (
     <form onSubmit={handleReviewSubmit} className="review-form">
       <h2>리뷰 작성</h2>
       <textarea
         value={reviewContent}
         onChange={(e) => setReviewContent(e.target.value)}
-        placeholder="리뷰 내용을 입력하세요."
+        placeholder={reviewPlaceholder}
         required
+        className="review-textarea"
+        disabled={!user}
       />
       <div className="rating-wrapper">
         {[1, 2, 3, 4, 5].map((rating) => (
@@ -83,15 +89,13 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
             key={rating}
             icon={faStar}
             onClick={() => handleRating(rating)}
-            style={{
-              cursor: "pointer",
-              color: reviewRating >= rating ? "gold" : "gray",
-              fontSize: "24px",
-            }}
+            className={`star-icon ${reviewRating >= rating ? "selected" : ""}`}
           />
         ))}
-        <button type="submit">리뷰 추가</button>
       </div>
+      <button type="submit" className="review-submit-button">
+        리뷰 추가
+      </button>
     </form>
   );
 };

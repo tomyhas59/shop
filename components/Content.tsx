@@ -36,7 +36,7 @@ const Content = ({ children }: { children: ReactNode }) => {
       router.events.off("routeChangeComplete", handleRouteChangeComplete);
       router.events.off("routeChangeError", handleRouteChangeError);
     };
-  }, [router]);
+  }, [router, setLoading]);
 
   return (
     <div className="content-wrapper">

@@ -6,10 +6,10 @@ const UserInfoPage: React.FC = () => {
 
   return (
     <div className="user-info-page">
-      <h1>User Information</h1>
+      <h1 className="user-title">User Information</h1>
       {user ? (
         <div className="user-details">
-          <div className="user-info">
+          <div className="user-info-card">
             <p className="user-email">
               <strong>Email:</strong> {user.email}
             </p>
@@ -19,7 +19,7 @@ const UserInfoPage: React.FC = () => {
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <p className="loading-text">Loading...</p>
       )}
     </div>
   );

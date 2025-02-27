@@ -18,6 +18,9 @@ const SignUpPage = () => {
     ({ email, nickname, password }: User) =>
       graphqlFetcher<any>(SIGN_UP, { email, nickname, password }),
     {
+      onMutate: () => {
+        setLoading(true);
+      },
       onError: (error: any) => {
         alert(error.response.errors[0].message);
       },
@@ -28,16 +31,14 @@ const SignUpPage = () => {
     }
   );
 
-  const handleSubmit = (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    setLoading(true);
+    if (password !== passwordConfirm) {
+      alert("비밀번호가 일치하지 않습니다");
+      return;
+    }
     try {
-      if (password !== passwordConfirm) {
-        alert("비밀번호가 일치하지 않습니다");
-        return;
-      }
-
-      signUp({ email, nickname, password });
+      await signUp({ email, nickname, password });
     } catch (error) {
       console.error(error);
     } finally {

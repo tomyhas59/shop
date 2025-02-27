@@ -161,48 +161,53 @@ const OrdersList = ({
   }, [enabledItem]);
 
   return (
-    <form
-      ref={formRef}
-      onChange={handleCheckboxChanged}
-      className="order-list-container"
-    >
-      <div className="all-button-wrapper">
-        <label className="custom-select-all">
-          <input
-            id="select-all"
-            type="checkbox"
-            className="select-all"
-            name="selectAll"
-            style={{ display: "none" }}
-          />
-          전체 선택
-          <label htmlFor="select-all"></label>
-        </label>
-        <button className="delete-selected" onClick={handleDeleteSelectedItems}>
-          선택된 항목 삭제
-        </button>
-        <button className="delete-all" onClick={handleDeleteAllItem}>
-          전체 삭제
-        </button>
-      </div>
-      <div className="order-list">
-        {ordersItems.map((ordersItem, i) => (
-          <OrdersItem
-            {...ordersItem}
-            key={ordersItem.id}
-            ref={checkboxRefs[i]}
-            onCheckboxChange={onCheckboxChange}
-            isChecked={itemCheckedStates[ordersItem.id] || false}
-            setIsChecked={(checked: boolean) =>
-              setItemCheckedStates((prev) => ({
-                ...prev,
-                [ordersItem.id]: checked,
-              }))
-            }
-          />
-        ))}
-      </div>
-    </form>
+    <div className="order-list-container">
+      <form
+        ref={formRef}
+        onChange={handleCheckboxChanged}
+        className="order-list-form-container"
+      >
+        <div className="all-button-wrapper">
+          <label className="custom-select-all">
+            <input
+              id="select-all"
+              type="checkbox"
+              className="select-all"
+              name="selectAll"
+              style={{ display: "none" }}
+            />
+            전체 선택
+            <label htmlFor="select-all"></label>
+          </label>
+          <button
+            className="delete-selected"
+            onClick={handleDeleteSelectedItems}
+          >
+            선택된 항목 삭제
+          </button>
+          <button className="delete-all" onClick={handleDeleteAllItem}>
+            전체 삭제
+          </button>
+        </div>
+        <div className="order-list">
+          {ordersItems.map((ordersItem, i) => (
+            <OrdersItem
+              {...ordersItem}
+              key={ordersItem.id}
+              ref={checkboxRefs[i]}
+              onCheckboxChange={onCheckboxChange}
+              isChecked={itemCheckedStates[ordersItem.id] || false}
+              setIsChecked={(checked: boolean) =>
+                setItemCheckedStates((prev) => ({
+                  ...prev,
+                  [ordersItem.id]: checked,
+                }))
+              }
+            />
+          ))}
+        </div>
+      </form>
+    </div>
   );
 };
 

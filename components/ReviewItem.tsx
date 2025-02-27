@@ -50,14 +50,16 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ reviews }) => {
           <div className="review-header">
             <div className="nickname-wrapper">
               <p className="nickname">{review.user?.nickname}</p>
-              {review.rating > 0 &&
-                Array.from({ length: review.rating }).map((_, index) => (
-                  <FontAwesomeIcon
-                    key={index}
-                    icon={faStar}
-                    style={{ color: "gold", marginLeft: "-5px" }}
-                  />
-                ))}
+              <div className="review-stars">
+                {review.rating > 0 &&
+                  Array.from({ length: review.rating }).map((_, index) => (
+                    <FontAwesomeIcon
+                      key={index}
+                      icon={faStar}
+                      className="review-star-icon"
+                    />
+                  ))}
+              </div>
               <p className="date">
                 {formatDate(new Date(Number(review.createdAt)))}
               </p>
