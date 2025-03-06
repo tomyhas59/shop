@@ -1,5 +1,13 @@
 import React, { SyntheticEvent, useState } from "react";
 import { useUser } from "@/context/UserProvider";
+import { useSetRecoilState } from "recoil";
+import { loadingState } from "@/recolis/loading";
+import {
+  EmailAuthProvider,
+  getAuth,
+  reauthenticateWithCredential,
+  updatePassword,
+} from "firebase/auth";
 
 const UserInfoPage: React.FC = () => {
   const { user } = useUser();
@@ -7,6 +15,7 @@ const UserInfoPage: React.FC = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+  const setLoading = useSetRecoilState(loadingState);
 
   const [changePasswordForm, setChangePasswordForm] = useState(false);
 
@@ -14,13 +23,50 @@ const UserInfoPage: React.FC = () => {
     setChangePasswordForm((prev) => !prev);
   };
 
-  const handleChangePassword = (e: SyntheticEvent) => {
+  const changePassword = async (oldPassword: string, newPassword: string) => {
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
+
+      if (!user) {
+        throw new Error("사용자가 로그인되지 않았습니다.");
+      }
+
+      if (!user.email) {
+        throw new Error("사용자의 이메일을 찾을 수 없습니다.");
+      }
+
+      const credential = EmailAuthProvider.credential(user.email, oldPassword);
+
+      await reauthenticateWithCredential(user, credential);
+
+      await updatePassword(user, newPassword);
+
+      alert("비밀번호가 변경되었습니다.");
+      setChangePasswordForm(false);
+      setOldPassword("");
+      setNewPassword("");
+      setPasswordConfirm("");
+      return;
+    } catch (error: any) {
+      alert("기존 비밀번호가 다릅니다");
+    }
+  };
+
+  const handleChangePassword = async (e: SyntheticEvent) => {
+    setLoading(true);
     e.preventDefault();
-    alert("비밀번호가 변경되었습니다.");
-    setChangePasswordForm(false);
-    setOldPassword("");
-    setNewPassword("");
-    setPasswordConfirm("");
+    if (newPassword !== passwordConfirm) {
+      alert("비밀번호가 일치하지 않습니다");
+      return;
+    }
+    try {
+      changePassword(oldPassword, newPassword);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

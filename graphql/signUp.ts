@@ -27,8 +27,8 @@ export const SIGN_UP = gql`
   }
 `;
 
-export const SIGN_OUT = gql`
-  mutation SIGN_OUT($uid: String!) {
-    signOut
+export const CHANGE_PASSWORD = gql`
+  mutation CHANGE_PASSWORD($oldPassword: String, $newPassword: String) {
+    changePassword(oldPassword: $oldPassword, newPassword: $newPassword)
   }
 `;
