@@ -1,4 +1,4 @@
-import OrdersList from "@/components/OrdersList";
+import OrdersList from "@/components/orders/OrdersList";
 import auth from "@/firebaseConfig";
 import { Cart } from "@/graphql/cart";
 import { GET_ORDERS } from "@/graphql/payment";

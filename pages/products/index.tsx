@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "react-query";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
 import React, { useEffect, useRef } from "react";
 import GET_PRODUCTS, { Products } from "@/graphql/products";
-import ProductList from "@/components/ProductList";
+import ProductList from "@/components/products/ProductList";
 import useIntersection from "@/hooks/useIntersection";
 
 const ProductListPage = () => {

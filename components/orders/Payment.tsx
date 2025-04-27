@@ -7,7 +7,7 @@ import { checkedCartState } from "@/recolis/cart";
 import { Dispatch, SetStateAction, useState } from "react";
 import { useMutation } from "react-query";
 import { useRecoilState } from "recoil";
-import PaymentModal from "./ModalPortal";
+import PaymentModal from "../ModalPortal";
 
 const Payment = ({
   cartItems,

@@ -18,6 +18,7 @@ interface PropTypes {
 
 const App: React.FC<PropTypes> = ({ Component, pageProps }) => {
   const queryClient = getClient();
+
   useEffect(() => {
     const handleBeforeUnload = async () => {
       const user = auth.currentUser;

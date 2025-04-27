@@ -5,7 +5,7 @@ import { formatPrice } from "@/pages/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import ReviewList from "./ReviewList";
+import ReviewList from "../reviews/ReviewList";
 
 const ProductDetail = ({
   description,

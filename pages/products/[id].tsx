@@ -1,4 +1,4 @@
-import ProductDetail from "@/components/ProductDetail";
+import ProductDetail from "@/components/products/ProductDetail";
 import { GET_PRODUCT, Product } from "@/graphql/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
 import { useRouter } from "next/dist/client/router";
