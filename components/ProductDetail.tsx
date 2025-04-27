@@ -77,7 +77,7 @@ const ProductDetail = ({
   }, [refetch]);
 
   return (
-    <div>
+    <>
       <div className="product-detail">
         <div className="image-container">
           <img className="image" src={imageUrl} alt={title} />
@@ -96,7 +96,7 @@ const ProductDetail = ({
       </div>
 
       <ReviewList productId={id} />
-    </div>
+    </>
   );
 };
 
