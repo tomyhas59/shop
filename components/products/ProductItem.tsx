@@ -2,7 +2,7 @@ import { useUser } from "@/context/UserProvider";
 import { ADD_CART, Cart, DELETE_CART, GET_CART } from "@/graphql/cart";
 import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";
-import { QueryKeys, getClient, graphqlFetcher } from "@/queryClient";
+import { QueryKeys, graphqlFetcher } from "@/queryClient";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import pullCartImg from "@/public/pullCart.png";
@@ -15,7 +15,7 @@ const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
   const uid = user?.uid;
   const router = useRouter();
 
-  //카드 담을 때 ui 반영
+  //카트 담을 때 ui 반영
   const { data, refetch } = useQuery<{ cart: Cart[] }>(
     [QueryKeys.CART, uid],
     () => {
