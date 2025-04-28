@@ -32,16 +32,6 @@ const AdminPage = () => {
     fetchNextPage();
   }, [intersecting]);
 
-  /* 
-data: {
-  {pageParams : [undefined...]},
-  {pages: [
-    {products:[{...}]},
-    {products:[{...}]}
-  ]}
-}
- */
-
   const startEdit = (index: number) => () => setEditingIndex(index);
   const doneEdit = () => setEditingIndex(null);
 
