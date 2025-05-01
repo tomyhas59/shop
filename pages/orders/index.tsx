@@ -55,11 +55,15 @@ const OrdersPage = () => {
   if (!ordersItems.length)
     return <div className="empty-cart">주문 내역이 없습니다.</div>;
 
+  const latestItems = ordersItems.sort(
+    (a, b) => Number(b.createdAt) - Number(a.createdAt)
+  );
+
   return (
     <div className="orders-page">
       <h1 className="orders-title">주문 내역</h1>
       <OrdersList
-        ordersItems={ordersItems}
+        ordersItems={latestItems}
         setOrdersItems={setOrdersItems}
         onCheckboxChange={handleCheckboxChange}
       />

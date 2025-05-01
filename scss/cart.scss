@@ -95,6 +95,7 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin-top: 10px;
+  gap: 5px;
   height: 70vh;
   overflow-x: hidden;
   overflow-y: scroll;
@@ -111,12 +112,9 @@
   align-items: center;
   border-bottom: 1px solid #ddd;
   background-color: #fff;
+  border-radius: 20px;
   &[data-checked="true"] {
-    border: 1px solid red;
-  }
-
-  &[data-checked="false"] {
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgb(187, 232, 247);
   }
   @media (max-width: 768px) {
     width: 170px;
@@ -139,8 +137,8 @@
   background-color: #ff6f61;
   color: #fff;
   border: none;
-  padding: 6px;
-  border-radius: 5px;
+  padding: 5px 10px;
+  border-radius: 10px;
   cursor: pointer;
   &:hover {
     background-color: #e55b4f;
@@ -165,11 +163,11 @@
   width: 200px;
   height: 200px;
   object-fit: cover;
+  border-radius: 20px 20px 0 0;
   cursor: pointer;
   transition: transform 0.5s;
   &:hover {
     transform: scale(0.9);
-    border: 1px solid red;
   }
 
   @media (max-width: 768px) {
@@ -199,6 +197,7 @@
   height: 10px;
   text-align: end;
   color: #f83321;
+  background-color: transparent;
   border: none;
   &::-webkit-inner-spin-button,
   ::-webkit-outer-spin-button {

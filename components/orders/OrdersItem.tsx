@@ -12,6 +12,7 @@ const OrdersItem = (
     amount,
     product: { title, imageUrl, price },
     onCheckboxChange,
+    isChecked,
     setIsChecked,
   }: Cart & {
     onCheckboxChange: (itemId: string, isChecked: boolean) => void;
@@ -52,33 +53,35 @@ const OrdersItem = (
   const formattedTotalPrice = formatPrice(price * amount);
 
   return (
-    <li className="order-item-container">
-      <input
-        type="checkbox"
-        id={`checkbox-${id}`}
-        className="order-item-checkbox"
-        name="selectItem"
-        ref={ref}
-        data-id={id}
-        disabled={!createdAt}
-        onChange={handleCheckboxChange}
-      />
-      <label htmlFor={`checkbox-${id}`} className="order-item">
-        <img className="order-image" src={imageUrl} alt={title} />
-        <p className="order-item-title">{title}</p>
-        <p>{amount}개</p>
-        <p>개당 {formatPrice(price)}원</p>
-        <p>합계 {formattedTotalPrice}원</p>
-        <p>주문 날짜 {formatDate(Number(createdAt))}</p>
-      </label>
-
+    <li className="order-card" data-checked={isChecked}>
+      <span className="order-date">{formatDate(Number(createdAt))}</span>
       <button
         type="button"
-        className="order-item-delete"
+        className="order-delete-button"
         onClick={handleDeleteOrder}
       >
-        X
+        ✕
       </button>
+      <div className="order-card-header">
+        <input
+          type="checkbox"
+          id={`checkbox-${id}`}
+          className="order-checkbox"
+          ref={ref}
+          data-id={id}
+          disabled={!createdAt}
+          onChange={handleCheckboxChange}
+        />
+      </div>
+      <label htmlFor={`checkbox-${id}`} className="order-card-body">
+        <img className="order-image" src={imageUrl} alt={title} />
+        <div className="order-info">
+          <p className="order-title">{title}</p>
+          <p className="order-detail">수량: {amount}개</p>
+          <p className="order-detail">개당: {formatPrice(price)}원</p>
+          <p className="order-total">총 합계: {formattedTotalPrice}원</p>
+        </div>
+      </label>
     </li>
   );
 };

@@ -35,7 +35,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
         await queryClient.refetchQueries([QueryKeys.PRODUCTS, "products"], {
           exact: true,
         });
-        await queryClient.refetchQueries(QueryKeys.REVIEWS);
+        await queryClient.invalidateQueries(QueryKeys.REVIEWS);
       },
     }
   );
