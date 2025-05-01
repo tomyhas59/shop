@@ -31,8 +31,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
     ({ productId, content, rating, uid }) =>
       graphqlFetcher(ADD_REVIEW, { productId, content, rating, uid }),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries(QueryKeys.REVIEWS);
+      onSuccess: async () => {
+        await queryClient.refetchQueries([QueryKeys.PRODUCTS, "products"], {
+          exact: true,
+        });
+        await queryClient.refetchQueries(QueryKeys.REVIEWS);
       },
     }
   );

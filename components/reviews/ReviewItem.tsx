@@ -29,7 +29,10 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ reviews }) => {
   const { mutate: deleteReview } = useMutation(
     (reviewId: string) => graphqlFetcher(DELETE_REVIEW, { reviewId }),
     {
-      onSuccess: () => {
+      onSuccess: async () => {
+        await queryClient.refetchQueries([QueryKeys.PRODUCTS, "products"], {
+          exact: true,
+        });
         queryClient.invalidateQueries(QueryKeys.REVIEWS); //data refresh로 ui update
       },
       onError: (error) => {
