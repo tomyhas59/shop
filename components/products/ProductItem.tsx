@@ -5,9 +5,6 @@ import { formatPrice } from "@/pages/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import pullCartImg from "@/public/pullCart.png";
-import emptyCartImg from "@/public/emptyCart.png";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
@@ -15,7 +12,6 @@ const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
   const uid = user?.uid;
   const router = useRouter();
 
-  //카트 담을 때 ui 반영
   const { data, refetch } = useQuery<{ cart: Cart[] }>(
     [QueryKeys.CART, uid],
     () => {
@@ -25,7 +21,7 @@ const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
     {
       staleTime: 0,
       cacheTime: 1000,
-    }
+    },
   );
 
   const cartIds = data?.cart ? data.cart.map((item) => item.product.id) : [];
@@ -38,11 +34,11 @@ const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
 
   const { mutate: addCart } = useMutation(
     ({ uid, id }: { uid: string; id: string }) =>
-      graphqlFetcher(ADD_CART, { uid, id })
+      graphqlFetcher(ADD_CART, { uid, id }),
   );
 
   const { mutate: deleteCart } = useMutation((id: string) =>
-    graphqlFetcher(DELETE_CART, { id })
+    graphqlFetcher(DELETE_CART, { id }),
   );
 
   const findCartIdByProductId = (productId: string) => {
@@ -76,55 +72,39 @@ const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
     router.push(`/products/${id}`);
   };
 
-  // 3D Tilt(기울기) Effect
-  useEffect(() => {
-    const boxes = document.querySelectorAll(
-      ".product-item"
-    ) as NodeListOf<HTMLElement>;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const box = e.currentTarget as HTMLElement;
-      const { width, height, left, top } = box.getBoundingClientRect();
-      const mouseX = e.clientX - left;
-      const mouseY = e.clientY - top;
-
-      const rotateX = (mouseY / height - 0.5) * 30;
-      const rotateY = (mouseX / width - 0.5) * 30;
-
-      box.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    };
-
-    const handleMouseLeave = (e: MouseEvent) => {
-      const box = e.currentTarget as HTMLElement;
-      box.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
-    };
-
-    boxes.forEach((box) => {
-      box.addEventListener("mousemove", handleMouseMove);
-      box.addEventListener("mouseleave", handleMouseLeave);
-    });
-
-    return () => {
-      boxes.forEach((box) => {
-        box.removeEventListener("mousemove", handleMouseMove);
-        box.removeEventListener("mouseleave", handleMouseLeave);
-      });
-    };
-  }, []);
-
   return (
     <li className="product-item" onClick={goToProductDetail}>
-      <img className="product-image" src={imageUrl} alt={title} />
-      <p className="product-title">{title}</p>
-      <span className="product-price">{formattedPrice}원</span>
-      <button className="add-to-cart" onClick={handleCartData}>
-        <Image
-          className="cart-icon"
-          src={addedCart ? pullCartImg : emptyCartImg}
-          alt={addedCart ? "Added to cart" : "Add to cart"}
-        />
-      </button>
-      <div className="reviewsCount">리뷰({reviewsCount})</div>
+      <div className="product-item__image-wrapper">
+        <img className="product-item__image" src={imageUrl} alt={title} />
+        <div className="product-item__overlay">
+          <button
+            className={`product-item__cart-btn ${addedCart ? "added" : ""}`}
+            onClick={handleCartData}
+          >
+            <i
+              className={`fas fa-${addedCart ? "check" : "shopping-cart"}`}
+            ></i>
+            <span>{addedCart ? "담김" : "담기"}</span>
+          </button>
+        </div>
+        {reviewsCount > 0 && (
+          <div className="product-item__badge">
+            <i className="fas fa-star"></i>
+            <span>{reviewsCount}</span>
+          </div>
+        )}
+      </div>
+
+      <div className="product-item__content">
+        <h3 className="product-item__title">{title}</h3>
+        <div className="product-item__footer">
+          <span className="product-item__price">{formattedPrice}원</span>
+          <div className="product-item__reviews">
+            <i className="fas fa-comment-dots"></i>
+            <span>리뷰 {reviewsCount}</span>
+          </div>
+        </div>
+      </div>
     </li>
   );
 };

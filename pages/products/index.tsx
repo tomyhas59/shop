@@ -18,7 +18,7 @@ const ProductListPage = () => {
         getNextPageParam: (lastPage) => {
           return lastPage.products.at(-1)?.id;
         },
-      }
+      },
     );
 
   useEffect(() => {
@@ -28,11 +28,39 @@ const ProductListPage = () => {
   }, [fetchNextPage, hasNextPage, intersecting, isFetchingNextPage, isSuccess]);
 
   return (
-    <div>
-      <div className="products-page">
-        <h1 className="products-title">상품 목록</h1>
+    <div className="products-page">
+      <div className="products-container">
+        <div className="products-header">
+          <div className="products-header-content">
+            <h1 className="products-title">
+              <i className="fas fa-shopping-bag"></i>
+              <span>전체 상품</span>
+            </h1>
+            <p className="products-subtitle">다양한 상품을 만나보세요</p>
+          </div>
+          <div className="products-count">
+            {data?.pages[0]?.products && (
+              <span>
+                {data.pages.reduce(
+                  (acc, page) => acc + page.products.length,
+                  0,
+                )}
+                개의 상품
+              </span>
+            )}
+          </div>
+        </div>
+
         <ProductList list={data?.pages || []} />
-        <div ref={fetchMoreRef} />
+
+        <div ref={fetchMoreRef} className="products-loader">
+          {isFetchingNextPage && (
+            <div className="products-loading">
+              <i className="fas fa-spinner fa-spin"></i>
+              <span>상품을 불러오는 중...</span>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

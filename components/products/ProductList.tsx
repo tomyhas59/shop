@@ -9,14 +9,26 @@ const ProductList = ({
     products: Product[];
   }[];
 }) => {
+  if (!list || list.length === 0 || !list[0]?.products) {
+    return (
+      <div className="product-list-empty">
+        <i className="fas fa-box-open"></i>
+        <h3>상품이 없습니다</h3>
+        <p>등록된 상품이 없습니다</p>
+      </div>
+    );
+  }
+
   return (
-    <ul className="product-list">
-      {list.map((page) =>
-        page.products.map((product) => (
-          <ProductItem {...product} key={product.id} />
-        ))
-      )}
-    </ul>
+    <div className="product-list-wrapper">
+      <ul className="product-list">
+        {list.map((page, pageIndex) =>
+          page.products.map((product) => (
+            <ProductItem {...product} key={`${pageIndex}-${product.id}`} />
+          )),
+        )}
+      </ul>
+    </div>
   );
 };
 

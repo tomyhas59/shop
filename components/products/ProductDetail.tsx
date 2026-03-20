@@ -19,11 +19,11 @@ const ProductDetail = ({
 
   const { mutate: addCart } = useMutation(
     ({ uid, id }: { uid: string; id: string }) =>
-      graphqlFetcher(ADD_CART, { uid, id })
+      graphqlFetcher(ADD_CART, { uid, id }),
   );
 
   const { mutate: deleteCart } = useMutation((id: string) =>
-    graphqlFetcher(DELETE_CART, { id })
+    graphqlFetcher(DELETE_CART, { id }),
   );
 
   const { data, refetch } = useQuery<{ cart: Cart[] }>(
@@ -37,7 +37,7 @@ const ProductDetail = ({
     {
       staleTime: 0,
       cacheTime: 1000,
-    }
+    },
   );
 
   const cartIds = data?.cart ? data.cart.map((item) => item.product.id) : [];
@@ -78,20 +78,74 @@ const ProductDetail = ({
 
   return (
     <>
-      <div className="product-detail">
-        <div className="image-container">
-          <img className="image" src={imageUrl} alt={title} />
-        </div>
-        <div className="info">
-          <h2 className="title">{title}</h2>
-          <p className="description">{description}</p>
-          <span className="price">{formattedPrice}원</span>
-          <button
-            className={`add-cart ${addedCart ? "added" : ""}`}
-            onClick={handleCartData}
-          >
-            {addedCart ? "담기 완료" : "담기"}
-          </button>
+      <div className="product-detail-container">
+        <div className="product-detail-card">
+          <div className="product-detail-image-wrapper">
+            <div className="product-detail-image-container">
+              <img
+                className="product-detail-image"
+                src={imageUrl}
+                alt={title}
+              />
+            </div>
+          </div>
+
+          <div className="product-detail-info">
+            <div className="product-detail-header">
+              <div className="product-detail-badge">
+                <i className="fas fa-star"></i>
+                <span>인기상품</span>
+              </div>
+              <h1 className="product-detail-title">{title}</h1>
+              <p className="product-detail-description">{description}</p>
+            </div>
+
+            <div className="product-detail-price-section">
+              <div className="product-detail-price-label">판매가</div>
+              <div className="product-detail-price">{formattedPrice}원</div>
+            </div>
+
+            <div className="product-detail-actions">
+              <button
+                className={`product-detail-cart-btn ${addedCart ? "added" : ""}`}
+                onClick={handleCartData}
+              >
+                <i
+                  className={`fas fa-${addedCart ? "check" : "shopping-cart"}`}
+                ></i>
+                <span>{addedCart ? "장바구니에 담김" : "장바구니에 담기"}</span>
+              </button>
+
+              <button className="product-detail-buy-btn">
+                <i className="fas fa-bolt"></i>
+                <span>바로 구매하기</span>
+              </button>
+            </div>
+
+            <div className="product-detail-info-list">
+              <div className="product-detail-info-item">
+                <i className="fas fa-shipping-fast"></i>
+                <div>
+                  <strong>배송 정보</strong>
+                  <span>무료배송 (5만원 이상)</span>
+                </div>
+              </div>
+              <div className="product-detail-info-item">
+                <i className="fas fa-undo-alt"></i>
+                <div>
+                  <strong>반품/교환</strong>
+                  <span>30일 이내 무료 반품</span>
+                </div>
+              </div>
+              <div className="product-detail-info-item">
+                <i className="fas fa-shield-alt"></i>
+                <div>
+                  <strong>안전 결제</strong>
+                  <span>SSL 보안 결제 시스템</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

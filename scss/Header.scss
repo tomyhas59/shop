@@ -1,0 +1,341 @@
+// Header.scss - 완전히 새로운 디자인
+.shop-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.scrolled {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+  }
+
+  &__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+
+    @media (max-width: 768px) {
+      height: 70px;
+      padding: 0 20px;
+    }
+  }
+
+  // 로고
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    z-index: 1001;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__logo-icon {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    i {
+      font-size: 24px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @media (max-width: 768px) {
+      width: 42px;
+      height: 42px;
+
+      i {
+        font-size: 22px;
+      }
+    }
+  }
+
+  &__logo-text {
+    font-size: 26px;
+    font-weight: 800;
+    color: white;
+    letter-spacing: -0.5px;
+
+    @media (max-width: 768px) {
+      font-size: 22px;
+    }
+  }
+
+  // 네비게이션
+  &__nav {
+    @media (max-width: 968px) {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 320px;
+      height: 100vh;
+      background: white;
+      box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+      transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow-y: auto;
+      padding-top: 100px;
+
+      &.active {
+        right: 0;
+      }
+    }
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: 968px) {
+      flex-direction: column;
+      gap: 4px;
+      align-items: stretch;
+      padding: 0 20px;
+    }
+  }
+
+  &__menu-item {
+    a,
+    button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      white-space: nowrap;
+      backdrop-filter: blur(10px);
+      position: relative;
+
+      i {
+        font-size: 18px;
+      }
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      @media (max-width: 968px) {
+        width: 100%;
+        color: #1f2937;
+        background: #f9fafb;
+        border-color: #e5e7eb;
+
+        &:hover {
+          background: #f3f4f6;
+          border-color: #667eea;
+          transform: none;
+          box-shadow: none;
+        }
+      }
+    }
+
+    // 관리자 메뉴
+    &--admin {
+      a {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border-color: transparent;
+
+        @media (max-width: 968px) {
+          background: #fef2f2;
+          border-color: #fecaca;
+          color: #dc2626;
+        }
+      }
+    }
+
+    // 사용자 메뉴
+    &--user {
+      a {
+        background: rgba(255, 255, 255, 0.95);
+        color: #667eea;
+        border-color: transparent;
+
+        &:hover {
+          background: white;
+          box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 968px) {
+          background: #eff6ff;
+          border-color: #dbeafe;
+        }
+      }
+    }
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+      font-size: 16px;
+      color: white;
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: 6px;
+    right: 12px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 2px 8px rgba(245, 87, 108, 0.4);
+
+    @media (max-width: 968px) {
+      background: #dc2626;
+    }
+  }
+
+  // 버튼
+  &__btn {
+    width: 100%;
+
+    &--primary {
+      background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%) !important;
+      color: #1f2937 !important;
+      border-color: transparent !important;
+
+      &:hover {
+        background: linear-gradient(
+          135deg,
+          #a6c1ee 0%,
+          #fbc2eb 100%
+        ) !important;
+        box-shadow: 0 6px 20px rgba(166, 193, 238, 0.4) !important;
+      }
+
+      @media (max-width: 968px) {
+        background: linear-gradient(135deg, #667eea, #764ba2) !important;
+        color: white !important;
+
+        &:hover {
+          background: linear-gradient(135deg, #764ba2, #667eea) !important;
+        }
+      }
+    }
+
+    &--logout {
+      @media (max-width: 968px) {
+        background: #fef2f2 !important;
+        border-color: #fecaca !important;
+        color: #dc2626 !important;
+      }
+    }
+  }
+
+  // 햄버거
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+
+    span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background: white;
+      border-radius: 3px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &.active {
+      span:nth-child(1) {
+        transform: translateY(10.5px) rotate(45deg);
+      }
+
+      span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+
+      span:nth-child(3) {
+        transform: translateY(-10.5px) rotate(-45deg);
+      }
+    }
+
+    @media (max-width: 968px) {
+      display: flex;
+    }
+  }
+
+  // 오버레이
+  &__overlay {
+    display: none;
+
+    @media (max-width: 968px) {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      animation: fadeIn 0.3s ease;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
