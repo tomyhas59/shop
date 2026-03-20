@@ -1,0 +1,573 @@
+// Review.scss - 리뷰 섹션
+
+// ==================== 리뷰 섹션 ====================
+.review-section {
+  background: white;
+  margin-top: 60px;
+  padding: 60px 0;
+
+  @media (max-width: 768px) {
+    margin-top: 40px;
+    padding: 40px 0;
+  }
+}
+
+.review-section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+}
+
+// 헤더
+.review-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 2px solid #f7fafc;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+  }
+}
+
+.review-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #1a202c;
+  margin: 0;
+
+  i {
+    font-size: 26px;
+    color: #667eea;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+
+    i {
+      font-size: 22px;
+    }
+  }
+}
+
+.review-section-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #667eea;
+
+  i {
+    font-size: 14px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+// 빈 리뷰
+.review-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  background: #f7fafc;
+  border-radius: 20px;
+  text-align: center;
+
+  i {
+    font-size: 64px;
+    color: #cbd5e0;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a202c;
+    margin: 0 0 8px;
+  }
+
+  p {
+    font-size: 15px;
+    color: #718096;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    padding: 60px 20px;
+
+    i {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
+
+// ==================== 리뷰 폼 ====================
+.review-form {
+  background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+  border-radius: 20px;
+  padding: 32px;
+  margin-bottom: 40px;
+
+  @media (max-width: 768px) {
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+}
+
+.review-form-header {
+  margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+  }
+}
+
+.review-form-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+
+  i {
+    font-size: 18px;
+    color: #667eea;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+
+    i {
+      font-size: 16px;
+    }
+  }
+}
+
+// 별점
+.review-form-rating {
+  margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+  }
+}
+
+.review-form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 12px;
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+}
+
+.review-form-stars {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    gap: 6px;
+  }
+}
+
+.review-form-star {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  i {
+    font-size: 32px;
+    color: #e2e8f0;
+    transition: all 0.2s ease;
+  }
+
+  &.active i {
+    color: #fbbf24;
+    transform: scale(1.1);
+  }
+
+  &:hover:not(:disabled) i {
+    transform: scale(1.15);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  @media (max-width: 768px) {
+    i {
+      font-size: 28px;
+    }
+  }
+}
+
+.review-form-rating-text {
+  margin-left: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #667eea;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+// 내용
+.review-form-content {
+  margin-bottom: 20px;
+  position: relative;
+
+  @media (max-width: 768px) {
+    margin-bottom: 16px;
+  }
+}
+
+.review-form-textarea {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 15px;
+  color: #1a202c;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.3s ease;
+
+  &::placeholder {
+    color: #a0aec0;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  }
+
+  &:disabled {
+    background: #f7fafc;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    padding: 14px;
+    font-size: 14px;
+  }
+}
+
+.review-form-counter {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #718096;
+  text-align: right;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+}
+
+// 제출 버튼
+.review-form-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+
+  i {
+    font-size: 16px;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: #cbd5e0;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  @media (max-width: 768px) {
+    padding: 14px 20px;
+    font-size: 15px;
+
+    i {
+      font-size: 15px;
+    }
+  }
+}
+
+// 로그인 안내
+.review-form-login-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 12px 20px;
+  background: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #c53030;
+
+  i {
+    font-size: 16px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 14px;
+    padding: 10px 16px;
+    font-size: 13px;
+
+    i {
+      font-size: 15px;
+    }
+  }
+}
+
+// ==================== 리뷰 목록 ====================
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (max-width: 768px) {
+    gap: 16px;
+  }
+}
+
+// ==================== 리뷰 카드 ====================
+.review-card {
+  background: white;
+  border: 2px solid #f7fafc;
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #e2e8f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
+}
+
+// 헤더
+.review-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 14px;
+  }
+}
+
+.review-card-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
+}
+
+.review-card-avatar {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i {
+    font-size: 20px;
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+
+    i {
+      font-size: 18px;
+    }
+  }
+}
+
+.review-card-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.review-card-nickname {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a202c;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+}
+
+.review-card-date {
+  font-size: 13px;
+  color: #718096;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+}
+
+// 삭제 버튼
+.review-card-delete {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid #feb2b2;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e53e3e;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  i {
+    font-size: 14px;
+  }
+
+  &:hover {
+    background: #fff5f5;
+    border-color: #fc8181;
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px 12px;
+    font-size: 12px;
+
+    span {
+      display: none;
+    }
+
+    i {
+      font-size: 13px;
+    }
+  }
+}
+
+// 별점
+.review-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 16px;
+
+  i {
+    font-size: 18px;
+    color: #e2e8f0;
+
+    &.active {
+      color: #fbbf24;
+    }
+  }
+
+  @media (max-width: 768px) {
+    margin-bottom: 14px;
+
+    i {
+      font-size: 16px;
+    }
+  }
+}
+
+.review-card-rating-text {
+  margin-left: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #667eea;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+}
+
+// 내용
+.review-card-content {
+  font-size: 15px;
+  color: #4a5568;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}

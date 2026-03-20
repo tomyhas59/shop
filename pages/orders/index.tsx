@@ -8,6 +8,7 @@ import { User, onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useSetRecoilState } from "recoil";
+import Link from "next/link";
 
 const OrdersPage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -16,7 +17,7 @@ const OrdersPage = () => {
   const setCheckedItems = useSetRecoilState(checkedOrdersState);
 
   useEffect(() => {
-    setCheckedItems([]); // 페이지 이동 시 체크 상태 초기화
+    setCheckedItems([]);
   }, []);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const OrdersPage = () => {
     {
       staleTime: 0,
       cacheTime: 1000,
-    }
+    },
   );
 
   useEffect(() => {
@@ -44,29 +45,56 @@ const OrdersPage = () => {
   }, [data]);
 
   const handleCheckboxChange = async (itemId: string, isChecked: boolean) => {
-    // 체크박스가 변경될 때마다 데이터를 다시 불러오기
     await refetch();
     const updatedCartItems = ordersItems.map((item) =>
-      item.id === itemId ? { ...item, checked: isChecked } : item
+      item.id === itemId ? { ...item, checked: isChecked } : item,
     );
     setOrdersItems(updatedCartItems);
   };
 
-  if (!ordersItems.length)
-    return <div className="empty-cart">주문 내역이 없습니다.</div>;
-
   const latestItems = ordersItems.sort(
-    (a, b) => Number(b.createdAt) - Number(a.createdAt)
+    (a, b) => Number(b.createdAt) - Number(a.createdAt),
   );
+
+  if (!ordersItems.length) {
+    return (
+      <div className="orders-page">
+        <div className="orders-empty">
+          <div className="orders-empty__icon">
+            <i className="fas fa-receipt"></i>
+          </div>
+          <h2 className="orders-empty__title">주문 내역이 없습니다</h2>
+          <p className="orders-empty__description">
+            상품을 구매하시면 주문 내역을 확인할 수 있습니다
+          </p>
+          <Link href="/products" className="orders-empty__action">
+            <i className="fas fa-shopping-bag"></i>
+            <span>쇼핑하러 가기</span>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="orders-page">
-      <h1 className="orders-title">주문 내역</h1>
-      <OrdersList
-        ordersItems={latestItems}
-        setOrdersItems={setOrdersItems}
-        onCheckboxChange={handleCheckboxChange}
-      />
+      <div className="orders-page__container">
+        <header className="orders-page__header">
+          <div className="orders-page__title-group">
+            <h1 className="orders-page__title">
+              <i className="fas fa-box"></i>
+              주문내역
+            </h1>
+            <span className="orders-page__count">{ordersItems.length}건</span>
+          </div>
+        </header>
+
+        <OrdersList
+          ordersItems={latestItems}
+          setOrdersItems={setOrdersItems}
+          onCheckboxChange={handleCheckboxChange}
+        />
+      </div>
     </div>
   );
 };

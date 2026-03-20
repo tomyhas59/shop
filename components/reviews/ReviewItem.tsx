@@ -1,7 +1,5 @@
 import { DELETE_REVIEW, Review } from "@/graphql/review";
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useUser } from "@/context/UserProvider";
 import { useMutation } from "react-query";
 import { getClient, graphqlFetcher, QueryKeys } from "@/queryClient";
@@ -15,13 +13,9 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ reviews }) => {
   const uid = user?.uid;
   const queryClient = getClient();
 
-  const formatDate = (date: {
-    getFullYear: () => any;
-    getMonth: () => number;
-    getDate: () => any;
-  }) => {
+  const formatDate = (date: Date) => {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1
+    const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
@@ -33,53 +27,71 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ reviews }) => {
         await queryClient.refetchQueries([QueryKeys.PRODUCTS, "products"], {
           exact: true,
         });
-        queryClient.invalidateQueries(QueryKeys.REVIEWS); //data refresh로 ui update
+        queryClient.invalidateQueries(QueryKeys.REVIEWS);
       },
       onError: (error) => {
         console.error("리뷰 삭제 중 오류 발생:", error);
         alert("리뷰 삭제에 실패했습니다.");
       },
-    }
+    },
   );
 
   const handleDeleteReview = (reviewId: string) => {
-    deleteReview(reviewId);
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      deleteReview(reviewId);
+    }
   };
 
+  if (!reviews || reviews.length === 0) {
+    return null;
+  }
+
   return (
-    <div className="reviews">
-      {reviews?.map((review, i) => (
-        <div key={i} className="review-item">
-          <div className="review-header">
-            <div className="nickname-wrapper">
-              <p className="nickname">{review.user?.nickname}</p>
-              <div className="review-stars">
-                {review.rating > 0 &&
-                  Array.from({ length: review.rating }).map((_, index) => (
-                    <FontAwesomeIcon
-                      key={index}
-                      icon={faStar}
-                      className="review-star-icon"
-                    />
-                  ))}
+    <>
+      {reviews.map((review) => (
+        <div key={review.id} className="review-card">
+          <div className="review-card-header">
+            <div className="review-card-user">
+              <div className="review-card-avatar">
+                <i className="fas fa-user"></i>
               </div>
-              <p className="date">
-                {formatDate(new Date(Number(review.createdAt)))}
-              </p>
+              <div className="review-card-user-info">
+                <div className="review-card-nickname">
+                  {review.user?.nickname}
+                </div>
+                <div className="review-card-date">
+                  {formatDate(new Date(Number(review.createdAt)))}
+                </div>
+              </div>
             </div>
+
             {(uid === review.user.uid || user?.displayName === "admin") && (
               <button
-                className="review-delete-button"
+                className="review-card-delete"
                 onClick={() => handleDeleteReview(review.id)}
               >
-                삭제
+                <i className="fas fa-trash-alt"></i>
+                <span>삭제</span>
               </button>
             )}
           </div>
-          <p className="review-content">{review.content}</p>
+
+          <div className="review-card-rating">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <i
+                key={index}
+                className={`fas fa-star ${
+                  index < review.rating ? "active" : ""
+                }`}
+              ></i>
+            ))}
+            <span className="review-card-rating-text">{review.rating}.0</span>
+          </div>
+
+          <div className="review-card-content">{review.content}</div>
         </div>
       ))}
-    </div>
+    </>
   );
 };
 

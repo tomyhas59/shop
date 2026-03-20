@@ -32,38 +32,38 @@ const CartList = ({
     [key: string]: boolean;
   }>(cartItems.reduce((acc, item) => ({ ...acc, [item.id]: false }), {}));
 
-  //개별 체크 올 체크 시------------------------------------------------
   const enabledItem = cartItems.filter((item) => item.product.createdAt);
 
   const setAllCheckedFromItems = useCallback(() => {
     if (!formRef.current) return;
     const data = new FormData(formRef.current);
-    const selectedCount = data.getAll("selectItem").length; //name="selectItem"
+    const selectedCount = data.getAll("selectItem").length;
     const allItemsSelected = selectedCount === enabledItem.length;
 
-    const selectAllCheckbox =
-      document.querySelector<HTMLInputElement>(".select-all");
+    const selectAllCheckbox = document.querySelector<HTMLInputElement>(
+      ".cart-select-all-input",
+    );
 
     if (selectAllCheckbox) {
       selectAllCheckbox.checked = allItemsSelected;
     }
   }, [cartItems.length]);
 
-  //올 체크 시-----------------------------------------------
   const setItemsCheckedFromAll = (targetInput: HTMLInputElement) => {
     const allChecked = targetInput.checked;
     checkboxRefs
-      .filter((inputElem) => {
-        return !inputElem.current?.disabled;
-      })
+      .filter((inputElem) => !inputElem.current?.disabled)
       .forEach((inputElem) => {
         inputElem.current!.checked = allChecked;
       });
     setItemCheckedStates((prevStates) =>
-      Object.keys(prevStates).reduce((acc, key) => {
-        acc[key] = allChecked;
-        return acc;
-      }, {} as { [key: string]: boolean })
+      Object.keys(prevStates).reduce(
+        (acc, key) => {
+          acc[key] = allChecked;
+          return acc;
+        },
+        {} as { [key: string]: boolean },
+      ),
     );
   };
 
@@ -71,7 +71,7 @@ const CartList = ({
     if (!formRef.current) return;
     const targetInput = e.target as HTMLInputElement;
 
-    if (targetInput && targetInput.classList.contains("select-all")) {
+    if (targetInput?.classList.contains("cart-select-all-input")) {
       setItemsCheckedFromAll(targetInput);
     } else {
       setAllCheckedFromItems();
@@ -81,113 +81,116 @@ const CartList = ({
     setFormData(data);
   };
 
-  //전체 카트 삭제
   const { mutate: deleteAllCart } = useMutation(() =>
-    graphqlFetcher(DELETE_ALL_CART)
+    graphqlFetcher(DELETE_ALL_CART),
   );
 
   const handleDeleteAllItem = (e: SyntheticEvent) => {
     e.preventDefault();
-    const confirmed = window.confirm("정말 삭제하시겠습니까?");
-    if (confirmed) {
+    if (window.confirm("장바구니를 모두 비우시겠습니까?")) {
       deleteAllCart();
       setCartItems([]);
     }
   };
-  //선택된 카트 삭제
 
   const { mutate: deleteSelectedCart } = useMutation((ids: string[]) =>
-    graphqlFetcher(DELETE_SELECTED_CART, { ids })
+    graphqlFetcher(DELETE_SELECTED_CART, { ids }),
   );
 
   const handleDeleteSelectedItems = (e: SyntheticEvent) => {
     e.preventDefault();
 
     const selectedIds = Object.keys(itemCheckedStates).filter(
-      (id) => itemCheckedStates[id]
+      (id) => itemCheckedStates[id],
     );
 
     if (selectedIds.length === 0) {
-      alert("삭제할 아이템을 선택해주세요.");
+      alert("삭제할 상품을 선택해주세요.");
       return;
     }
 
-    const confirmed = window.confirm(
-      `선택된 ${selectedIds.length}개의 항목을 삭제하시겠습니까?`
-    );
-
-    if (confirmed) {
+    if (
+      window.confirm(`선택한 ${selectedIds.length}개 상품을 삭제하시겠습니까?`)
+    ) {
       deleteSelectedCart(selectedIds);
       setCartItems((prevItems) =>
-        prevItems.filter((item) => !selectedIds.includes(item.id))
+        prevItems.filter((item) => !selectedIds.includes(item.id)),
       );
     }
   };
 
-  //recoil checked 업데이트
   useEffect(() => {
     checkedItems.forEach((item) => {
       const itemRef = checkboxRefs.find(
-        (ref) => ref.current!.dataset.id === item.id
+        (ref) => ref.current?.dataset.id === item.id,
       );
       if (itemRef) itemRef.current!.checked = true;
     });
     setAllCheckedFromItems();
   }, []);
 
-  //recoil data 추가
   useEffect(() => {
     const checkedItems = checkboxRefs.reduce<Cart[]>((res, ref, i) => {
-      if (ref.current!.checked) res.push(cartItems[i]);
+      if (ref.current?.checked) res.push(cartItems[i]);
       return res;
     }, []);
     setCheckedCartData(checkedItems);
   }, [cartItems, formData]);
 
   useEffect(() => {
-    const selectAllCheckbox =
-      document.querySelector<HTMLInputElement>(".select-all");
+    const selectAllCheckbox = document.querySelector<HTMLInputElement>(
+      ".cart-select-all-input",
+    );
 
     if (selectAllCheckbox) {
-      if (enabledItem.length === 0) {
-        selectAllCheckbox.disabled = true;
-      } else {
-        selectAllCheckbox.disabled = false;
-      }
+      selectAllCheckbox.disabled = enabledItem.length === 0;
     }
   }, [enabledItem]);
 
   return (
-    <div className="cart-list-container">
+    <div className="cart-list">
       <form
         ref={formRef}
         onChange={handleCheckboxChanged}
-        className="cart-list-form-container"
+        className="cart-list__form"
       >
-        <div className="all-button-wrapper">
-          <label className="custom-select-all">
+        <div className="cart-list__toolbar">
+          <div className="cart-select-all">
             <input
-              id="select-all"
               type="checkbox"
-              className="select-all"
+              id="cart-select-all"
+              className="cart-select-all-input"
               name="selectAll"
-              style={{ display: "none" }}
             />
-            전체 선택
-            <label htmlFor="select-all"></label>
-          </label>
+            <label htmlFor="cart-select-all" className="cart-select-all__label">
+              <span className="cart-select-all__box">
+                <i className="fas fa-check"></i>
+              </span>
+              <span className="cart-select-all__text">전체선택</span>
+            </label>
+          </div>
 
-          <button
-            className="delete-selected"
-            onClick={handleDeleteSelectedItems}
-          >
-            선택된 항목 삭제
-          </button>
-          <button className="delete-all" onClick={handleDeleteAllItem}>
-            전체 삭제
-          </button>
+          <div className="cart-actions">
+            <button
+              type="button"
+              className="cart-actions__button"
+              onClick={handleDeleteSelectedItems}
+            >
+              <i className="fas fa-trash-alt"></i>
+              <span>선택삭제</span>
+            </button>
+            <button
+              type="button"
+              className="cart-actions__button cart-actions__button--danger"
+              onClick={handleDeleteAllItem}
+            >
+              <i className="fas fa-trash"></i>
+              <span>전체삭제</span>
+            </button>
+          </div>
         </div>
-        <div className="cart-list">
+
+        <ul className="cart-items">
           {cartItems.map((cartItem, i) => (
             <CartItem
               {...cartItem}
@@ -203,7 +206,7 @@ const CartList = ({
               }
             />
           ))}
-        </div>
+        </ul>
       </form>
     </div>
   );

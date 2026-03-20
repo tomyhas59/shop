@@ -5,8 +5,6 @@ import { loadingState } from "@/recolis/loading";
 import { useMutation } from "react-query";
 import { ADD_REVIEW, Review } from "@/graphql/review";
 import { getClient, graphqlFetcher, QueryKeys } from "@/queryClient";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 type ReviewFormProps = {
   productId: string;
@@ -18,7 +16,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   const setLoading = useSetRecoilState(loadingState);
   const [reviewRating, setReviewRating] = useState(0);
   const [reviewContent, setReviewContent] = useState("");
+  const [hoveredRating, setHoveredRating] = useState(0);
   const queryClient = getClient();
+
   const handleRating = (rating: number) => {
     setReviewRating(rating);
   };
@@ -36,8 +36,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
           exact: true,
         });
         await queryClient.invalidateQueries(QueryKeys.REVIEWS);
+        alert("리뷰가 등록되었습니다!");
       },
-    }
+    },
   );
 
   const handleReviewSubmit = async (e: React.FormEvent) => {
@@ -48,8 +49,14 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       alert("로그인이 필요합니다");
       return setLoading(false);
     }
-    if (!reviewContent) {
-      alert("리뷰를 작성하세요.");
+
+    if (reviewRating === 0) {
+      alert("별점을 선택해주세요.");
+      return setLoading(false);
+    }
+
+    if (!reviewContent.trim()) {
+      alert("리뷰 내용을 입력해주세요.");
       return setLoading(false);
     }
 
@@ -72,33 +79,69 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   };
 
   const reviewPlaceholder = user
-    ? "리뷰 내용을 입력해주세요."
-    : "로그인 후 입력 가능합니다.";
+    ? "상품에 대한 솔직한 리뷰를 작성해주세요."
+    : "로그인 후 리뷰를 작성할 수 있습니다.";
 
   return (
     <form onSubmit={handleReviewSubmit} className="review-form">
-      <h2>리뷰 작성</h2>
-      <textarea
-        value={reviewContent}
-        onChange={(e) => setReviewContent(e.target.value)}
-        placeholder={reviewPlaceholder}
-        required
-        className="review-textarea"
-        disabled={!user}
-      />
-      <div className="rating-wrapper">
-        {[1, 2, 3, 4, 5].map((rating) => (
-          <FontAwesomeIcon
-            key={rating}
-            icon={faStar}
-            onClick={() => handleRating(rating)}
-            className={`star-icon ${reviewRating >= rating ? "selected" : ""}`}
-          />
-        ))}
+      <div className="review-form-header">
+        <h3 className="review-form-title">
+          <i className="fas fa-pen"></i>
+          <span>리뷰 작성하기</span>
+        </h3>
       </div>
-      <button type="submit" className="review-submit-button">
-        리뷰 추가
+
+      <div className="review-form-rating">
+        <label className="review-form-label">별점을 선택해주세요</label>
+        <div className="review-form-stars">
+          {[1, 2, 3, 4, 5].map((rating) => (
+            <button
+              key={rating}
+              type="button"
+              className={`review-form-star ${
+                (hoveredRating || reviewRating) >= rating ? "active" : ""
+              }`}
+              onClick={() => handleRating(rating)}
+              onMouseEnter={() => setHoveredRating(rating)}
+              onMouseLeave={() => setHoveredRating(0)}
+              disabled={!user}
+            >
+              <i className="fas fa-star"></i>
+            </button>
+          ))}
+          {reviewRating > 0 && (
+            <span className="review-form-rating-text">{reviewRating}.0</span>
+          )}
+        </div>
+      </div>
+
+      <div className="review-form-content">
+        <label className="review-form-label">리뷰 내용</label>
+        <textarea
+          value={reviewContent}
+          onChange={(e) => setReviewContent(e.target.value)}
+          placeholder={reviewPlaceholder}
+          required
+          className="review-form-textarea"
+          disabled={!user}
+          rows={4}
+        />
+        <div className="review-form-counter">
+          {reviewContent.length} / 500자
+        </div>
+      </div>
+
+      <button type="submit" className="review-form-submit" disabled={!user}>
+        <i className="fas fa-paper-plane"></i>
+        <span>리뷰 등록</span>
       </button>
+
+      {!user && (
+        <div className="review-form-login-notice">
+          <i className="fas fa-info-circle"></i>
+          <span>리뷰를 작성하려면 로그인이 필요합니다</span>
+        </div>
+      )}
     </form>
   );
 };

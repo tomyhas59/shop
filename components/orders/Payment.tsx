@@ -21,26 +21,23 @@ const Payment = ({
   const uid = user?.uid;
   const [modalShown, toggleModal] = useState(false);
 
-  //천 단위 쉼표-------------------------------
   const totalPrice = checkedItems.reduce(
     (res, { product: { price }, amount }) => {
       res += price * amount;
       return res;
     },
-    0
+    0,
   );
 
   const formattedTotalPrice = formatPrice(totalPrice);
 
-  //결제--------------------------------------------
   const { mutate: executePay } = useMutation(
     ({ uid, ids }: { uid: string; ids: string[] }) =>
-      graphqlFetcher(EXECUTE_PAY, { uid, ids })
+      graphqlFetcher(EXECUTE_PAY, { uid, ids }),
   );
 
   const proceed = () => {
     const ids = checkedItems.map((item) => item.id);
-    console.log(ids);
     if (uid) {
       executePay(
         { uid, ids },
@@ -48,7 +45,7 @@ const Payment = ({
           onSuccess: () => {
             const remainingItems = cartItems.filter(
               (item) =>
-                !checkedItems.find((checkedItem) => checkedItem.id === item.id)
+                !checkedItems.find((checkedItem) => checkedItem.id === item.id),
             );
             setCartItems(remainingItems);
             setCheckedCartData([]);
@@ -58,7 +55,7 @@ const Payment = ({
           onError: () => {
             alert("삭제된 상품이 포함되어 결제를 진행할 수 없습니다");
           },
-        }
+        },
       );
     }
   };
@@ -66,16 +63,9 @@ const Payment = ({
   const handleSubmit = () => {
     if (checkedItems.length < 1) {
       alert("구매할 상품을 선택하세요");
-    } else showModal();
-    // 새로운 경로로 이동하고 페이지 다시 로드
-    // router.replace('/another-page');
-
-    // 이전 페이지로 이동
-    // router.back();
-  };
-
-  const showModal = () => {
-    toggleModal(true);
+    } else {
+      toggleModal(true);
+    }
   };
 
   const cancel = () => {
@@ -83,14 +73,39 @@ const Payment = ({
   };
 
   return (
-    <div className="total-cost-wrapper">
-      <h3>총 금액</h3>
-      <div className="total-estimate">
-        {formattedTotalPrice ? `${formattedTotalPrice}원` : null}
+    <div className="payment-summary">
+      <div className="payment-summary__card">
+        <h3 className="payment-summary__title">
+          <i className="fas fa-calculator"></i>
+          <span>결제 금액</span>
+        </h3>
+
+        <div className="payment-summary__content">
+          <div className="payment-summary__row">
+            <span className="payment-summary__label">선택 상품</span>
+            <span className="payment-summary__value">
+              {checkedItems.length}개
+            </span>
+          </div>
+
+          <div className="payment-summary__row payment-summary__row--total">
+            <span className="payment-summary__label">총 결제금액</span>
+            <span className="payment-summary__amount">
+              {formattedTotalPrice || "0"}원
+            </span>
+          </div>
+        </div>
+
+        <button
+          className="payment-summary__button"
+          onClick={handleSubmit}
+          disabled={checkedItems.length === 0}
+        >
+          <i className="fas fa-credit-card"></i>
+          <span>결제하기</span>
+        </button>
       </div>
-      <button className="buy" onClick={handleSubmit}>
-        구매하기
-      </button>
+
       <PaymentModal
         show={modalShown}
         cancel={cancel}
