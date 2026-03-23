@@ -115,11 +115,6 @@ const ProductDetail = ({
                 ></i>
                 <span>{addedCart ? "장바구니에 담김" : "장바구니에 담기"}</span>
               </button>
-
-              <button className="product-detail-buy-btn">
-                <i className="fas fa-bolt"></i>
-                <span>바로 구매하기</span>
-              </button>
             </div>
 
             <div className="product-detail-info-list">

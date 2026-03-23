@@ -415,8 +415,7 @@
   }
 }
 
-.product-detail-cart-btn,
-.product-detail-buy-btn {
+.product-detail-cart-btn {
   flex: 1;
   display: flex;
   align-items: center;
@@ -464,17 +463,6 @@
     &:hover {
       background: linear-gradient(135deg, #38a169, #2f855a);
     }
-  }
-}
-
-.product-detail-buy-btn {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(102, 126, 234, 0.4);
   }
 }
 
