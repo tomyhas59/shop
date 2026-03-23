@@ -87,12 +87,6 @@ const ProductItem = ({ imageUrl, price, title, id, reviewsCount }: Product) => {
             <span>{addedCart ? "담김" : "담기"}</span>
           </button>
         </div>
-        {reviewsCount > 0 && (
-          <div className="product-item__badge">
-            <i className="fas fa-star"></i>
-            <span>{reviewsCount}</span>
-          </div>
-        )}
       </div>
 
       <div className="product-item__content">
