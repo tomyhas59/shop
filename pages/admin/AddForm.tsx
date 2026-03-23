@@ -26,7 +26,7 @@ const AddForm = () => {
           refetchInactive: true,
         });
       },
-    }
+    },
   );
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -43,53 +43,69 @@ const AddForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="admin-product-form">
-      <label>
-        상품명:
-        <input
-          ref={titleRef}
-          className="input-field"
-          name="title"
-          placeholder="title"
-          type="text"
-          required
-        />
-      </label>
-      <label>
-        이미지URL:
-        <input
-          ref={imageUrlRef}
-          className="input-field"
-          name="imageUrl"
-          type="text"
-          required
-        ></input>
-      </label>
-      <label>
-        가격:
-        <input
-          ref={priceRef}
-          className="input-field"
-          placeholder="Price"
-          name="price"
-          required
-          type="number"
-          min="1000"
-        />
-      </label>
-      <label>
-        상세:
-        <textarea
-          ref={descriptionRef}
-          className="textarea-field"
-          name="description"
-          placeholder="Description"
-        />
-      </label>
-      <button type="submit" className="submit-button">
-        등록
-      </button>
-    </form>
+    <div className="admin-form-container">
+      <div className="admin-form-header">
+        <h2>
+          <i className="fas fa-plus-circle"></i> 새 상품 등록
+        </h2>
+        <p>판매할 새로운 상품의 정보를 입력해 주세요.</p>
+      </div>
+      <form onSubmit={handleSubmit} className="admin-product-form">
+        <div className="form-group-grid">
+          <div className="form-group">
+            <label>
+              <i className="fas fa-tag"></i> 상품명
+            </label>
+            <input
+              ref={titleRef}
+              name="title"
+              placeholder="상품명을 입력하세요"
+              type="text"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>
+              <i className="fas fa-link"></i> 이미지 URL
+            </label>
+            <input
+              ref={imageUrlRef}
+              name="imageUrl"
+              type="text"
+              required
+              placeholder="https://..."
+            />
+          </div>
+          <div className="form-group">
+            <label>
+              <i className="fas fa-won-sign"></i> 가격
+            </label>
+            <input
+              ref={priceRef}
+              name="price"
+              required
+              type="number"
+              min="1000"
+              placeholder="1000원 이상"
+            />
+          </div>
+        </div>
+        <div className="form-group">
+          <label>
+            <i className="fas fa-align-left"></i> 상세 설명
+          </label>
+          <textarea
+            ref={descriptionRef}
+            name="description"
+            placeholder="상품에 대한 설명을 적어주세요"
+          />
+        </div>
+        <button type="submit" className="admin-submit-btn">
+          <span>상품 등록하기</span>
+          <i className="fas fa-arrow-right"></i>
+        </button>
+      </form>
+    </div>
   );
 };
 

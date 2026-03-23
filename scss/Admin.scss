@@ -1,0 +1,283 @@
+// Admin.scss - 관리자 상품 관리 페이지
+
+// 공통 변수 (Products.scss와 통일감 유지)
+$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
+$success-gradient: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+$soft-bg: #f7fafc;
+$white: #ffffff;
+$text-dark: #1a202c;
+$text-gray: #718096;
+$shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.06);
+$shadow-md: 0 10px 40px rgba(0, 0, 0, 0.08);
+
+.admin-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 32px;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
+}
+
+// ==================== 1. 상품 등록 폼 (AddForm) ====================
+.admin-form-container {
+  background: $white;
+  border-radius: 24px;
+  padding: 40px;
+  margin-bottom: 60px;
+  box-shadow: $shadow-md;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+
+  .admin-form-header {
+    margin-bottom: 32px;
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 28px;
+      font-weight: 800;
+      color: $text-dark;
+      margin: 0 0 8px;
+
+      i {
+        color: #667eea;
+      }
+    }
+
+    p {
+      color: $text-gray;
+      font-size: 15px;
+    }
+  }
+}
+
+.admin-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .form-group-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+
+    @media (max-width: 968px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: $text-dark;
+
+      i {
+        font-size: 12px;
+        color: $text-gray;
+      }
+    }
+
+    input,
+    textarea {
+      padding: 14px 18px;
+      border: 2px solid #edf2f7;
+      border-radius: 12px;
+      font-size: 15px;
+      transition: all 0.2s ease;
+      background: $soft-bg;
+
+      &:focus {
+        outline: none;
+        border-color: #667eea;
+        background: $white;
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+      }
+
+      &::placeholder {
+        color: #a0aec0;
+      }
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+  }
+
+  .admin-submit-btn {
+    align-self: flex-end;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 40px;
+    background: $primary-gradient;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+// ==================== 2. 관리자 아이템 (AdminItem) ====================
+
+// 수정 모드 (Editing State)
+.product-item.editing {
+  grid-column: span 2; // 수정 시에는 영역을 넓게 차지하도록 설정 가능
+  background: #f8faff;
+  border: 2px dashed #667eea;
+
+  .admin-edit-form {
+    padding: 24px;
+
+    .edit-form-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+      }
+    }
+
+    .edit-actions {
+      display: flex;
+      gap: 8px;
+
+      button {
+        flex: 1;
+        padding: 12px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+      }
+
+      .save-btn {
+        background: $success-gradient;
+        color: white;
+      }
+
+      .cancel-btn {
+        background: #e2e8f0;
+        color: $text-dark;
+      }
+    }
+  }
+}
+
+// 관리자용 상품 카드 (Admin View)
+.product-item.admin {
+  .admin-item-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+    transform: translateX(10px);
+    z-index: 10;
+  }
+
+  &:hover .admin-item-overlay {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .admin-action-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.edit {
+      background: $primary-gradient;
+    }
+    &.delete {
+      background: $danger-gradient;
+    }
+  }
+
+  // 삭제된 상품 상태
+  .deleted-status-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+
+    span {
+      color: white;
+      font-weight: 800;
+      padding: 8px 16px;
+      border: 2px solid white;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+  }
+
+  .admin-status-badge {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    background: #edf2f7;
+    border-radius: 4px;
+    color: $text-gray;
+  }
+}
+
+// 무한 스크롤 트리거 영역
+.admin-page div[ref] {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-gray;
+}

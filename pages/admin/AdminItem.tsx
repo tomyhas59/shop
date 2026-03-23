@@ -29,7 +29,7 @@ const AdminItem = ({
   const queryClient = getClient();
   //장바구니 담기----------------------------------------
   const { mutate: addCart } = useMutation((id: string) =>
-    graphqlFetcher(ADD_CART, { id })
+    graphqlFetcher(ADD_CART, { id }),
   );
 
   const formattedPrice = formatPrice(price);
@@ -44,7 +44,7 @@ const AdminItem = ({
           refetchInactive: true,
         });
       },
-    }
+    },
   );
 
   const handleDeleteProduct = () => {
@@ -69,7 +69,7 @@ const AdminItem = ({
         });
         doneEdit();
       },
-    }
+    },
   );
 
   const handleUpdateProduct = (e: SyntheticEvent) => {
@@ -80,83 +80,77 @@ const AdminItem = ({
   };
   if (isEditing)
     return (
-      <form onSubmit={handleUpdateProduct} className="admin-product-form">
-        <label>
-          상품명:
-          <input
-            className="input-field"
-            name="title"
-            placeholder="title"
-            type="text"
-            required
-            defaultValue={title}
-          />
-        </label>
-        <label>
-          이미지URL:
-          <input
-            className="input-field"
-            name="imageUrl"
-            type="text"
-            required
-            defaultValue={imageUrl}
-          />
-        </label>
-        <label>
-          가격:
-          <input
-            className="input-field"
-            placeholder="Price"
-            name="price"
-            required
-            type="number"
-            min="1000"
-            defaultValue={price}
-          />
-        </label>
-        <label>
-          상세:
-          <textarea
-            className="textarea-field"
-            name="description"
-            placeholder="Description"
-            defaultValue={description}
-          />
-        </label>
-        <div className="button-wrapper">
-          <button type="submit" className="submit-button">
-            저장
-          </button>
-          <button
-            type="button"
-            className="submit-button"
-            onClick={() => doneEdit()}
-          >
-            취소
-          </button>
-        </div>
-      </form>
+      <li className="product-item editing">
+        <form onSubmit={handleUpdateProduct} className="admin-edit-form">
+          <div className="edit-form-content">
+            <input
+              name="title"
+              defaultValue={title}
+              required
+              placeholder="상품명"
+            />
+            <input
+              name="imageUrl"
+              defaultValue={imageUrl}
+              required
+              placeholder="이미지 URL"
+            />
+            <input name="price" type="number" defaultValue={price} required />
+            <textarea
+              name="description"
+              defaultValue={description}
+              placeholder="상세 설명"
+            />
+          </div>
+          <div className="edit-actions">
+            <button type="submit" className="save-btn">
+              저장
+            </button>
+            <button type="button" className="cancel-btn" onClick={doneEdit}>
+              취소
+            </button>
+          </div>
+        </form>
+      </li>
     );
 
   return (
-    <li
-      className="product-item"
-      style={{ gridTemplateAreas: '"a a" "b b" "c c"' }}
-    >
-      {createdAt && (
-        <>
-          <button className="delete-button" onClick={handleDeleteProduct}>
-            삭제
-          </button>
-          <button className="update-button" onClick={startEdit}>
-            수정
-          </button>
-        </>
-      )}
-      <img className="product-image" src={imageUrl} alt={title} />
-      <p className="product-title">{title}</p>
-      <span className="product-price">{formattedPrice}원</span>
-      {!createdAt && <div className="xMark">삭제된 상품</div>}
+    <li className="product-item admin">
+      <div className="product-item__image-wrapper">
+        <img className="product-item__image" src={imageUrl} alt={title} />
+        {createdAt ? (
+          <div className="admin-item-overlay">
+            <button
+              className="admin-action-btn edit"
+              onClick={startEdit}
+              title="수정"
+            >
+              <i className="fas fa-edit"></i>
+            </button>
+            <button
+              className="admin-action-btn delete"
+              onClick={handleDeleteProduct}
+              title="삭제"
+            >
+              <i className="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        ) : (
+          <div className="deleted-status-overlay">
+            <span>삭제된 상품</span>
+          </div>
+        )}
+      </div>
+
+      <div className="product-item__content">
+        <h3 className="product-item__title">{title}</h3>
+        <div className="product-item__footer">
+          <span className="product-item__price">{formattedPrice}원</span>
+          <div className="admin-status-badge">
+            {createdAt ? "판매중" : "판매중지"}
+          </div>
+        </div>
+      </div>
     </li>
   );
 };
