@@ -35,12 +35,6 @@ const SignInPage = () => {
     }
   };
 
-  const enterSignIn = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      await handleSignIn(e);
-    }
-  };
-
   return (
     <div className="auth-page">
       <div className="auth-container">
@@ -66,7 +60,6 @@ const SignInPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="example@email.com"
                 required
-                onKeyDown={enterSignIn}
               />
             </div>
 
@@ -83,7 +76,6 @@ const SignInPage = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="6자 이상 입력하세요"
                   required
-                  onKeyDown={enterSignIn}
                 />
                 <button
                   type="button"

@@ -24,7 +24,7 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push("/");
+      router.push("/signIn");
       setIsMenuOpen(false);
     } catch (error) {
       console.error("Logout Error: ", error);
