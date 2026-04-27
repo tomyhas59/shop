@@ -4,7 +4,7 @@ import { Product } from "@/graphql/products";
 import { formatPrice } from "@/pages/products";
 import { QueryKeys, graphqlFetcher } from "@/queryClient";
 import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import ReviewList from "../reviews/ReviewList";
 
 const ProductDetail = ({
@@ -16,65 +16,48 @@ const ProductDetail = ({
 }: Product) => {
   const { user } = useUser();
   const uid = user?.uid;
+  const queryClient = useQueryClient();
 
-  const { mutate: addCart } = useMutation(
-    ({ uid, id }: { uid: string; id: string }) =>
-      graphqlFetcher(ADD_CART, { uid, id }),
-  );
-
-  const { mutate: deleteCart } = useMutation((id: string) =>
-    graphqlFetcher(DELETE_CART, { id }),
-  );
-
-  const { data, refetch } = useQuery<{ cart: Cart[] }>(
+  const { data } = useQuery<{ cart: Cart[] }>(
     [QueryKeys.CART, uid],
-    () => {
-      if (uid) return graphqlFetcher<{ cart: Cart[] }>(GET_CART, { uid });
-      else {
-        return Promise.resolve({ cart: [] });
-      }
-    },
+    () => graphqlFetcher(GET_CART, { uid }),
     {
-      staleTime: 0,
-      cacheTime: 1000,
+      enabled: !!uid, // 🔥 로그인 시에만 실행
     },
   );
 
   const cartIds = data?.cart ? data.cart.map((item) => item.product.id) : [];
   const isAddedToCart = cartIds.includes(id);
-  const [addedCart, setAddedCart] = useState(isAddedToCart);
 
-  const findCartIdByProductId = (productId: string) => {
-    const cartItem = data?.cart.find((item) => item.product.id === productId);
-    return cartItem?.id;
-  };
+  const addCart = useMutation(() => graphqlFetcher(ADD_CART, { uid, id }), {
+    onSuccess: () => {
+      queryClient.invalidateQueries([QueryKeys.CART, uid]);
+    },
+  });
 
-  const handleCartData = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    if (!user) return alert("로그인이 필요합니다");
-    if (uid) {
-      if (!addedCart) {
-        addCart({ uid, id });
-        setAddedCart(true);
-      } else {
-        const cartId = findCartIdByProductId(id);
-        if (cartId) {
-          deleteCart(cartId);
-        }
+  const deleteCart = useMutation(
+    (cartId: string) => graphqlFetcher(DELETE_CART, { id: cartId }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([QueryKeys.CART, uid]);
+      },
+    },
+  );
+
+  const handleCart = () => {
+    if (!uid) return alert("로그인이 필요합니다");
+
+    if (!isAddedToCart) {
+      addCart.mutate();
+    } else {
+      const cartItem = data?.cart.find((item) => item.product.id === id);
+      if (cartItem) {
+        deleteCart.mutate(cartItem.id);
       }
-      setAddedCart(!addedCart);
     }
   };
 
-  useEffect(() => {
-    setAddedCart(isAddedToCart);
-  }, [data, isAddedToCart]);
-
   const formattedPrice = formatPrice(price);
-
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
 
   return (
     <>
@@ -107,13 +90,15 @@ const ProductDetail = ({
 
             <div className="product-detail-actions">
               <button
-                className={`product-detail-cart-btn ${addedCart ? "added" : ""}`}
-                onClick={handleCartData}
+                className={`product-detail-cart-btn ${isAddedToCart ? "added" : ""}`}
+                onClick={handleCart}
               >
                 <i
-                  className={`fas fa-${addedCart ? "check" : "shopping-cart"}`}
+                  className={`fas fa-${isAddedToCart ? "check" : "shopping-cart"}`}
                 ></i>
-                <span>{addedCart ? "장바구니에 담김" : "장바구니에 담기"}</span>
+                <span>
+                  {isAddedToCart ? "장바구니에 담김" : "장바구니에 담기"}
+                </span>
               </button>
             </div>
 

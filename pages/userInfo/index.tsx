@@ -1,13 +1,14 @@
 import React, { SyntheticEvent, useState } from "react";
 import { useUser } from "@/context/UserProvider";
 import { useSetRecoilState } from "recoil";
-import { loadingState } from "@/recolis/loading";
+
 import {
   EmailAuthProvider,
   getAuth,
   reauthenticateWithCredential,
   updatePassword,
 } from "firebase/auth";
+import { loadingState } from "@/recolis/loading";
 
 const UserInfoPage: React.FC = () => {
   const { user } = useUser();
