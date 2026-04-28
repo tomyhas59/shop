@@ -65,7 +65,7 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ reviews }) => {
               </div>
             </div>
 
-            {(uid === review.user.uid || user?.displayName === "admin") && (
+            {(uid === review.user?.uid || user?.displayName === "admin") && (
               <button
                 className="review-card-delete"
                 onClick={() => handleDeleteReview(review.id)}
